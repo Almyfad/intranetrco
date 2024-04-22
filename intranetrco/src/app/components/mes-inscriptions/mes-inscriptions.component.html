@@ -1,0 +1,4 @@
+<h2>Mes inscriptions</h2>
+<ng-container *ngFor="let item of inscriptions">
+{{item.id}} {{item.conference.titre}} {{item.conference.date | date:'dd/MM/yyyy' }}
+</ng-container>
