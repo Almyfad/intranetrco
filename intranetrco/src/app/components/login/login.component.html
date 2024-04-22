@@ -1,0 +1,39 @@
+<div class="mainlogin">
+  <mat-card>
+    <mat-card-content>
+  <img src="assets/img/logo.png">  
+  <form [formGroup]="form" (ngSubmit)="login()" class="flex flex-col">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="email">
+            <mat-icon matSuffix>person</mat-icon>
+            @if (propEmail.hasError('required')) {
+              <mat-error>Email requis</mat-error>
+            }
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Mot de passe</mat-label>
+          <input matInput placeholder="Placeholder" formControlName="password" type="password" >
+          <mat-icon matSuffix>key</mat-icon>
+          @if (propPass.hasError('required')) {
+            <mat-error>Mot de passe requis</mat-error>
+          }
+      </mat-form-field>
+    </p>
+    <button mat-raised-button color="primary">
+      Se connecter
+    </button>
+
+      
+    </form>
+    
+  </mat-card-content>
+  </mat-card>
+</div>
+
+
+
+
