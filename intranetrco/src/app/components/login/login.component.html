@@ -23,7 +23,10 @@
           }
       </mat-form-field>
     </p>
-    <button mat-raised-button color="primary">
+    <button mat-raised-button color="primary" [disabled]="loading">
+      @if (loading) {
+        <mat-spinner diameter="20"></mat-spinner>
+      }
       Se connecter
     </button>
 

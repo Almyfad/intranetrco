@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, delay, map, tap } from 'rxjs';
 
 type AuthTokenResponse = {
   token: string
@@ -20,6 +20,7 @@ export class AuthService {
         tap((res: AuthTokenResponse) => {
             this.token = res.token
         }),
+        delay(1000)
       )
   }
 
