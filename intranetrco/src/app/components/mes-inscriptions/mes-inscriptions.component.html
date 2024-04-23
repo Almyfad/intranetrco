@@ -1,21 +1,47 @@
 <h2>Mes inscriptions</h2>
 <mat-accordion>
-    <mat-expansion-panel *ngFor="let item of inscriptions" hideToggle>
-        <mat-expansion-panel-header>
+    <mat-expansion-panel *ngFor="let item of (mesinscriptions | async)" hideToggle>
+
+        <mat-expansion-panel-header *ngIf="item.pending">
             <mat-panel-title>
-            {{item.conference.titre}}
+                <div class="ngx-skeleton-loader-container">
+                    <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+                </div>
             </mat-panel-title>
             <mat-panel-description>
-             {{item.conference.date | date:'dd/MM/yyyy' }}
+                <div class="ngx-skeleton-loader-container">
+                    <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+                </div>
             </mat-panel-description>
             <mat-panel-description>
-                {{item.conference.centre.nom}} 
+                <div class="ngx-skeleton-loader-container">
+                    <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+                </div>
             </mat-panel-description>
             <mat-icon>edit_calendar</mat-icon>
         </mat-expansion-panel-header>
-        <p>Lit supérieur</p>
-        <p>Staff oui</p>
-        <p>Arrivée Vendredi</p>
-        <p>Départ Lundi</p>
+
+        <mat-expansion-panel-header *ngIf="!item.pending">
+            <mat-panel-title>
+                {{item.value!.conference.titre}}
+            </mat-panel-title>
+            <mat-panel-description>
+                {{item.value!.conference.date | date:'dd/MM/yyyy' }}
+            </mat-panel-description>
+            <mat-panel-description>
+                {{item.value!.conference.centre.nom}}
+            </mat-panel-description>
+            <mat-icon>edit_calendar</mat-icon>
+        </mat-expansion-panel-header>
+        <ng-container *ngIf="!item.pending">
+
+            <p>Lit supérieur</p>
+            <p>Staff oui</p>
+            <p>Arrivée Vendredi</p>
+            <p>Départ Lundi</p>
+        </ng-container>
+        <div class="ngx-skeleton-loader-container-footer" *ngIf="item.pending">
+            <ngx-skeleton-loader appearance="line" count="4"></ngx-skeleton-loader>
+        </div>
     </mat-expansion-panel>
 </mat-accordion>

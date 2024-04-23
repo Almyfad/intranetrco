@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Inscription,DBMocked } from '../models/models';
+import { Inscription, DBMocked } from '../models/models';
 import { Observable, delay, of } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,7 @@ export class ConferencesService {
 
   constructor() { }
 
-  getMesInscriptions():Observable<Inscription[]> {
-    return of(DBMocked.inscriptions).pipe(delay(3000));
+  getMesInscriptions(): Observable<Inscription[]> {
+    return of(DBMocked.inscriptions).pipe(delay(1000));
   }
 }
