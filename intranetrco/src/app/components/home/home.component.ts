@@ -13,5 +13,6 @@ import { ConferencesService } from '../../core/services/conferences.service';
 export class HomeComponent  {
   private readonly confAPI = inject(ConferencesService);
   mesinscriptions = this.confAPI.getMesInscriptions();
+  conferences = this.confAPI.getConferences();
 
 }

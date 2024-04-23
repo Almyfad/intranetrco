@@ -1,12 +1,11 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { Inscription } from '../../core/models/models';
-import { NgFor, DatePipe, AsyncPipe, JsonPipe, NgIf } from '@angular/common';
+import { NgFor, DatePipe, AsyncPipe, NgIf } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIcon } from '@angular/material/icon';
-import { Observable, concat, } from 'rxjs';
+import { Observable } from 'rxjs';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { AsyncValue } from '../../core/class/asyncvalue';
-import { ConferencesService } from '../../core/services/conferences.service';
 
 @Component({
   selector: 'app-mes-inscriptions',
@@ -16,11 +15,11 @@ import { ConferencesService } from '../../core/services/conferences.service';
   styleUrl: './mes-inscriptions.component.less'
 })
 export class MesInscriptionsComponent implements OnInit {
-  @Input() inscriptions!: Observable<Inscription[]>;
+  @Input() Oinscriptions!: Observable<Inscription[]>;
   mesinscriptions!: Observable<AsyncValue<Inscription>[]>;
 
   ngOnInit(): void {
-    this.mesinscriptions = AsyncValue.of<Inscription>(this.inscriptions, 3)
+    this.mesinscriptions = AsyncValue.of<Inscription>(this.Oinscriptions, 3)
   }
 
 }

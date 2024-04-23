@@ -1,1 +1,46 @@
-<p>inscriptions works!</p>
+<h2>inscriptions prochaines conférences</h2>
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let item of (conferences | async)" hideToggle>
+        <mat-expansion-panel-header *ngIf="item.pending">
+            <mat-panel-title>
+                <div class="ngx-skeleton-loader-container">
+                    <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+                </div>
+            </mat-panel-title>
+            <mat-panel-description>
+                <div class="ngx-skeleton-loader-container">
+                    <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+                </div>
+            </mat-panel-description>
+            <mat-panel-description>
+                <div class="ngx-skeleton-loader-container">
+                    <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+                </div>
+            </mat-panel-description>
+            <mat-icon>edit_calendar</mat-icon>
+        </mat-expansion-panel-header>
+
+        <mat-expansion-panel-header *ngIf="!item.pending">
+            <mat-panel-title>
+                {{item.value!.titre}}
+            </mat-panel-title>
+            <mat-panel-description>
+                {{item.value!.date | date:'dd/MM/yyyy' }}
+            </mat-panel-description>
+            <mat-panel-description>
+                {{item.value!.centre.nom}}
+            </mat-panel-description>
+            <mat-icon>edit_calendar</mat-icon>
+        </mat-expansion-panel-header>
+        <ng-container *ngIf="!item.pending">
+
+            <p>Lit supérieur</p>
+            <p>Staff oui</p>
+            <p>Arrivée Vendredi</p>
+            <p>Départ Lundi</p>
+        </ng-container>
+        <div class="ngx-skeleton-loader-container-footer" *ngIf="item.pending">
+            <ngx-skeleton-loader appearance="line" count="4"></ngx-skeleton-loader>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>
