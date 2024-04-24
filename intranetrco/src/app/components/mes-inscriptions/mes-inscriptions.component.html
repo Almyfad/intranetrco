@@ -1,7 +1,6 @@
 <h2>Mes inscriptions</h2>
 <mat-accordion>
     <mat-expansion-panel *ngFor="let item of (mesinscriptions | async)" hideToggle>
-
         <mat-expansion-panel-header *ngIf="item.pending">
             <mat-panel-title>
                 <div class="ngx-skeleton-loader-container">
@@ -23,10 +22,11 @@
 
         <mat-expansion-panel-header *ngIf="!item.pending">
             <mat-panel-title>
-                {{item.value!.conference.titre}}
+                {{item.value!.conference.type.nom}}
             </mat-panel-title>
             <mat-panel-description>
-                {{item.value!.conference.date | date:'dd/MM/yyyy' }}
+                {{item.value!.conference.datedebut | date:'dd' }}-{{item.value!.conference.datefin | date:'dd MMMM' }}
+                {{item.value!.conference.titre}}
             </mat-panel-description>
             <mat-panel-description>
                 {{item.value!.conference.centre.nom}}

@@ -14,5 +14,7 @@ export class HomeComponent  {
   private readonly confAPI = inject(ConferencesService);
   mesinscriptions = this.confAPI.getMesInscriptions();
   conferences = this.confAPI.getConferences();
+  types = this.confAPI.getTypes();
+  centres = this.confAPI.getCentres();
 
 }

@@ -1,6 +1,29 @@
 <h2>inscriptions prochaines conférences</h2>
+<mat-card>
+    <mat-card-content>
+        <mat-chip-listbox>
+            <mat-chip-option *ngFor="let item of centres | async" (click)="selectCentre(item?.value)">
+                <ngx-skeleton-loader appearance="line" *ngIf="item.pending"
+                    [theme]="{height: '5px' ,width:'50px', 'vertical-align':'bottom' }"></ngx-skeleton-loader>
+                <span *ngIf="!item.pending">
+                    {{item.value?.nom}}
+                </span>
+            </mat-chip-option>
+        </mat-chip-listbox>
+
+        <mat-chip-listbox>
+            <mat-chip-option *ngFor="let item of types | async" (click)="selectType(item?.value)">
+                <ngx-skeleton-loader appearance="line" *ngIf="item.pending"
+                    [theme]="{height: '5px' ,width:'100px', 'vertical-align':'bottom' }"></ngx-skeleton-loader>
+                <span *ngIf="!item.pending">
+                    {{item.value?.nom}}
+                </span></mat-chip-option>
+        </mat-chip-listbox>
+    </mat-card-content>
+</mat-card>
+
 <mat-accordion>
-    <mat-expansion-panel *ngFor="let item of (conferences | async)" hideToggle>
+    <mat-expansion-panel *ngFor="let item of (filteredConferences | async)" hideToggle>
         <mat-expansion-panel-header *ngIf="item.pending">
             <mat-panel-title>
                 <div class="ngx-skeleton-loader-container">
@@ -22,10 +45,11 @@
 
         <mat-expansion-panel-header *ngIf="!item.pending">
             <mat-panel-title>
-                {{item.value!.titre}}
+                {{item.value!.type.nom}}
             </mat-panel-title>
             <mat-panel-description>
-                {{item.value!.date | date:'dd/MM/yyyy' }}
+                {{item.value!.datedebut | date:'dd' }}-{{item.value!.datefin | date:'dd MMMM' }}
+                {{item.value!.titre}}
             </mat-panel-description>
             <mat-panel-description>
                 {{item.value!.centre.nom}}

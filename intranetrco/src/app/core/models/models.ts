@@ -3,11 +3,18 @@ interface Centre {
     nom: string;
 }
 
+interface TypeConference {
+    id: number;
+    nom: string;
+}
+
 interface Conference {
     id: number;
     titre: string;
-    date: string;
+    datedebut: Date;
+    datefin: Date;
     centre: Centre;
+    type: TypeConference;
 }
 
 interface Inscription {
@@ -28,41 +35,74 @@ class DBMocked {
         },
         {
             "id": 3,
-            "nom": "Centre 3"
+            "nom": "Arc-Atlantique"
         }
     ];
-    static conferences: Conference[] = [{
-        "id": 100,
-        "titre": "Conference de renouvellement",
-        "date": "2024-01-01",
-        "centre": this.centres[0]
-    }, {
-        "id": 101,
-        "titre": "Convent Travailleurs",
-        "date": "2024-01-02",
-        "centre": this.centres[0]
-    }, {
-        "id": 103,
-        "titre": "Conference CTO",
-        "date": "2024-01-03",
-        "centre": this.centres[0]
-    }, {
-        "id": 100,
-        "titre": "Conference de renouvellement",
-        "date": "2024-02-01",
-        "centre": this.centres[1]
-    }, {
-        "id": 101,
-        "titre": "Convent Travailleurs",
-        "date": "2024-03-02",
-        "centre": this.centres[1]
-    }, {
-        "id": 103,
-        "titre": "Conference CTO",
-        "date": "2024-04-03",
-        "centre": this.centres[1]
-    }
+    static types: TypeConference[] = [
+        {
+            "id": 1,
+            "nom": "Conférences de renouvellement"
+        },
+        {
+            "id": 2,
+            "nom": "Conférences jeunesse"
+        },
+        {
+            "id": 3,
+            "nom": "Séminaires"
+        }
+        ,
+        {
+            "id": 4,
+            "nom": "Convent"
+        }
+        ,
+        {
+            "id": 5,
+            "nom": "Stage"
+        }
+        ,
+        {
+            "id": 5,
+            "nom": "Atelier"
+        }
     ];
+    static conferences: Conference[] = Array.from({ length: 5 }, (_, t) => {
+        return this.centres.flatMap(c => {
+            let k = t + 1;
+            return [{
+                "id": 100 + k * 10,
+                "titre": "CR " + k + " 2024",
+                "datedebut": new Date(2024, k, 1),
+                "datefin": new Date(2024, k, 2),
+                type: this.types[0],
+                "centre": c
+            }, {
+                "id": 101 + k * 10,
+                "titre": "Convent Travailleurs " + k,
+                "datedebut": new Date(2024, k, 10),
+                "datefin": new Date(2024, k, 11),
+                type: this.types[3],
+                "centre": c
+            }, {
+                "id": 103 + k * 10,
+                "titre": "CR jeunnesse " + k,
+                "datedebut": new Date(2024, k, 13),
+                "datefin": new Date(2024, k, 15),
+                type: this.types[1],
+                "centre": c
+            }, {
+                "id": 104 + k * 10,
+                "titre": "CR Gral CTO " + k,
+                "datedebut": new Date(2024, k, 13),
+                "datefin": new Date(2024, k, 15),
+                type: this.types[2],
+                "centre": c
+            }
+            ];
+        })
+    }).flat()
+
     static inscriptions: Inscription[] = [
         {
             "id": 1,
@@ -84,4 +124,5 @@ class DBMocked {
 
 
 
-export { Centre, Conference, Inscription, DBMocked };
+
+export { Centre, Conference, Inscription, DBMocked ,TypeConference};
