@@ -1,2 +1,16 @@
-<app-mes-inscriptions [Oinscriptions]="this.mesinscriptions"></app-mes-inscriptions>
-<app-inscriptions [Oconferences]="this.conferences" [Ocentres]="this.centres" [Otypes]="this.types"></app-inscriptions>
+<app-mes-inscriptions [Oinscriptions]="this.mesinscriptions"
+[Olits]="Olits"
+[OheuresArrivee]="OheuresArrivee"
+[OheuresDepart]="OheuresDepart"
+[OparticipationTaches]="OparticipationTaches">
+</app-mes-inscriptions>
+
+<app-inscriptions [Oconferences]="this.conferences" 
+[Ocentres]="this.centres" 
+[Otypes]="this.types"
+[Olits]="Olits"
+[OheuresArrivee]="OheuresArrivee"
+[OheuresDepart]="OheuresDepart"
+[OparticipationTaches]="OparticipationTaches"
+(setInscription)="setInscriptionEvent($event)"
+></app-inscriptions>

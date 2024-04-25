@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Inscription } from '../../core/models/models';
+import { HeureArrivee, HeureDepart, Inscription, Lit, ParticipationTache } from '../../core/models/models';
 import { NgFor, AsyncPipe, NgIf } from '@angular/common';
 import { MatAccordion } from '@angular/material/expansion';
 import { Observable } from 'rxjs';
@@ -15,6 +15,10 @@ import { ConferenceExpansionPanelComponent } from '../conference-expansion-panel
 })
 export class MesInscriptionsComponent implements OnInit {
   @Input() Oinscriptions!: Observable<Inscription[]>;
+  @Input() Olits!: Observable<Lit[]>;
+  @Input() OheuresArrivee!: Observable<HeureArrivee[]>;
+  @Input() OheuresDepart!: Observable<HeureDepart[]>;
+  @Input() OparticipationTaches!: Observable<ParticipationTache[]>;
   mesinscriptions!: Observable<SkeletonValue<Inscription>[]>;
 
   ngOnInit(): void {

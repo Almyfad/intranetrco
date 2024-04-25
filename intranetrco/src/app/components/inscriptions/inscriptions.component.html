@@ -25,6 +25,11 @@
 <mat-accordion>
     <conference-expansion-panel 
     *ngFor="let item of (filteredConferences | async)" 
-    [SklValue]="item" hideToggle>
+    [SklValue]="item" hideToggle
+    [Olits]="Olits"
+    [OheuresArrivee]="OheuresArrivee"
+    [OheuresDepart]="OheuresDepart"
+    [OparticipationTaches]="OparticipationTaches"
+    (setInscription)="setInscriptionEvent($event)">
     </conference-expansion-panel>
 </mat-accordion>

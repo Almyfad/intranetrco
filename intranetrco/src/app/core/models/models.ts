@@ -20,8 +20,30 @@ interface Conference {
 interface Inscription {
     id: number;
     conference: Conference;
+    lit: Lit;
+    heureArrivee: HeureArrivee;
+    heureDepart: HeureDepart;
+    participation: ParticipationTache;
+    description:string;
 }
 
+interface Lit {
+    id: number;
+    nom: string;
+}
+
+interface HeureArrivee {
+    id: number;
+    nom: string;
+}
+interface HeureDepart {
+    id: number;
+    nom: string;
+}
+interface ParticipationTache {
+    id: number;
+    nom: string;
+}
 
 class DBMocked {
     static centres: Centre[] = [
@@ -102,27 +124,61 @@ class DBMocked {
             ];
         })
     }).flat()
-
+    static lits: Lit[] = [
+        { "id": 1, "nom": "Indifférent" },
+        { "id": 2, "nom": "inférieur" },
+        { "id": 3, "nom": "supérieur" },
+        { "id": 4, "nom": "Pas de lit" }
+    ];
+    static heureArrivees: HeureArrivee[] = [
+        { "id": 1, "nom": "Vendredi soir (Repas + nuit)" },
+        { "id": 2, "nom": "Vendredi soir (Nuit)" },
+        { "id": 3, "nom": "Samedi matin" },
+        { "id": 4, "nom": "Samedi soir (Repas + nuit)" },
+        { "id": 5, "nom": "Samedi soir (Nuit)" },
+        { "id": 6, "nom": "Dimanche matin" },
+        { "id": 7, "nom": "Autre (préciser)" }
+    ];
+    static heureDeparts: HeureDepart[] = [
+        { "id": 1, "nom": "Samedi fin CR" },
+        { "id": 2, "nom": "Dimanche fin CR" },
+        { "id": 3, "nom": "Autre (préciser)" }
+    ];
+    static participationTaches: ParticipationTache[] = [
+        { "id": 1, "nom": "Si besoin" },
+        { "id": 2, "nom": "Oui" },
+        { "id": 3, "nom": "Non" }
+    ];
     static inscriptions: Inscription[] = [
         {
             "id": 1,
-            "conference": this.conferences[0]
+            "conference": this.conferences[0],
+            "lit": this.lits[0],
+            "heureArrivee": this.heureArrivees[3],
+            "heureDepart": this.heureDeparts[0],
+            "participation": this.participationTaches[0],
+            "description" : "Coucou"
         },
         {
             "id": 2,
-            "conference": this.conferences[1]
+            "conference": this.conferences[1],
+            "lit": this.lits[0],
+            "heureArrivee": this.heureArrivees[0],
+            "heureDepart": this.heureDeparts[0],
+            "participation": this.participationTaches[0],
+            "description" : "Coucou"
         },
         {
             "id": 3,
-            "conference": this.conferences[4]
-        }
+            "conference": this.conferences[4],
+            "lit": this.lits[0],
+            "heureArrivee": this.heureArrivees[0],
+            "heureDepart": this.heureDeparts[0],
+            "participation": this.participationTaches[0],
+            "description" : "Coucou"
+        }]
 
-    ];
 
 }
 
-
-
-
-
-export { Centre, Conference, Inscription, DBMocked ,TypeConference};
+export { Centre, Conference, Inscription, DBMocked, TypeConference, Lit, HeureArrivee, HeureDepart, ParticipationTache };
