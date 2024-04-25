@@ -1,16 +1,15 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { Inscription } from '../../core/models/models';
-import { NgFor, DatePipe, AsyncPipe, NgIf } from '@angular/common';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatIcon } from '@angular/material/icon';
+import { NgFor, AsyncPipe, NgIf } from '@angular/common';
+import { MatAccordion } from '@angular/material/expansion';
 import { Observable } from 'rxjs';
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { AsyncValue } from '../../core/class/asyncvalue';
+import { ConferenceExpansionPanelComponent } from '../conference-expansion-panel/conference-expansion-panel.component';
 
 @Component({
   selector: 'app-mes-inscriptions',
   standalone: true,
-  imports: [NgFor, DatePipe, MatExpansionModule, MatIcon, AsyncPipe, NgxSkeletonLoaderModule,NgIf],
+  imports: [NgFor, ConferenceExpansionPanelComponent, AsyncPipe,NgIf,MatAccordion],
   templateUrl: './mes-inscriptions.component.html',
   styleUrl: './mes-inscriptions.component.less'
 })

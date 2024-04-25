@@ -3,18 +3,17 @@ import { BehaviorSubject, Observable, Subject, lastValueFrom, map } from 'rxjs';
 import { Centre, Conference, TypeConference } from '../../core/models/models';
 import { AsyncValue } from '../../core/class/asyncvalue';
 import { AsyncPipe, DatePipe, NgFor, NgIf } from '@angular/common';
-import { MatIcon } from '@angular/material/icon';
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCard, MatCardContent } from '@angular/material/card';
+import { ConferenceExpansionPanelComponent } from '../conference-expansion-panel/conference-expansion-panel.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @Component({
   selector: 'app-inscriptions',
   standalone: true,
-  imports: [NgFor, NgIf, DatePipe,
-    MatIcon, MatCard, MatCardContent,
-    NgxSkeletonLoaderModule, AsyncPipe, MatExpansionModule, MatChipsModule],
+  imports: [NgFor, NgIf, MatCard, MatCardContent, NgxSkeletonLoaderModule
+    , AsyncPipe, MatAccordion, MatChipsModule, ConferenceExpansionPanelComponent],
   templateUrl: './inscriptions.component.html',
   styleUrl: './inscriptions.component.less'
 })

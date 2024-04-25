@@ -1,0 +1,43 @@
+<mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header *ngIf="SklValue.pending">
+        <mat-panel-title>
+            <div class="ngx-skeleton-loader-container">
+                <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+            </div>
+        </mat-panel-title>
+        <mat-panel-description>
+            <div class="ngx-skeleton-loader-container">
+                <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+            </div>
+        </mat-panel-description>
+        <mat-panel-description>
+            <div class="ngx-skeleton-loader-container">
+                <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+            </div>
+        </mat-panel-description>
+        <mat-icon>edit_calendar</mat-icon>
+    </mat-expansion-panel-header>
+    
+    <mat-expansion-panel-header *ngIf="!SklValue.pending">
+        <mat-panel-title>
+            {{conference.type.nom}}
+        </mat-panel-title>
+        <mat-panel-description>
+            {{conference.datedebut | date:'dd' }}-{{conference.datefin | date:'dd MMMM' }}
+            {{conference.titre}}
+        </mat-panel-description>
+        <mat-panel-description>
+            {{conference.centre.nom}}
+        </mat-panel-description>
+        <mat-icon>edit_calendar</mat-icon>
+    </mat-expansion-panel-header>
+    <ng-container *ngIf="!SklValue.pending">        
+        <p>Lit supérieur</p>
+        <p>Staff oui</p>
+        <p>Arrivée Vendredi</p>
+        <p>Départ Lundi</p>
+    </ng-container>
+    <div class="ngx-skeleton-loader-container-footer" *ngIf="SklValue.pending">
+        <ngx-skeleton-loader appearance="line" count="4"></ngx-skeleton-loader>
+    </div>
+</mat-expansion-panel>
