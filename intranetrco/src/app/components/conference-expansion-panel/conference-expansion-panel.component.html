@@ -17,7 +17,7 @@
         </mat-panel-description>
         <mat-icon>edit_calendar</mat-icon>
     </mat-expansion-panel-header>
-    
+
     <mat-expansion-panel-header *ngIf="!SklValue.pending">
         <mat-panel-title>
             {{conference.type.nom}}
@@ -31,11 +31,68 @@
         </mat-panel-description>
         <mat-icon>edit_calendar</mat-icon>
     </mat-expansion-panel-header>
-    <ng-container *ngIf="!SklValue.pending">        
-        <p>Lit supérieur</p>
-        <p>Staff oui</p>
-        <p>Arrivée Vendredi</p>
-        <p>Départ Lundi</p>
+    <ng-container *ngIf="!SklValue.pending">
+        <form [formGroup]="form" (ngSubmit)="subscribe()">
+            <span>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <input matInput placeholder="Placeholder" formControlName="description">
+                    <mat-icon matSuffix>note</mat-icon>
+                </mat-form-field>
+            </span>
+            <span>
+                <mat-form-field appearance="outline">
+                    <mat-label>Heure d'arrivée</mat-label>
+                    <mat-select [formControl]="heureArriverControl" required>
+                        @for (value of heuresArriver; track value) {
+                        <mat-option [value]="value">{{value}}</mat-option>
+                        }
+                    </mat-select>
+                    @if (heureArriverControl.hasError('required')) {
+                    <mat-error>Choisissez une heure d'arrivée</mat-error>
+                    }
+                </mat-form-field>
+            </span>
+            <span>
+                <mat-form-field appearance="outline">
+                    <mat-label>Heure départ</mat-label>
+                    <mat-select [formControl]="heureDepartControl" required>
+                        @for (value of heuresDepart; track value) {
+                        <mat-option [value]="value">{{value}}</mat-option>
+                        }
+                    </mat-select>
+                    @if (heureDepartControl.hasError('required')) {
+                    <mat-error>Choisissez une heure départ</mat-error>
+                    }
+                </mat-form-field>
+            </span>
+            <span>
+                <mat-form-field appearance="outline">
+                    <mat-label>Participation aux tâches</mat-label>
+                    <mat-select [formControl]="participationControl">
+                        @for (value of participation; track value) {
+                        <mat-option [value]="value">{{value}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </span>
+            <span>
+                <mat-form-field appearance="outline">
+                    <mat-label>Préference pour le lit</mat-label>
+                    <mat-select [formControl]="litControl">
+                        @for (value of lit; track value) {
+                        <mat-option [value]="value">{{value}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </span>
+            <p>Personne(s) à inscrire</p>
+            <button mat-raised-button color="primary">
+                S'inscrire
+            </button>
+        </form>
+
     </ng-container>
     <div class="ngx-skeleton-loader-container-footer" *ngIf="SklValue.pending">
         <ngx-skeleton-loader appearance="line" count="4"></ngx-skeleton-loader>
