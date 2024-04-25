@@ -3,8 +3,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIcon } from '@angular/material/icon';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { Centre, Conference, Inscription } from '../../core/models/models';
-import { AsyncValue } from '../../core/class/asyncvalue';
 import { DatePipe, NgIf } from '@angular/common';
+import { SkeletonValue } from '../../core/class/skeletonvalue';
 
 @Component({
   selector: 'conference-expansion-panel',
@@ -14,7 +14,7 @@ import { DatePipe, NgIf } from '@angular/common';
   styleUrl: './conference-expansion-panel.component.less'
 })
 export class ConferenceExpansionPanelComponent {
-  @Input() SklValue!: AsyncValue<Conference | Inscription>;
+  @Input() SklValue!: SkeletonValue<Conference | Inscription>;
 
   get isInscription(): boolean {
     let obj = this.SklValue.value;

@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, lastValueFrom, map } from 'rxjs';
 import { Centre, Conference, TypeConference } from '../../core/models/models';
-import { AsyncValue } from '../../core/class/asyncvalue';
-import { AsyncPipe, DatePipe, NgFor, NgIf } from '@angular/common';
-import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
+import { SkeletonValue } from '../../core/class/skeletonvalue';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { MatAccordion, } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { ConferenceExpansionPanelComponent } from '../conference-expansion-panel/conference-expansion-panel.component';
@@ -25,9 +25,9 @@ export class InscriptionsComponent implements OnInit {
   conferences!: Observable<Conference[]>;
 
   Sconferences: Subject<Conference[]> = new BehaviorSubject<Conference[]>([]);
-  filteredConferences!: Observable<AsyncValue<Conference>[]>;
-  types!: Observable<AsyncValue<TypeConference>[]>;
-  centres!: Observable<AsyncValue<Centre>[]>;
+  filteredConferences!: Observable<SkeletonValue<Conference>[]>;
+  types!: Observable<SkeletonValue<TypeConference>[]>;
+  centres!: Observable<SkeletonValue<Centre>[]>;
 
   ngOnInit(): void {
     this.Oconferences.subscribe({
@@ -35,10 +35,10 @@ export class InscriptionsComponent implements OnInit {
     });
     this.conferences = this.Sconferences.asObservable()
 
-    this.filteredConferences = AsyncValue.of<Conference>(this.conferences, 10)
+    this.filteredConferences = SkeletonValue.of<Conference>(this.conferences, 10)
 
-    this.types = AsyncValue.of<TypeConference>(this.Otypes.pipe(map(x => [{ id: 0, nom: "Tous" }, ...x])), 5)
-    this.centres = AsyncValue.of<Centre>(this.Ocentres.pipe(map(x => [{ id: 0, nom: "Tous" }, ...x])), 3)
+    this.types = SkeletonValue.of<TypeConference>(this.Otypes.pipe(map(x => [{ id: 0, nom: "Tous" }, ...x])), 5)
+    this.centres = SkeletonValue.of<Centre>(this.Ocentres.pipe(map(x => [{ id: 0, nom: "Tous" }, ...x])), 3)
 
   }
 

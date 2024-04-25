@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Inscription } from '../../core/models/models';
 import { NgFor, AsyncPipe, NgIf } from '@angular/common';
 import { MatAccordion } from '@angular/material/expansion';
 import { Observable } from 'rxjs';
-import { AsyncValue } from '../../core/class/asyncvalue';
+import { SkeletonValue } from '../../core/class/skeletonvalue';
 import { ConferenceExpansionPanelComponent } from '../conference-expansion-panel/conference-expansion-panel.component';
 
 @Component({
@@ -15,10 +15,10 @@ import { ConferenceExpansionPanelComponent } from '../conference-expansion-panel
 })
 export class MesInscriptionsComponent implements OnInit {
   @Input() Oinscriptions!: Observable<Inscription[]>;
-  mesinscriptions!: Observable<AsyncValue<Inscription>[]>;
+  mesinscriptions!: Observable<SkeletonValue<Inscription>[]>;
 
   ngOnInit(): void {
-    this.mesinscriptions = AsyncValue.of<Inscription>(this.Oinscriptions, 3)
+    this.mesinscriptions = SkeletonValue.of<Inscription>(this.Oinscriptions, 3)
   }
 
 }
