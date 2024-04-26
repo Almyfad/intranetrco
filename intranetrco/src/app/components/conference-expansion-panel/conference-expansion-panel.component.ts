@@ -97,9 +97,11 @@ export class ConferenceExpansionPanelComponent implements OnInit {
 
   subscribe() {
     if (this.form.invalid) return
+    console.log("form", this.form.value)
     this.setInscription.emit({
-      "id": 1,
-      "conference": this.conference,
+      isnew: this.isNew,
+      id: this.inscription?.id,
+      conference: this.conference,
       ...this.form.value,
     })
   }

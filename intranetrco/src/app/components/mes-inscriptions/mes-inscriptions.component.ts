@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HeureArrivee, HeureDepart, Inscription, Lit, ParticipationTache } from '../../core/models/models';
 import { NgFor, AsyncPipe, NgIf } from '@angular/common';
 import { MatAccordion } from '@angular/material/expansion';
@@ -19,10 +19,16 @@ export class MesInscriptionsComponent implements OnInit {
   @Input() OheuresArrivee!: Observable<HeureArrivee[]>;
   @Input() OheuresDepart!: Observable<HeureDepart[]>;
   @Input() OparticipationTaches!: Observable<ParticipationTache[]>;
+  @Output() setInscription = new EventEmitter<Inscription>();
+
   mesinscriptions!: Observable<SkeletonValue<Inscription>[]>;
 
   ngOnInit(): void {
     this.mesinscriptions = SkeletonValue.of<Inscription>(this.Oinscriptions, 3)
+  }
+
+  setInscriptionEvent(inscription: Inscription) {
+    this.setInscription.emit(inscription)
   }
 
 }

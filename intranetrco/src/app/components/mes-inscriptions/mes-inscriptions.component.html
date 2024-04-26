@@ -6,6 +6,7 @@
         [OheuresDepart]="OheuresDepart"
         [OparticipationTaches]="OparticipationTaches"
         *ngFor="let item of (mesinscriptions | async)" 
+        (setInscription)="setInscriptionEvent($event)"
         [SklValue]="item" hideToggle>
         </conference-expansion-panel>
 </mat-accordion>

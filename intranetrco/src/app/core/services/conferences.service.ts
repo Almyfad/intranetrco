@@ -39,7 +39,6 @@ export class ConferencesService {
   }
 
   setInscription(inscription: Inscription): Observable<Inscription> {
-    console.log(inscription);
     return this.InscriptionExist(inscription)
       .pipe(
         mergeMap(exist => {
@@ -65,6 +64,35 @@ export class ConferencesService {
           return of(inscription).pipe(delay(100));
         })
       );
+  }
+
+  updateInscription(inscription: Inscription): Observable<Inscription> {
+    return this.InscriptionExist(inscription).pipe(
+      mergeMap(exist => {
+        if (!exist) return throwError(() => new Error('Inscription does not exist'));
+
+        let lit = DBMocked.lits.find(x => x.id === inscription.lit.id);
+        let heureDepart = DBMocked.heureDeparts.find(x => x.id === inscription.heureDepart.id);
+        let participation = DBMocked.participationTaches.find(x => x.id === inscription.participation.id);
+        let heureArrivee = DBMocked.heureArrivees.find(x => x.id === inscription.heureArrivee.id);
+
+        if (!lit || !heureArrivee || !heureDepart || !participation) {
+          return throwError(() => new Error('Invalid data'));
+        }
+
+        let index = DBMocked.inscriptions.findIndex(x => x.id === inscription.id);
+        console.log(index,DBMocked.inscriptions.map(x => x.id),inscription.id);
+        if (index === -1) return throwError(() => new Error('Inscription does not exist'));
+        DBMocked.inscriptions[index] = {
+          ...inscription,
+          lit: lit,
+          heureArrivee: heureArrivee,
+          heureDepart: heureDepart,
+          participation: participation
+        };
+        return of(inscription).pipe(delay(100));
+      })
+    )
   }
 
   InscriptionExist(inscription: Inscription): Observable<boolean> {

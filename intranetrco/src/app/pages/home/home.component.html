@@ -1,8 +1,10 @@
+
 <app-mes-inscriptions [Oinscriptions]="this.mesinscriptions"
 [Olits]="Olits"
 [OheuresArrivee]="OheuresArrivee"
 [OheuresDepart]="OheuresDepart"
-[OparticipationTaches]="OparticipationTaches">
+[OparticipationTaches]="OparticipationTaches"
+(setInscription)="updateInscriptionEvent($event)">
 </app-mes-inscriptions>
 
 <app-inscriptions [Oconferences]="this.conferences" 
