@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, lastValueFrom, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, lastValueFrom, map, switchMap } from 'rxjs';
 import { Centre, Conference, HeureArrivee, HeureDepart, Inscription, Lit, ParticipationTache, TypeConference } from '../../core/models/models';
 import { SkeletonValue } from '../../core/class/skeletonvalue';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
@@ -8,6 +8,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { ConferenceExpansionPanelComponent } from '../conference-expansion-panel/conference-expansion-panel.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+
+enum FilterType { Centre, TypeConference, None }
 
 @Component({
   selector: 'app-inscriptions',
@@ -25,25 +27,31 @@ export class InscriptionsComponent implements OnInit {
   @Input() OheuresArrivee!: Observable<HeureArrivee[]>;
   @Input() OheuresDepart!: Observable<HeureDepart[]>;
   @Input() OparticipationTaches!: Observable<ParticipationTache[]>;
- 
-  
+
+
   @Output() setInscription = new EventEmitter<Inscription>();
 
 
-  conferences!: Observable<Conference[]>;
 
-  Sconferences: Subject<Conference[]> = new BehaviorSubject<Conference[]>([]);
+  SubjectPattern = new BehaviorSubject<[FilterType, Centre | TypeConference] | undefined>(undefined);
   filteredConferences!: Observable<SkeletonValue<Conference>[]>;
   types!: Observable<SkeletonValue<TypeConference>[]>;
   centres!: Observable<SkeletonValue<Centre>[]>;
 
   ngOnInit(): void {
-    this.Oconferences.subscribe({
-      next: value => this.Sconferences.next(value),
-    });
-    this.conferences = this.Sconferences.asObservable()
-
-    this.filteredConferences = SkeletonValue.of<Conference>(this.conferences, 10)
+    this.filteredConferences = SkeletonValue.of<Conference>(this.SubjectPattern
+      .pipe(switchMap((params: [FilterType, TypeConference | Centre] | undefined) => {
+        const [type, filter] = params || [];
+        return this.Oconferences.pipe(map(x => {
+          if (type === FilterType.Centre) {
+            return x.filter(x => filter === undefined || filter.id == 0 || x.centre.id === filter.id)
+          }
+          if (type === FilterType.TypeConference) {
+            return x.filter(x => filter === undefined || filter.id == 0 || x.type.id === filter.id)
+          }
+          return x;
+        }));
+      })), 10)
 
     this.types = SkeletonValue.of<TypeConference>(this.Otypes.pipe(map(x => [{ id: 0, nom: "Tous" }, ...x])), 5)
     this.centres = SkeletonValue.of<Centre>(this.Ocentres.pipe(map(x => [{ id: 0, nom: "Tous" }, ...x])), 3)
@@ -51,15 +59,13 @@ export class InscriptionsComponent implements OnInit {
   }
 
   selectCentre(centre: Centre | undefined) {
-    lastValueFrom(this.Oconferences)
-      .then(x => this.Sconferences.next(x.filter(x => centre === undefined || centre.id == 0 || x.centre.id === centre.id)))
-
+    if(centre === undefined) return;
+    this.SubjectPattern.next([FilterType.Centre, centre])
   }
 
   selectType(type: TypeConference | undefined) {
-    lastValueFrom(this.Oconferences)
-      .then(x => this.Sconferences.next(x.filter(x => type === undefined || type.id == 0 || x.type.id === type.id)))
-
+    if(type === undefined) return;
+    this.SubjectPattern.next([FilterType.TypeConference, type])
   }
 
   setInscriptionEvent(inscription: Inscription) {
