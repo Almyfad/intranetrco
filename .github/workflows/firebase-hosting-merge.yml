@@ -17,3 +17,5 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_INTRANET_RCO }}
           channelId: live
           projectId: intranet-rco
+    env:
+      FIREBASE_CLI_EXPERIMENTS: webframeworks
