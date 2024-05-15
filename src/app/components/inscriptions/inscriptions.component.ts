@@ -8,6 +8,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { ConferenceExpansionPanelComponent } from '../conference-expansion-panel/conference-expansion-panel.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 enum FilterType { Centre, TypeConference, None }
 
@@ -15,7 +16,7 @@ enum FilterType { Centre, TypeConference, None }
   selector: 'app-inscriptions',
   standalone: true,
   imports: [NgFor, NgIf, MatCard, MatCardContent, NgxSkeletonLoaderModule
-    , AsyncPipe, MatAccordion, MatChipsModule, ConferenceExpansionPanelComponent],
+    , AsyncPipe, MatAccordion, MatChipsModule, ConferenceExpansionPanelComponent,ScrollingModule],
   templateUrl: './inscriptions.component.html',
   styleUrl: './inscriptions.component.less'
 })
@@ -27,8 +28,6 @@ export class InscriptionsComponent implements OnInit {
   @Input() OheuresArrivee!: Observable<HeureArrivee[]>;
   @Input() OheuresDepart!: Observable<HeureDepart[]>;
   @Input() OparticipationTaches!: Observable<ParticipationTache[]>;
-
-
   @Output() setInscription = new EventEmitter<Inscription>();
 
 

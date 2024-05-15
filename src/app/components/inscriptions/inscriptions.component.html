@@ -21,15 +21,12 @@
         </mat-chip-listbox>
     </mat-card-content>
 </mat-card>
-
 <mat-accordion>
-    <conference-expansion-panel 
-    *ngFor="let item of (filteredConferences | async)" 
-    [SklValue]="item" hideToggle
-    [Olits]="Olits"
-    [OheuresArrivee]="OheuresArrivee"
-    [OheuresDepart]="OheuresDepart"
-    [OparticipationTaches]="OparticipationTaches"
-    (setInscription)="setInscriptionEvent($event)">
-    </conference-expansion-panel>
+    <cdk-virtual-scroll-viewport itemSize="50" class="listallconf">
+        <conference-expansion-panel class="listallconf-expansion-panel"
+            *ngFor="let item of (filteredConferences | async)" [SklValue]="item" hideToggle [Olits]="Olits"
+            [OheuresArrivee]="OheuresArrivee" [OheuresDepart]="OheuresDepart"
+            [OparticipationTaches]="OparticipationTaches" (setInscription)="setInscriptionEvent($event)">
+        </conference-expansion-panel>
+    </cdk-virtual-scroll-viewport>
 </mat-accordion>

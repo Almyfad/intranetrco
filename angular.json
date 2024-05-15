@@ -30,7 +30,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/theme.scss",
+              "src/custom-theme.scss",
               "src/styles.less"
             ],
             "scripts": []
@@ -91,7 +91,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/theme.scss",
+              "src/custom-theme.scss",
               "src/styles.less"
             ],
             "scripts": []

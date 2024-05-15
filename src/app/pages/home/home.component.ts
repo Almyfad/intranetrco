@@ -1,60 +1,44 @@
-import { Component, inject } from '@angular/core';
-import { MesInscriptionsComponent } from '../../components/mes-inscriptions/mes-inscriptions.component';
-import { InscriptionsComponent } from '../../components/inscriptions/inscriptions.component';
-import { ConferencesService } from '../../core/services/conferences.service';
-import { Inscription } from '../../core/models/models';
-import { BehaviorSubject, map, switchMap } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, OnDestroy, inject } from '@angular/core';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIcon } from '@angular/material/icon';
+import { AuthService } from '../../core/services/auth.service';
+import { MatIconButton } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListItem, MatNavList } from '@angular/material/list';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Subject, map, takeUntil, tap } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MesInscriptionsComponent, InscriptionsComponent],
+  imports: [RouterOutlet, MatToolbar, MatIcon, MatIconButton, MatSidenavModule, MatNavList, MatListItem, RouterModule, AsyncPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.less'
 })
-export class HomeComponent {
-  behaviourSubject = new BehaviorSubject<boolean>(true);
-  private readonly confAPI = inject(ConferencesService);
-  mesinscriptions = this.behaviourSubject.pipe(switchMap(_ => this.confAPI.getMesInscriptions()));
-  conferences = this.behaviourSubject
-    .pipe(
-      switchMap(_ => this.mesinscriptions),
-      switchMap(inscriptions => this.confAPI.getConferences()
-        .pipe(map(conferences => conferences.filter(c => !inscriptions.some(i => i.conference.id === c.id))),
-        )));
-  types = this.confAPI.getTypes();
-  centres = this.confAPI.getCentres();
-  Olits = this.confAPI.lit;
-  OheuresArrivee = this.confAPI.heuresArrivee;
-  OheuresDepart = this.confAPI.HeuresDepart;
-  OparticipationTaches = this.confAPI.ParticipationTaches;
+export class HomeComponent implements OnDestroy {
+  private readonly auth = inject(AuthService);
+  private readonly breakpointObserver = inject(BreakpointObserver);
+  destroyed = new Subject<void>();
+  isXSmallScreen = this.breakpointObserver.observe([
+    Breakpoints.XSmall,
+  ]).pipe(takeUntil(this.destroyed),
+    map(result => result.matches));
 
 
 
-  constructor(private _snackBar: MatSnackBar) { }
-  setInscriptionEvent(inscription: Inscription) {
-    this.confAPI.setInscription(inscription)
-      .subscribe({
-        next: _ => {
-          this.behaviourSubject.next(true)
-          this._snackBar.open(`Vous êtes inscrit à ${inscription.conference.titre}`, "Fermer", { duration: 2000 });
-        }, error: err => {
-          this._snackBar.open(err.message, "Fermer", { duration: 2000 });
-        }
-      });
+  logout() {
+    console.log("logout")
+    localStorage.removeItem('angular');
+    window.location.href = '/login';
+  }
+  get islogged() {
+    return this.auth.isLogged;
   }
 
-  updateInscriptionEvent(inscription: Inscription) {
-    this.confAPI.updateInscription(inscription)
-      .subscribe({
-        next: _ => {
-          this.behaviourSubject.next(true)
-          this._snackBar.open(`Votre inscrption à ${inscription.conference.titre} a été modifier`, "Fermer", { duration: 2000 });
-        },
-        error: err => {
-          this._snackBar.open(err.message, "Fermer", { duration: 2000 });
-        }
-      });
-
+  ngOnDestroy() {
+    this.destroyed.next();
+    this.destroyed.complete();
   }
 }
