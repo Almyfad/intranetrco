@@ -1,0 +1,30 @@
+@if(this.conference.pending) {
+<mat-card>
+    <div style="background-color: #eae4e4ca;">
+        <div class="header">
+            <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+        </div>
+        <div class="matcontent">
+            <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+            <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+            <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+        </div>
+    </div>
+</mat-card>
+
+}@else {
+<mat-card (click)="this.editoradd()">
+    <div [style.backgroundColor]="conference.value?.type?.color">
+        <div class="header">
+            <mat-icon>{{conference.value?.type?.icon}}</mat-icon>
+            <span>{{conference.value?.type?.nom}}</span>
+        </div>
+        <div class="matcontent">
+            <div>{{conference.value?.centre?.nom}}</div>
+            <div>{{conference.value?.titre}}</div>
+            <div>{{conference.value?.datedebut | date:'dd' }}-{{conference.value?.datefin | date:'dd MMMM' }}</div>
+        </div>
+    </div>
+</mat-card>
+
+}

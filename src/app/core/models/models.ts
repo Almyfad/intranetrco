@@ -6,6 +6,8 @@ interface Centre {
 interface TypeConference {
     id: number;
     nom: string;
+    icon : string | undefined;
+    color : string | undefined;
 }
 
 interface Conference {
@@ -63,30 +65,42 @@ class DBMocked {
     static types: TypeConference[] = [
         {
             "id": 1,
+            "icon": "event",
+            "color": "#caa55c",
             "nom": "Conférences de renouvellement"
         },
         {
             "id": 2,
-            "nom": "Conférences jeunesse"
+            "nom": "Conférences jeunesse",
+            "icon": "event",
+            "color": "#058f93",
         },
         {
             "id": 3,
-            "nom": "Séminaires"
+            "nom": "Séminaires",
+            "icon": "event",
+            "color": "#295e08",
         }
         ,
         {
             "id": 4,
-            "nom": "Convent"
+            "nom": "Convent",
+            "icon": "event",
+            "color": "#581676",
         }
         ,
         {
             "id": 5,
-            "nom": "Stage"
+            "nom": "Stage",
+            "icon": "event",
+            "color": "#991212",
         }
         ,
         {
             "id": 5,
-            "nom": "Atelier"
+            "nom": "Atelier",
+            "icon": "event",
+            "color": "#999312",
         }
     ];
     static conferences: Conference[] = Array.from({ length: 5 }, (_, t) => {

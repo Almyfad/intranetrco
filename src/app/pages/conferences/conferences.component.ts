@@ -1,61 +1,42 @@
 import { Component, inject } from '@angular/core';
-import { MesInscriptionsComponent } from '../../components/mes-inscriptions/mes-inscriptions.component';
-import { InscriptionsComponent } from '../../components/inscriptions/inscriptions.component';
-import { BehaviorSubject, map, switchMap } from 'rxjs';
 import { ConferencesService } from '../../core/services/conferences.service';
-import { Inscription } from '../../core/models/models';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConferencesListComponent } from '../../components/conferences-list/conferences-list.component';
+import { CurrentMode, InscriptionConferenceService } from '../../core/services/inscription-conference.service';
+import { combineLatest, map, mergeMap, switchMap, tap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
   selector: 'app-conferences',
   standalone: true,
-  imports: [MesInscriptionsComponent,InscriptionsComponent],
+  imports: [ConferencesListComponent],
   templateUrl: './conferences.component.html',
   styleUrl: './conferences.component.less'
 })
 export class ConferencesComponent {
-
-  behaviourSubject = new BehaviorSubject<boolean>(true);
   private readonly confAPI = inject(ConferencesService);
-  private readonly _snackBar = inject(MatSnackBar);
-  mesinscriptions = this.behaviourSubject.pipe(switchMap(_ => this.confAPI.getMesInscriptions()));
-  conferences = this.behaviourSubject
+  private readonly insService = inject(InscriptionConferenceService);
+
+  Omesinscriptions = this.confAPI.mesInscriptions
     .pipe(
-      switchMap(_ => this.mesinscriptions),
-      switchMap(inscriptions => this.confAPI.getConferences()
-        .pipe(map(conferences => conferences.filter(c => !inscriptions.some(i => i.conference.id === c.id))),
-        )));
-  types = this.confAPI.getTypes();
-  centres = this.confAPI.getCentres();
-  Olits = this.confAPI.lit;
-  OheuresArrivee = this.confAPI.heuresArrivee;
-  OheuresDepart = this.confAPI.HeuresDepart;
-  OparticipationTaches = this.confAPI.ParticipationTaches;
+      tap(ins => { this.insService.mesinscriptions = ins }),
+      map(ins => ins.map(i => i.conference)))
 
-  setInscriptionEvent(inscription: Inscription) {
-    this.confAPI.setInscription(inscription)
-      .subscribe({
-        next: _ => {
-          this.behaviourSubject.next(true)
-          this._snackBar.open(`Vous êtes inscrit à ${inscription.conference.titre}`, "Fermer", { duration: 2000 });
-        }, error: err => {
-          this._snackBar.open(err.message, "Fermer", { duration: 2000 });
-        }
-      });
-  }
+  Oconferences = combineLatest([this.confAPI.conferences, this.confAPI.mesInscriptions]).pipe(
+    tap(_ => { this.insService.mesinscriptions = undefined }),
+    map(([conf, ins]) => conf.filter(c => !ins.some(i => i.conference.id === c.id))));
 
-  updateInscriptionEvent(inscription: Inscription) {
-    this.confAPI.updateInscription(inscription)
-      .subscribe({
-        next: _ => {
-          this.behaviourSubject.next(true)
-          this._snackBar.open(`Votre inscrption à ${inscription.conference.titre} a été modifier`, "Fermer", { duration: 2000 });
-        },
-        error: err => {
-          this._snackBar.open(err.message, "Fermer", { duration: 2000 });
-        }
-      });
+
+  private readonly activatedRoute = inject(ActivatedRoute);
+
+  get items() {
+    if (this.activatedRoute.snapshot.data['mode'] === CurrentMode.ajoutInscription) {
+      this.insService.mode = CurrentMode.ajoutInscription;
+    }
+    if (this.activatedRoute.snapshot.data['mode'] === CurrentMode.editInscription) {
+      this.insService.mode = CurrentMode.editInscription;
+    }
+    return this.insService.mode === CurrentMode.editInscription ? this.Omesinscriptions : this.Oconferences;
 
   }
 }

@@ -1,0 +1,91 @@
+<h2 *ngIf="isEditable">Modifier mon inscription </h2>
+<h2 *ngIf="isInscription">Inscription</h2>
+
+
+
+<mat-card>
+    @if(this.formIsLoading |async) {
+    <ng-container>
+        <ngx-skeleton-loader count="4" appearance="circle" [theme]="{
+                width: '212px',
+                height: '56px',
+                'border-radius': '10px'
+            }" />
+        <div>
+            <ngx-skeleton-loader count="1" appearance="circle" [theme]="{
+                width: '284px',
+                height: '80px',
+                'border-radius': '10px'
+            }" />
+        </div>
+    </ng-container>
+    }
+    @else {
+
+
+    <form [formGroup]="form" (ngSubmit)="subscribe()">
+        <p>Personne(s) à inscrire</p>
+        <span>
+            <mat-form-field appearance="outline">
+                <mat-label>Heure d'arrivée</mat-label>
+                <mat-select [formControl]="heureArriveeControl" required>
+                    <mat-option [value]="item" *ngFor="let item of OheuresArrivee | async;">
+                        {{item.nom}}
+                    </mat-option>
+                </mat-select>
+                @if (heureArriveeControl.hasError('required')) {
+                <mat-error>Choisissez une heure d'arrivée</mat-error>
+                }
+            </mat-form-field>
+        </span>
+        <span>
+            <mat-form-field appearance="outline">
+                <mat-label>Heure départ</mat-label>
+                <mat-select [formControl]="heureDepartControl" required>
+                    <mat-option [value]="item" *ngFor="let item of OheuresDepart | async">
+                        {{item.nom}}
+                    </mat-option>
+                </mat-select>
+                @if (heureDepartControl.hasError('required')) {
+                <mat-error>Choisissez une heure départ</mat-error>
+                }
+            </mat-form-field>
+        </span>
+        <span>
+            <mat-form-field appearance="outline">
+                <mat-label>Participation aux tâches</mat-label>
+                <mat-select [formControl]="participationControl">
+                    <mat-option [value]="item" *ngFor="let item of OparticipationTaches | async">
+                        {{item.nom}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </span>
+        <span>
+            <mat-form-field appearance="outline">
+                <mat-label>Préference pour le lit</mat-label>
+                <mat-select [formControl]="litControl">
+                    <mat-option [value]="item" *ngFor="let item of Olits | async">
+                        {{item.nom}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </span>
+        <div>
+
+            <mat-form-field appearance="outline" style="width:300px">
+                <mat-label>Description</mat-label>
+                <textarea matInput placeholder="Placeholder" formControlName="description"></textarea>
+                <mat-icon matSuffix>note</mat-icon>
+            </mat-form-field>
+        </div>
+
+        <button mat-raised-button color="primary" *ngIf="isEditable">
+            Modifier
+        </button>
+        <button mat-raised-button color="primary" *ngIf="isInscription">
+            S'inscrire
+        </button>
+    </form>
+    }
+</mat-card>

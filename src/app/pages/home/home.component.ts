@@ -29,7 +29,6 @@ export class HomeComponent implements OnDestroy {
 
 
   logout() {
-    console.log("logout")
     localStorage.removeItem('angular');
     window.location.href = '/login';
   }

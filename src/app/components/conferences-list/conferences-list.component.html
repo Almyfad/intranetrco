@@ -1,0 +1,11 @@
+<h2>Les prochaines Conférences</h2>
+<div class="content">
+    @if(this.SklConferences | async; as conferences) {
+    @for (conf of conferences; track conf) {
+    <app-conferences-card [conference]="conf">
+    </app-conferences-card>
+    } @empty {
+    Aucune Conférences
+    }
+    }
+</div>
