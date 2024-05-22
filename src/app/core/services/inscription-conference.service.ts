@@ -11,6 +11,10 @@ export class InscriptionConferenceService {
   mesinscriptions: Inscription[] | undefined = undefined;
   conference: Conference | undefined = undefined;
 
+  get isEditable(): boolean { return this.mode === CurrentMode.editInscription }
+  get isInscription(): boolean { return this.mode === CurrentMode.ajoutInscription }
+
+
   constructor() { }
 
   reset() {

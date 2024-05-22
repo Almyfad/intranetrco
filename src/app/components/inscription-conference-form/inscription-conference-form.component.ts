@@ -3,23 +3,23 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 import { MatButton } from '@angular/material/button';
 import { MatInputModule, MatLabel } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { HeureArrivee, HeureDepart, ParticipationTache, Lit, Inscription } from '../../core/models/models';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { HeureArrivee, HeureDepart, ParticipationTache, Lit, Inscription, Conference } from '../../core/models/models';
+import { AsyncPipe, DatePipe, NgFor, NgIf } from '@angular/common';
 import { ConferencesService } from '../../core/services/conferences.service';
 import { MatIcon } from '@angular/material/icon';
-import { MatCard } from '@angular/material/card';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CurrentMode, InscriptionConferenceService } from '../../core/services/inscription-conference.service';
 import { Router } from '@angular/router';
 import { Observable, concat, map, mergeMap, of, tap } from 'rxjs';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-
+import { SkeletonValue } from '../../core/class/skeletonvalue';
+import { MatCard, MatCardContent } from '@angular/material/card';
 
 @Component({
   selector: 'app-inscription-conference-form',
   standalone: true,
-  imports: [ReactiveFormsModule, MatButton, MatInputModule, MatIcon, MatCard,
-    MatLabel, MatSelectModule, AsyncPipe, NgFor, NgIf,NgxSkeletonLoaderModule],
+  imports: [ReactiveFormsModule, MatButton, MatInputModule, MatIcon, MatCard, MatCardContent,DatePipe,
+    MatLabel, MatSelectModule, AsyncPipe, NgFor, NgIf, NgxSkeletonLoaderModule],
   templateUrl: './inscription-conference-form.component.html',
   styleUrl: './inscription-conference-form.component.less'
 })
@@ -28,8 +28,9 @@ export class InscriptionConferenceFormComponent implements OnInit {
   private readonly _snackBar = inject(MatSnackBar);
   private readonly router = inject(Router)
 
-  get isEditable(): boolean { return this.insService.mode === CurrentMode.editInscription }
-  get isInscription(): boolean { return this.insService.mode === CurrentMode.ajoutInscription }
+  get isEditable(): boolean { return this.insService.isEditable }
+  get isInscription(): boolean { return this.insService.isInscription }
+  get conference(): Conference | undefined { return this.insService.conference }
 
 
   private builder: FormBuilder = inject(FormBuilder)
@@ -50,14 +51,15 @@ export class InscriptionConferenceFormComponent implements OnInit {
   })
   private readonly confAPI = inject(ConferencesService);
 
-  types = this.confAPI.types;
-  centres = this.confAPI.centres;
+  Otypes = this.confAPI.types;
+  Ocentres = this.confAPI.centres;
   Olits = this.confAPI.lit;
   OheuresArrivee = this.confAPI.heuresArrivee;
   OheuresDepart = this.confAPI.HeuresDepart;
   OparticipationTaches = this.confAPI.ParticipationTaches;
 
-
+  centres = SkeletonValue.of(this.Ocentres, 3);
+  types = SkeletonValue.of(this.Otypes, 3);
   ngOnInit(): void {
     this.formIsLoading = concat(of(true), this.OheuresArrivee.pipe(
       mergeMap(_ => this.OheuresDepart),
@@ -122,4 +124,6 @@ export class InscriptionConferenceFormComponent implements OnInit {
       });
 
   }
+
+
 }

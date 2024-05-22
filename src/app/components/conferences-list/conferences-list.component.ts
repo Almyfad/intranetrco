@@ -5,11 +5,12 @@ import { Observable } from 'rxjs';
 import { SkeletonValue } from '../../core/class/skeletonvalue';
 import { AsyncPipe } from '@angular/common';
 import { CurrentMode, InscriptionConferenceService } from '../../core/services/inscription-conference.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-conferences-list',
   standalone: true,
-  imports: [AsyncPipe, ConferencesCardComponent],
+  imports: [AsyncPipe, ConferencesCardComponent,MatIcon],
   templateUrl: './conferences-list.component.html',
   styleUrl: './conferences-list.component.less'
 })
