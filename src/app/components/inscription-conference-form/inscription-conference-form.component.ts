@@ -7,13 +7,13 @@ import { HeureArrivee, HeureDepart, ParticipationTache, Lit, Inscription, Confer
 import { AsyncPipe, DatePipe, NgFor, NgIf } from '@angular/common';
 import { ConferencesService } from '../../core/services/conferences.service';
 import { MatIcon } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { CurrentMode, InscriptionConferenceService } from '../../core/services/inscription-conference.service';
+import { InscriptionConferenceService } from '../../core/services/inscription-conference.service';
 import { Router } from '@angular/router';
 import { Observable, concat, map, mergeMap, of, tap } from 'rxjs';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { SkeletonValue } from '../../core/class/skeletonvalue';
 import { MatCard, MatCardContent } from '@angular/material/card';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-inscription-conference-form',
@@ -25,7 +25,7 @@ import { MatCard, MatCardContent } from '@angular/material/card';
 })
 export class InscriptionConferenceFormComponent implements OnInit {
   private insService = inject(InscriptionConferenceService)
-  private readonly _snackBar = inject(MatSnackBar);
+  private readonly _snackBar = inject(SnackbarService);
   private readonly router = inject(Router)
 
   get isEditable(): boolean { return this.insService.isEditable }
@@ -103,10 +103,10 @@ export class InscriptionConferenceFormComponent implements OnInit {
     this.confAPI.setInscription(inscription)
       .subscribe({
         next: _ => {
-          this._snackBar.open(`Vous êtes inscrit à ${inscription.conference.titre}`, "Fermer", { duration: 2000 });
+          this._snackBar.success(`Vous êtes inscrit à ${inscription.conference.titre}`);
           this.insService.reset();
         }, error: err => {
-          this._snackBar.open(err.message, "Fermer", { duration: 2000 });
+          this._snackBar.error(err.message)
         }
       });
   }
@@ -115,11 +115,11 @@ export class InscriptionConferenceFormComponent implements OnInit {
     this.confAPI.updateInscription(inscription)
       .subscribe({
         next: _ => {
-          this._snackBar.open(`Votre inscrption à ${inscription.conference.titre} a été modifier`, "Fermer", { duration: 2000 });
+          this._snackBar.success(`Votre inscrption à ${inscription.conference.titre} a été modifier`);
           this.insService.reset();
         },
         error: err => {
-          this._snackBar.open(err.message, "Fermer", { duration: 2000 });
+          this._snackBar.error(err.message);
         }
       });
 
