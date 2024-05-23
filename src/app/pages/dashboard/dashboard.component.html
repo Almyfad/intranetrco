@@ -1,1 +1,10 @@
-<p>dashboard works!</p>
+<h1>Bienvenue dans votre Espace Intranet</h1>
+<div class="content">
+
+
+    <app-next-activities titre="Mes prochaines Conférences" [Oconferences]="Oinscriptions"
+        routerLink="/mesinscriptions"></app-next-activities>
+
+    <app-next-activities titre="Autres Conférences" [Oconferences]="Oconferences"
+        routerLink="/conferences"></app-next-activities>
+</div>
