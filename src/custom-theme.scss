@@ -31,13 +31,11 @@ $intranetrco-theme: mat.define-light-theme((
   typography: mat.define-typography-config(),
   density: 0
 ));
-
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($intranetrco-theme);
-
-
-
-
-
+  :root {
+        --mat-sidenav-container-background-color: #{mat.get-color-from-palette($intranetrco-primary, default)};
+        --mat-sidenav-container-text-color: #{mat.get-color-from-palette($intranetrco-primary, 50)};
+  }

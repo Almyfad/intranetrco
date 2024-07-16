@@ -1,0 +1,18 @@
+
+@for (menu of menus; track menu) {
+    <mat-accordion>
+        <mat-expansion-panel [hideToggle]="!menu.hasChildren" [disabled]="!menu.hasChildren" [routerLink]="menu.route" class="menu-mat-expansion-panel">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon class="icon" color="accent">{{menu.icon}}</mat-icon>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <span>{{menu.label}}</span>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            @if (menu.hasChildren) {
+                <app-menu-tree [menus]="menu.children"></app-menu-tree>
+            }
+        </mat-expansion-panel>
+    </mat-accordion>
+}

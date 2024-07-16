@@ -1,0 +1,27 @@
+<mat-sidenav-container>
+
+    <mat-sidenav #snav fixedTopGap="100" [mode]="(this.isXSmallScreen | async) ? 'over' : 'side'"
+        [opened]="(this.isXSmallScreen | async)===false">
+        <div class="sidebarheader">
+            <img src="assets/img/logo.svg">
+            <span>Intranet Rose-Croix d'Or</span>
+        </div>
+        <hr/>
+        <app-menu-tree [menus]="menus"></app-menu-tree>
+    </mat-sidenav>
+    <mat-sidenav-content class="sidenav-content" >
+        <mat-toolbar color="secondary">
+            <button mat-icon-button (click)="snav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+
+            @if ((this.isXSmallScreen | async) === false){
+            }
+            <span class="spacer"></span>
+            <button mat-icon-button aria-label="logout" (click)="logout()" class="logoutbtn">
+                <mat-icon class="icon">logout</mat-icon>
+            </button>
+        </mat-toolbar>
+        <router-outlet/>
+    </mat-sidenav-content>
+</mat-sidenav-container>

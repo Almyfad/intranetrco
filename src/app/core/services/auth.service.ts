@@ -1,38 +1,25 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, delay, map, tap } from 'rxjs';
+import { OsmoseApiClientService } from './osmose-api-client.service';
+import { TokenService } from './token.service';
 
-type AuthTokenResponse = {
-  token: string
-}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private http = inject(HttpClient)
-  private readonly url = 'https://reqres.in/api/login'
+  private readonly osmoseApiClientService = inject(OsmoseApiClientService)
+  private readonly tokenService = inject(TokenService)
 
-
-  login(payload: { email: string, password: string }): Observable<AuthTokenResponse> {
-    return this.http.post<AuthTokenResponse>(this.url, payload)
+  login(payload: { email: string, password: string }): Observable<string> {
+    return this.osmoseApiClientService.login(payload.email, payload.password)
       .pipe(
-        tap((res: AuthTokenResponse) => {
-            this.token = res.token
-        }),
-        delay(1000)
+        tap((token) => this.tokenService.token = token),
+        delay(1000),
       )
   }
 
-  set token(value: string) {
-    localStorage.setItem('angular', value)
-  }
-
-  get token() {
-    return localStorage.getItem('angular') as string
-  }
-
-  get isLogged() {
-    return !!this.token
+  get isLogged(): boolean {
+    return !!this.tokenService.token
   }
 }

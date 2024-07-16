@@ -4,9 +4,8 @@ import { Observable, tap } from "rxjs";
 import { AuthService } from "../services/auth.service";
 
 export function authInterceptor(req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> {
-    const authService = inject(AuthService)
-    const token = authService.token
-
+    return next(req);
+/*
     if (!token) {
         return next(req)
     }
@@ -19,5 +18,5 @@ export function authInterceptor(req: HttpRequest<any>, next: HttpHandlerFn): Obs
         headers: headers
     })
 
-    return next(newReq)
+    return next(newReq)*/
 }
