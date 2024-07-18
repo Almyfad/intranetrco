@@ -9,15 +9,15 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Utilisateur } from './utilisateur';
 
 
-export interface Role { 
-    id?: number;
-    creation?: string;
-    modification?: string | null;
-    nom: string | null;
-    utilisateurId?: number;
-    utilisateur?: Utilisateur;
-}
+export type CallingConventions = 1 | 2 | 3 | 32 | 64;
+
+export const CallingConventions = {
+    NUMBER_1: 1 as CallingConventions,
+    NUMBER_2: 2 as CallingConventions,
+    NUMBER_3: 3 as CallingConventions,
+    NUMBER_32: 32 as CallingConventions,
+    NUMBER_64: 64 as CallingConventions
+};
 

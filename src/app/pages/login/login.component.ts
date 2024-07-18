@@ -6,25 +6,27 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
-import {MatButton} from '@angular/material/button';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatButton } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, MatFormFieldModule, 
-    MatInputModule, MatIconModule, MatCardModule,MatButton, MatProgressSpinnerModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule,
+    MatInputModule, MatIconModule, MatCardModule, MatButton, MatProgressSpinnerModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.less'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   private readonly authService: AuthService = inject(AuthService);
+  private readonly _snackBar = inject(SnackbarService);
 
   private router: Router = inject(Router)
   private builder: FormBuilder = inject(FormBuilder)
   loading = false;
 
-  propEmail: FormControl = new FormControl<string>('george.bluth@reqres.in', [
+  propEmail: FormControl = new FormControl<string>('test@test.com', [
     Validators.required,
     Validators.minLength(3),
   ])
@@ -34,13 +36,32 @@ export class LoginComponent {
     password: this.propPass
   })
 
+  ngOnInit(): void {
+    this.authService.amiLogged().subscribe(x =>{
+      this.router.navigateByUrl('/')
+    })
+  }
 
   login() {
     if (this.form.invalid) return
     this.loading = true;
-    this.authService.login(this.form.value).subscribe(() => {
-      this.loading = false;
-      this.router.navigateByUrl('/')
+
+    this.authService.login(this.form.value).subscribe({
+      next: (v) => {
+        if (v)
+          this.router.navigateByUrl('/')
+        this.loading = false;
+      },
+      error: (e ) => {
+        this.loading = false
+        this._snackBar.error(e.error?.message ?? 'Erreur de connexion')
+      },
+      complete: () => this.loading = false
     })
   }
+
+
+
 }
+
+

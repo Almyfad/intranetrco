@@ -6,7 +6,7 @@ import { MatSidenavContent, MatSidenavModule } from '@angular/material/sidenav';
 import { AsyncPipe } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { MatNavList } from '@angular/material/list';
 import { MenuTreeComponent } from '../menu-tree/menu-tree.component';
 import { MatIconButton } from '@angular/material/button';
@@ -22,8 +22,8 @@ import { OsmoseApiClientService } from '../../core/services/osmose-api-client.se
 export class MenuComponent implements OnDestroy {
   @Input() menus: Menu[] = [];
   private readonly auth = inject(AuthService);
+  private router: Router = inject(Router)
   private readonly breakpointObserver = inject(BreakpointObserver);
-  private readonly osmoseApiClientService = inject(OsmoseApiClientService);
   destroyed = new Subject<void>();
   isXSmallScreen = this.breakpointObserver.observe([
     Breakpoints.XSmall,
@@ -33,10 +33,9 @@ export class MenuComponent implements OnDestroy {
 
 
   logout() {
-this.osmoseApiClientService.generate().subscribe();
+    this.auth.logout()
+    this.router.navigateByUrl('/login')
 
-   // localStorage.removeItem('angular');
-   // window.location.href = '/login';
   }
   get islogged() {
     return this.auth.isLogged;
@@ -53,7 +52,7 @@ export class Menu {
   label: string | undefined
   icon: string | undefined
   route: string | undefined
-  roles : string[] = [];
+  roles: string[] = [];
   children: Menu[] = [];
   get hasChildren(): boolean {
     return this.children.length > 0;

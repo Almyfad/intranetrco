@@ -9,15 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Utilisateur } from './utilisateur';
 
 
-export interface Role { 
-    id?: number;
-    creation?: string;
-    modification?: string | null;
-    nom: string | null;
-    utilisateurId?: number;
-    utilisateur?: Utilisateur;
-}
+export type EventAttributes = 0 | 512 | 1024;
+
+export const EventAttributes = {
+    NUMBER_0: 0 as EventAttributes,
+    NUMBER_512: 512 as EventAttributes,
+    NUMBER_1024: 1024 as EventAttributes
+};
 

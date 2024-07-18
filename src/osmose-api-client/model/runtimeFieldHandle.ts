@@ -9,15 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Utilisateur } from './utilisateur';
 
 
-export interface Role { 
-    id?: number;
-    creation?: string;
-    modification?: string | null;
-    nom: string | null;
-    utilisateurId?: number;
-    utilisateur?: Utilisateur;
+export interface RuntimeFieldHandle { 
+    value?: object;
 }
 

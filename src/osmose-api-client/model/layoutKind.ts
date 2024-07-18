@@ -9,15 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Utilisateur } from './utilisateur';
 
 
-export interface Role { 
-    id?: number;
-    creation?: string;
-    modification?: string | null;
-    nom: string | null;
-    utilisateurId?: number;
-    utilisateur?: Utilisateur;
-}
+export type LayoutKind = 0 | 2 | 3;
+
+export const LayoutKind = {
+    NUMBER_0: 0 as LayoutKind,
+    NUMBER_2: 2 as LayoutKind,
+    NUMBER_3: 3 as LayoutKind
+};
 

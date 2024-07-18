@@ -1,25 +1,42 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, delay, map, tap } from 'rxjs';
-import { OsmoseApiClientService } from './osmose-api-client.service';
-import { TokenService } from './token.service';
+import { Observable, delay, map, switchMap, tap } from 'rxjs';
+import { UserService } from '../../../osmose-api-client';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly osmoseApiClientService = inject(OsmoseApiClientService)
-  private readonly tokenService = inject(TokenService)
+  private readonly osmose = inject(UserService)
 
-  login(payload: { email: string, password: string }): Observable<string> {
-    return this.osmoseApiClientService.login(payload.email, payload.password)
+  private roles: String[] = []
+  private _isLogged: boolean = false;
+
+  amiLogged(): Observable<boolean> {
+    return this.osmose.apiUserInfoRolesGet().pipe(
+      map((roles) => {
+        this.roles = roles;
+        this._isLogged = true;
+        return true;
+      }),
+    );
+  }
+
+  login(payload: { email: string, password: string }): Observable<boolean> {
+    return this.osmose.apiLoginPost({ email: payload.email, password: payload.password })
       .pipe(
-        tap((token) => this.tokenService.token = token),
-        delay(1000),
-      )
+        switchMap(() => this.osmose.apiUserInfoRolesGet()),
+        tap((roles) => this.roles = roles),
+        tap((_) => this._isLogged = true),
+        map(() => true),
+        delay(1000))
   }
 
   get isLogged(): boolean {
-    return !!this.tokenService.token
+    return this._isLogged
+  }
+
+  logout() {
+    this._isLogged = false
   }
 }

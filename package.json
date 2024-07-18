@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "proxy": "nodemon ./proxy.cjs",
     "gen:osmose": "rimraf src/osmose-api-client && openapi-generator-cli generate -i ./osmose-api.json -o src/osmose-api-client -g typescript-angular --additional-properties=supportsES6=true,npmVersion=6.9.0,typescriptThreePlus=true"
   },
   "private": true,
@@ -32,7 +33,6 @@
     "@angular/compiler-cli": "^17.2.0",
     "@openapitools/openapi-generator-cli": "^2.13.4",
     "@types/jasmine": "~5.1.0",
-    "http-proxy-middleware": "^3.0.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

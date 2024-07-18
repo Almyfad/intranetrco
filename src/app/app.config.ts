@@ -6,20 +6,18 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { Configuration } from '../osmose-api-client/configuration';
-import { TokenService } from './core/services/token.service';
 
 
-export function apiConfigFactory(authService: TokenService): Configuration {
+export function apiConfigFactory(): Configuration {
   return new Configuration({
-    basePath: 'http://localhost:8080',
-    credentials: { Bearer: () => authService.token }, // Utilisez le service pour obtenir le token
+    basePath: 'https://localhost:7265',
+    withCredentials: true,
   });
 }
 
 const configurationProvider: Provider = {
   provide: Configuration,
   useFactory: apiConfigFactory,
-  deps: [TokenService]
 };
 
 

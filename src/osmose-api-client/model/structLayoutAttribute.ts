@@ -9,15 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Utilisateur } from './utilisateur';
+import { LayoutKind } from './layoutKind';
 
 
-export interface Role { 
-    id?: number;
-    creation?: string;
-    modification?: string | null;
-    nom: string | null;
-    utilisateurId?: number;
-    utilisateur?: Utilisateur;
+export interface StructLayoutAttribute { 
+    readonly typeId?: any | null;
+    value?: LayoutKind;
 }
+export namespace StructLayoutAttribute {
+}
+
 

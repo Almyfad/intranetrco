@@ -9,15 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Utilisateur } from './utilisateur';
 
 
-export interface Role { 
-    id?: number;
-    creation?: string;
-    modification?: string | null;
-    nom: string | null;
-    utilisateurId?: number;
-    utilisateur?: Utilisateur;
-}
+export type SecurityRuleSet = 0 | 1 | 2;
+
+export const SecurityRuleSet = {
+    NUMBER_0: 0 as SecurityRuleSet,
+    NUMBER_1: 1 as SecurityRuleSet,
+    NUMBER_2: 2 as SecurityRuleSet
+};
 

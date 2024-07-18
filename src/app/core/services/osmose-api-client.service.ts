@@ -20,7 +20,5 @@ export class OsmoseApiClientService {
     return this.UserService.apiGeneratePost();
   }
 
-  public login(email: string, password: string): Observable<string> {
-    return this.UserService.apiLoginPost({ email: email, password: password });
-  }
+
 }

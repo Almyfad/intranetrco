@@ -9,15 +9,17 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Utilisateur } from './utilisateur';
+import { MethodBase } from './methodBase';
 
 
-export interface Role { 
-    id?: number;
-    creation?: string;
-    modification?: string | null;
-    nom: string | null;
-    utilisateurId?: number;
-    utilisateur?: Utilisateur;
+export interface Exception { 
+    targetSite?: MethodBase;
+    readonly message?: string | null;
+    readonly data?: { [key: string]: any; } | null;
+    innerException?: Exception;
+    helpLink?: string | null;
+    source?: string | null;
+    hResult?: number;
+    readonly stackTrace?: string | null;
 }
 

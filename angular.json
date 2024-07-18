@@ -66,7 +66,10 @@
               "buildTarget": "intranetrco:build:production"
             },
             "development": {
-              "buildTarget": "intranetrco:build:development"
+              "buildTarget": "intranetrco:build:development",
+              "ssl": true,
+              "sslKey": "certs/key.pem",
+              "sslCert": "certs/cert.pem"
             }
           },
           "defaultConfiguration": "development"

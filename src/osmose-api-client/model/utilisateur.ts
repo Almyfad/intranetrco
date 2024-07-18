@@ -16,8 +16,8 @@ export interface Utilisateur {
     id?: number;
     creation?: string;
     modification?: string | null;
-    nom?: string | null;
-    prenom?: string | null;
+    nom: string | null;
+    prenom: string | null;
     email?: string | null;
     motDePasse?: string | null;
     telephone?: string | null;
