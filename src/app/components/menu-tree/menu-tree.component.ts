@@ -6,7 +6,7 @@ import { MatIconButton } from '@angular/material/button';
 import { MatSidenavContent, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListItem, MatNavList } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { Menu } from '../menu/menu.component';
+import { Menu } from '../menu/menu';
 
 @Component({
   selector: 'app-menu-tree',

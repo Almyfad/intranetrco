@@ -5,12 +5,13 @@ import { Subject, map, takeUntil } from 'rxjs';
 import { MatSidenavContent, MatSidenavModule } from '@angular/material/sidenav';
 import { AsyncPipe } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import {  MatIconModule } from '@angular/material/icon';
 import { Router, RouterOutlet } from '@angular/router';
 import { MatNavList } from '@angular/material/list';
 import { MenuTreeComponent } from '../menu-tree/menu-tree.component';
 import { MatIconButton } from '@angular/material/button';
-import { OsmoseApiClientService } from '../../core/services/osmose-api-client.service';
+import { Menu } from './menu';
+import { MenuService } from '../../core/services/menu.service';
 
 @Component({
   selector: 'app-menu',
@@ -20,8 +21,11 @@ import { OsmoseApiClientService } from '../../core/services/osmose-api-client.se
   styleUrl: './menu.component.less'
 })
 export class MenuComponent implements OnDestroy {
-  @Input() menus: Menu[] = [];
+
+//  @Input() menus: Menu[] = [];
   private readonly auth = inject(AuthService);
+  private readonly menuService = inject(MenuService);
+  menus = this.menuService.menus;
   private router: Router = inject(Router)
   private readonly breakpointObserver = inject(BreakpointObserver);
   destroyed = new Subject<void>();
@@ -48,20 +52,3 @@ export class MenuComponent implements OnDestroy {
 
 }
 
-export class Menu {
-  label: string | undefined
-  icon: string | undefined
-  route: string | undefined
-  roles: string[] = [];
-  children: Menu[] = [];
-  get hasChildren(): boolean {
-    return this.children.length > 0;
-  }
-
-  constructor(label: string, icon: string, route: string, children: Menu[], roles: string[] = ["USER"]) {
-    this.label = label;
-    this.icon = icon;
-    this.route = route;
-    this.children = children;
-  }
-}
