@@ -22,27 +22,23 @@ import { MenuService } from '../../core/services/menu.service';
 })
 export class MenuComponent implements OnDestroy {
 
-//  @Input() menus: Menu[] = [];
   private readonly auth = inject(AuthService);
   private readonly menuService = inject(MenuService);
   menus = this.menuService.menus;
   private router: Router = inject(Router)
   private readonly breakpointObserver = inject(BreakpointObserver);
   destroyed = new Subject<void>();
+
+
   isXSmallScreen = this.breakpointObserver.observe([
     Breakpoints.XSmall,
   ]).pipe(takeUntil(this.destroyed),
     map(result => result.matches));
 
-
-
   logout() {
     this.auth.logout()
     this.router.navigateByUrl('/login')
 
-  }
-  get islogged() {
-    return this.auth.isLogged;
   }
 
   ngOnDestroy() {

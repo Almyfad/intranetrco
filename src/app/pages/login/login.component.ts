@@ -36,9 +36,11 @@ export class LoginComponent implements OnInit {
     password: this.propPass
   })
 
-  ngOnInit(): void {
-    this.authService.amiLogged().subscribe(x =>{
-      this.router.navigateByUrl('/')
+  ngOnInit() {
+    this.authService.isLogged$.subscribe((isLogged) => {
+      if (isLogged) {
+        this.router.navigateByUrl('/')
+      }
     })
   }
 

@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Roles } from './roles';
 import { Utilisateur } from './utilisateur';
 
 
@@ -16,8 +17,10 @@ export interface Role {
     id?: number;
     creation?: string;
     modification?: string | null;
-    nom: string | null;
-    utilisateurId?: number;
-    utilisateur?: Utilisateur;
+    code: Roles;
+    utilisateurs?: Array<Utilisateur> | null;
 }
+export namespace Role {
+}
+
 

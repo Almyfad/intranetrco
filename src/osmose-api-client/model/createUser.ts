@@ -9,14 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { CustomAttributeTypedArgument } from './customAttributeTypedArgument';
-import { MemberInfo } from './memberInfo';
+import { Roles } from './roles';
 
 
-export interface CustomAttributeNamedArgument { 
-    memberInfo?: MemberInfo;
-    typedValue?: CustomAttributeTypedArgument;
-    readonly memberName?: string | null;
-    readonly isField?: boolean;
+export interface CreateUser { 
+    nom: string | null;
+    prenom: string | null;
+    email: string | null;
+    motDePasse: string | null;
+    telephone?: string | null;
+    adresse?: string | null;
+    codePostal?: string | null;
+    ville?: string | null;
+    pays?: string | null;
+    roles: Array<Roles> | null;
 }
 

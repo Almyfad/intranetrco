@@ -5,8 +5,7 @@ export default defineConfig({
     https: true,
     hmr: {
       protocol: 'wss',
-      host: 'localhost',
-      port: 4200, // Remplacez par votre nom d'hôte si différent
+      port: 4201, 
     },
   },
 });

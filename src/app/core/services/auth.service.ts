@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, delay, map, switchMap, tap } from 'rxjs';
-import { UserService } from '../../../osmose-api-client';
+import { BehaviorSubject, Observable, Subject, Subscription, catchError, concat, defer, delay, delayWhen, interval, map, of, retry, retryWhen, shareReplay, startWith, switchMap, takeUntil, tap, timer } from 'rxjs';
+import { UserInfo, UserService } from '../../../osmose-api-client';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -8,40 +9,55 @@ import { UserService } from '../../../osmose-api-client';
 })
 export class AuthService {
   private readonly osmose = inject(UserService)
+  private readonly router = inject(Router)
+  private stoPing$Subject = new Subject<void>();
+  private UserInfos$Subject = new BehaviorSubject<UserInfo>({isConnected: false, roles: []});
 
-  private _roles: string[] = []
-  private _isLogged: boolean = false;
 
-
-  public get roles(): string[] {
-    return this._roles
-  }
-
-  amiLogged(): Observable<boolean> {
-    return this.osmose.apiUserInfoRolesGet().pipe(
-      map((roles) => {
-        this._roles = roles;
-        this._isLogged = true;
-        return true;
+  ping$: Observable<UserInfo> = concat(
+    defer(() => this.osmose.apiUserInfosGet()), // dqsdqsdqsd
+    interval(5000).pipe(
+      switchMap(() => this.osmose.apiUserInfosGet()),
+      retry({
+        delay: error => {
+          if (error.status === 401) {
+            return timer(30000);
+          }
+          return timer(5000);
+        }
       }),
-    );
+      catchError(() => of({isConnected: false, roles: []}))
+    )
+  ).pipe(
+    tap((ui) => {
+      this.UserInfos$Subject.next(ui);
+      if (ui.isConnected === false) {
+        this.router.navigateByUrl('/login');
+      }
+    }),
+    takeUntil(this.stoPing$Subject)
+  );
+
+  stopPing() {
+    this.stoPing$Subject.next();
+    this.stoPing$Subject.complete();
   }
+
+  get UserInfo$(): Observable<UserInfo> { return this.UserInfos$Subject.asObservable() }
+  get isLogged$(): Observable<boolean> { return this.UserInfos$Subject.pipe(map(ui => ui.isConnected ?? false)) }
 
   login(payload: { email: string, password: string }): Observable<boolean> {
     return this.osmose.apiLoginPost({ email: payload.email, password: payload.password })
       .pipe(
-        switchMap(() => this.osmose.apiUserInfoRolesGet()),
-        tap((roles) => this._roles = roles),
-        tap((_) => this._isLogged = true),
-        map(() => true),
+        switchMap(() => this.osmose.apiUserInfosGet()),
+        tap((ui) => {
+          this.UserInfos$Subject.next(ui)
+        }),
+        map(ui => ui.isConnected ?? false),
         delay(1000))
   }
 
-  get isLogged(): boolean {
-    return this._isLogged
-  }
-
   logout() {
-    this._isLogged = false
+    // this._isLogged = false //addendpoint to remove cookie
   }
 }

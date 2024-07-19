@@ -13,7 +13,7 @@ export class MenuService {
       new Menu('Mes Inscriptions', 'edit', '/mesinscriptions', [])
     ]),
     new Menu('Registre', 'book', '/registre', [
-      new Menu('Fiches Elèves', 'people', '/registre/fiches-eleves', [], ),
+      new Menu('Fiches Elèves', 'people', '/registre/fiches-eleves', [],),
       new Menu('Fiches Parvis', 'wb_iridescent', '/registre/fiches-parvis', []),
       new Menu('Fiches Contacts', 'contact_page', '/registre/fiches-contacts', [], ['SYSADMIN']),
       new Menu('Fiches Jeunesses', 'child_care', '/registre/fiches-jeunesses', [], ['SYSADMIN']),
@@ -40,7 +40,8 @@ export class MenuService {
 
   private readonly auth = inject(AuthService);
   get menus(): Menu[] {
-    return Menu.getAllowedMenus(this.Allmenus, this.auth.roles);
+    return this.Allmenus;
+    //return Menu.getAllowedMenus(this.Allmenus, this.auth.roles);
   }
 
   constructor() { }

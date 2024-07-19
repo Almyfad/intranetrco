@@ -11,7 +11,12 @@
  */
 
 
-export interface RuntimeMethodHandle { 
-    value?: object;
+export interface UserInfo { 
+    id?: number;
+    email?: string | null;
+    nom?: string | null;
+    prenom?: string | null;
+    isConnected?: boolean;
+    roles?: Array<string> | null;
 }
 

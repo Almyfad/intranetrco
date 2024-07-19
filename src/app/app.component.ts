@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from './core/services/auth.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -7,6 +8,14 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.less'
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'intranetrco';
+  private readonly authService = inject(AuthService);
+
+  ngOnInit() {
+   this.authService.ping$.subscribe(console.log)
+  }
+  ngOnDestroy() {
+   this.authService.stopPing()
+  }
 }
