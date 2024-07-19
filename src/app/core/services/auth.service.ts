@@ -45,6 +45,7 @@ export class AuthService {
 
   get UserInfo$(): Observable<UserInfo> { return this.UserInfos$Subject.asObservable() }
   get isLogged$(): Observable<boolean> { return this.UserInfos$Subject.pipe(map(ui => ui.isConnected ?? false)) }
+  get UserRoles$(): Observable<string[]> { return this.UserInfos$Subject.pipe(map(ui => ui.roles ?? [])) }
 
   login(payload: { email: string, password: string }): Observable<boolean> {
     return this.osmose.apiLoginPost({ email: payload.email, password: payload.password })

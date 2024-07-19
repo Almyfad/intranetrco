@@ -1,3 +1,5 @@
+import { Observable, map, of } from "rxjs";
+
 export class Menu {
   label: string
   icon: string
@@ -6,6 +8,9 @@ export class Menu {
   children: Menu[] = [];
   get hasChildren(): boolean {
     return this.children.length > 0;
+  }
+  get children$(): Observable<Menu[]> {
+    return of(this.children);
   }
 
   constructor(label: string, icon: string, route: string, children: Menu[], roles: string[] = ["USER"]) {
@@ -18,7 +23,6 @@ export class Menu {
 
   isAllowed(userRoles: string[]): boolean {
     // Check if any of the menu's roles match any of the user's roles
-    console.log("isAllowed.menuroles",this.label, this.roles)
     return this.roles.some(menuRole => userRoles.includes(menuRole));
   }
 
@@ -39,10 +43,11 @@ export class Menu {
     return menu;
   }
 
-  static getAllowedMenus(menus: Menu[], userRoles: string[]): Menu[] {
-    console.log("useroles", userRoles)
-    return menus
-      .filter(menu => menu.isAllowed(userRoles))
-      .map(menu => menu.getAllowed(userRoles));
+  static getAllowedMenus(menus: Menu[], userRoles: Observable<string[]>): Observable<Menu[]> {
+    return userRoles.pipe(map(roles => {
+      return menus
+        .filter(menu => menu.isAllowed(roles))
+        .map(menu => menu.getAllowed(roles));
+    }));
   }
 }

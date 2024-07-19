@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Menu } from '../../components/menu/menu';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -39,9 +40,8 @@ export class MenuService {
   ]
 
   private readonly auth = inject(AuthService);
-  get menus(): Menu[] {
-    return this.Allmenus;
-    //return Menu.getAllowedMenus(this.Allmenus, this.auth.roles);
+  get menus(): Observable<Menu[]> {
+    return Menu.getAllowedMenus(this.Allmenus, this.auth.UserRoles$);
   }
 
   constructor() { }
