@@ -6,6 +6,7 @@ import { ConferencesComponent } from './pages/conferences/conferences.component'
 import { InscriptionConferenceFormComponent } from './components/inscription-conference-form/inscription-conference-form.component';
 import { CurrentMode } from './core/services/inscription-conference.service';
 import { MenuComponent } from './components/menu/menu.component';
+import { FichesElevesComponent } from './pages/registre/fiches.eleves/fiches.eleves.component';
 
 
 
@@ -34,6 +35,10 @@ export const routes: Routes = [
             path :'conferences/inscription',
             component : InscriptionConferenceFormComponent
            },
+           {
+            path :'registre/fiches/eleves',
+            component : FichesElevesComponent
+           }
         ]
     },
     {

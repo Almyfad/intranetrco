@@ -1,5 +1,6 @@
 @for (menu of menus | async; track menu) {
-<mat-accordion>
+
+<mat-accordion (click)="this.onSelectMenu(menu)">
     <mat-expansion-panel [hideToggle]="!menu.hasChildren" [disabled]="!menu.hasChildren" [routerLink]="menu.route"
         class="menu-mat-expansion-panel">
         <mat-expansion-panel-header>

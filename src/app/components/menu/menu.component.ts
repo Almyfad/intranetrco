@@ -25,6 +25,7 @@ export class MenuComponent implements OnDestroy {
   private readonly auth = inject(AuthService);
   private readonly menuService = inject(MenuService);
   menus = this.menuService.menus;
+  SelectedMenu$ = this.menuService.SelectedMenu;
   private router: Router = inject(Router)
   private readonly breakpointObserver = inject(BreakpointObserver);
   destroyed = new Subject<void>();

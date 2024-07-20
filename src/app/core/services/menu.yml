@@ -1,5 +1,9 @@
 root:
   - label: Accueil
+    title:
+      label: Bienvenue dans votre Espace Intranet
+      prefix_icon: grass
+      suffix_icon: grass
     icon: home
     route: /   
   - label: Conferences
@@ -13,12 +17,14 @@ root:
         icon: edit
         route: /mesinscriptions       
   - label: Registre
+    roles: ['SYSADMIN', 'REGISTRE']
     icon: book
     route: /registre
     children:
       - label: Fiches Elèves
+        roles: ['REGISTRE']
         icon: people
-        route: /registre/fiches-eleves       
+        route: /registre/fiches/eleves       
       - label: Fiches Parvis
         icon: wb_iridescent
         route: /registre/fiches-parvis       
@@ -54,12 +60,12 @@ root:
           - label: Mouvements
             icon: autorenew
             route: /registre/statistiques/mouvements          
-    roles: ['SYSADMIN', 'REGISTRE']
   - label: Conferences
+    roles: ['SYSADMIN', 'CONFERENCES']
     icon: temple_buddhist
     route: /admin-conferences   
-    roles: ['SYSADMIN', 'CONFERENCES']
   - label: Comptabilité
+    roles: ['SYSADMIN', 'COMPTA']
     icon: account_balance
     route: /compta
     children:
@@ -75,7 +81,6 @@ root:
       - label: Comptes/caisse
         icon: description
         route: /compta/comptescaisse       
-    roles: ['SYSADMIN', 'COMPTA']
   - label: Administration
     icon: admin_panel_settings
     route: /admin

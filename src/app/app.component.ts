@@ -13,7 +13,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
 
   ngOnInit() {
-   this.authService.ping$.subscribe(console.log)
+   this.authService.ping$.subscribe()
   }
   ngOnDestroy() {
    this.authService.stopPing()

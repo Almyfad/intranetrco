@@ -15,9 +15,11 @@
                 <mat-icon>menu</mat-icon>
             </button>
             <div class="title">
-                <mat-icon></mat-icon>
-                <span>Hello world</span>
-                <mat-icon>menu</mat-icon>
+                @if(SelectedMenu$ | async; as _menu) {
+                <mat-icon>{{_menu?.title?.prefix_icon}}</mat-icon>
+                <span>{{_menu?.title?.label ?? _menu?.label}}</span>
+                <mat-icon>{{_menu?.title?.suffix_icon}}</mat-icon>
+                }
             </div>
             @if ((this.isXSmallScreen | async) === false){
             }

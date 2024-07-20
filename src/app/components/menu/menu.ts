@@ -1,5 +1,5 @@
-import { Title } from "@angular/platform-browser";
 import { Observable, map, of } from "rxjs";
+import { MenuTitle } from "./menu.tittle";
 
 
 interface MenuOptions {
@@ -8,7 +8,7 @@ interface MenuOptions {
   route: string;
   children?: Menu[];
   roles?: string[];
-  title?: Title; 
+  title?: MenuTitle;
 }
 
 export class Menu {
@@ -16,7 +16,7 @@ export class Menu {
   icon: string
   route: string
   roles: string[];
-  title: Title | undefined;
+  title: MenuTitle | undefined;
   children: Menu[] = [];
   get hasChildren(): boolean {
     return this.children.length > 0;
@@ -29,36 +29,27 @@ export class Menu {
     this.label = options.label;
     this.icon = options.icon;
     this.route = options.route;
-    this.children = options.children || []; 
-    this.roles = options.roles || ["USER"]; 
-    this.title = options.title; 
+    this.children = (options.children || []).map(childOptions => new Menu(childOptions));
+    this.roles = options.roles || ["USER"];
+    this.title = options.title;
   }
 
- isAllowed(userRoles: string[]): boolean {
+  isAllowed(userRoles: string[]): boolean {
     return this.roles.some(menuRole => userRoles.includes(menuRole));
   }
 
-  getAllowedChildren(userRoles: string[]): Menu[] {
-    return this.children
-      .filter(child => child.isAllowed(userRoles))
-      .map(child => {
-        child.children = child.getAllowedChildren(userRoles);
-        return child;
-      });
-  }
-
-  getAllowed(userRoles: string[]): Menu {
-    return {
-      ...this, 
-      children: this.getAllowedChildren(userRoles)
-    };
-  }
-
   static getAllowedMenus(menus: Menu[], userRoles: Observable<string[]>): Observable<Menu[]> {
-    return userRoles.pipe(map(roles => {
-      return menus
-        .filter(menu => menu.isAllowed(roles))
-        .map(menu => menu.getAllowed(roles));
-    }));
+    return userRoles.pipe(
+      map(roles => {
+        const allowedMenus: Menu[] = [];
+        menus.forEach(menu => {
+          if (menu.isAllowed(roles)) {
+            menu.children = menu.children.filter(child => child.isAllowed(roles));
+            allowedMenus.push(menu);
+          }
+        });
+        return allowedMenus;
+      })
+    );
   }
 }
