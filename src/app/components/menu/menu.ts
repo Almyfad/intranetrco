@@ -1,10 +1,22 @@
+import { Title } from "@angular/platform-browser";
 import { Observable, map, of } from "rxjs";
+
+
+interface MenuOptions {
+  label: string;
+  icon: string;
+  route: string;
+  children?: Menu[];
+  roles?: string[];
+  title?: Title; 
+}
 
 export class Menu {
   label: string
   icon: string
   route: string
   roles: string[];
+  title: Title | undefined;
   children: Menu[] = [];
   get hasChildren(): boolean {
     return this.children.length > 0;
@@ -13,34 +25,33 @@ export class Menu {
     return of(this.children);
   }
 
-  constructor(label: string, icon: string, route: string, children: Menu[], roles: string[] = ["USER"]) {
-    this.label = label;
-    this.icon = icon;
-    this.route = route;
-    this.children = children;
-    this.roles = roles;
+  constructor(options: MenuOptions) {
+    this.label = options.label;
+    this.icon = options.icon;
+    this.route = options.route;
+    this.children = options.children || []; 
+    this.roles = options.roles || ["USER"]; 
+    this.title = options.title; 
   }
 
-  isAllowed(userRoles: string[]): boolean {
-    // Check if any of the menu's roles match any of the user's roles
+ isAllowed(userRoles: string[]): boolean {
     return this.roles.some(menuRole => userRoles.includes(menuRole));
   }
 
   getAllowedChildren(userRoles: string[]): Menu[] {
-    // Filter children based on user's roles, and then recursively apply to sub-children
     return this.children
       .filter(child => child.isAllowed(userRoles))
       .map(child => {
-        // Recursively filter sub-children
         child.children = child.getAllowedChildren(userRoles);
         return child;
       });
   }
 
   getAllowed(userRoles: string[]): Menu {
-    const menu = new Menu(this.label, this.icon, this.route, this.children, this.roles);
-    menu.children = menu.getAllowedChildren(userRoles);
-    return menu;
+    return {
+      ...this, 
+      children: this.getAllowedChildren(userRoles)
+    };
   }
 
   static getAllowedMenus(menus: Menu[], userRoles: Observable<string[]>): Observable<Menu[]> {

@@ -17,6 +17,7 @@
 $intranetrco-primary: mat.define-palette($intranetrco-purple);
 $intranetrco-accent: mat.define-palette($intranetrco-gold);
 
+
 // The warn palette is optional (defaults to red).
 $intranetrco-warn: mat.define-palette(mat.$red-palette);
 
@@ -39,3 +40,4 @@ $intranetrco-theme: mat.define-light-theme((
         --mat-sidenav-container-background-color: #{mat.get-color-from-palette($intranetrco-primary, default)};
         --mat-sidenav-container-text-color: #{mat.get-color-from-palette($intranetrco-primary, 50)};
   }
+

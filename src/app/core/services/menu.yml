@@ -1,0 +1,83 @@
+root:
+  - label: Accueil
+    icon: home
+    route: /   
+  - label: Conferences
+    icon: temple_buddhist
+    route: /conferences
+    children:
+      - label: Inscription
+        icon: add
+        route: /conferences/inscription       
+      - label: Mes Inscriptions
+        icon: edit
+        route: /mesinscriptions       
+  - label: Registre
+    icon: book
+    route: /registre
+    children:
+      - label: Fiches Elèves
+        icon: people
+        route: /registre/fiches-eleves       
+      - label: Fiches Parvis
+        icon: wb_iridescent
+        route: /registre/fiches-parvis       
+      - label: Fiches Contacts
+        icon: contact_page
+        route: /registre/fiches-contacts      
+      - label: Fiches Jeunesses
+        icon: child_care
+        route: /registre/fiches-jeunesses       
+      - label: Fiches Jeunes Rosicruciens
+        icon: settings_accessibility
+        route: /registre/fiches-jeunes-rosicruciens    
+      - label: Saisie Présences
+        icon: featured_play_list
+        route: /registre/traitements
+        children:
+          - label: Présence Villes
+            icon: list_alt
+            route: /registre/traitements/encours        
+          - label: Présence CR
+            icon: fact_check
+            route: /registre/traitements/termines           
+          - label: Présence EI
+            icon: receipt_long
+            route: /registre/traitements/termines           
+      - label: Statistiques
+        icon: insert_chart_outlined
+        route: /registre/statistiques
+        children:
+          - label: Présences
+            icon: list_alt
+            route: /registre/statistiques/villes           
+          - label: Mouvements
+            icon: autorenew
+            route: /registre/statistiques/mouvements          
+    roles: ['SYSADMIN', 'REGISTRE']
+  - label: Conferences
+    icon: temple_buddhist
+    route: /admin-conferences   
+    roles: ['SYSADMIN', 'CONFERENCES']
+  - label: Comptabilité
+    icon: account_balance
+    route: /compta
+    children:
+      - label: Compta en ligne
+        icon: account_balance_wallet
+        route: /compta/comptes      
+      - label: Paramètre generaux
+        icon: settings
+        route: /compta/parametres       
+      - label: Sasie écritures répetitives
+        icon: monetization_on
+        route: /compta/ecritures      
+      - label: Comptes/caisse
+        icon: description
+        route: /compta/comptescaisse       
+    roles: ['SYSADMIN', 'COMPTA']
+  - label: Administration
+    icon: admin_panel_settings
+    route: /admin
+   
+  
