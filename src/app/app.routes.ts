@@ -8,12 +8,17 @@ import { AuthComponent } from './components/auth/auth.component';
 
 
 export const routes: Routes = [
+
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
+  },
   {
     path: '',
     component: AuthComponent,
     canActivate: [authGuard],
     canActivateChild: [authGuard],
-    
     children: [
       {
         path: 'dashboard',

@@ -8,12 +8,13 @@ export const authGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  return authService.isLogged$.pipe(
-    tap((isLogged) => {
-      if (!isLogged) {
+  return authService.UserInfoGuard$.pipe(
+    tap((userInfo) => {
+      console.log('authGuard', userInfo)
+      if (userInfo?.isConnected === false) {
         router.navigateByUrl('/login'); // Rediriger si non connecté
       }
     }),
-    map(isLogged => isLogged) // Renvoyer la valeur booléenne finale
+    map(userInfo => userInfo?.isConnected === true) // Renvoyer la valeur booléenne finale
   );
 };

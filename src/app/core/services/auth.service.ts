@@ -47,7 +47,22 @@ export class AuthService {
     this.stoPing$Subject.complete();
   }
 
+  get UserInfoGuard$(): Observable<UserInfo> {
+    return this.osmose.apiUserInfosGet().pipe(
+      tap((ui) => {
+        this.UserInfos$Subject.next(ui);
+        if (ui.isConnected === false) {
+          this.router.navigateByUrl('/login');
+        }
+      }),
+      catchError(() => {
+        this.UserInfos$Subject.next({ isConnected: false, roles: [] });
+        this.router.navigateByUrl('/login');
+        return of({ isConnected: false, roles: [] })
+      }))
+  }
   get UserInfo$(): Observable<UserInfo> {
+
     return this.UserInfos$Subject.pipe(shareReplay(1),
       distinctUntilChanged(
         (a, b) => a.isConnected === b.isConnected
@@ -60,7 +75,7 @@ export class AuthService {
     )
   }
   get isLogged$(): Observable<boolean> { return this.UserInfo$.pipe(
-    map(ui => ui.isConnected ?? false),
+    map(ui => ui.isConnected ?? false)
   ); }
   get UserRoles$(): Observable<string[]> { return this.UserInfo$.pipe(
     map(ui => ui.roles ?? []),

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
@@ -18,7 +18,7 @@ import { SnackbarService } from '../../core/services/snackbar.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.less'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit,OnDestroy {
   private readonly authService: AuthService = inject(AuthService);
   private readonly _snackBar = inject(SnackbarService);
 
@@ -37,11 +37,15 @@ export class LoginComponent implements OnInit {
   })
 
   ngOnInit() {
+    this.authService.ping$.subscribe()
     this.authService.isLogged$.subscribe((isLogged) => {
       if (isLogged) {
         this.router.navigateByUrl('/')
       }
     })
+  }
+  ngOnDestroy() {
+    this.authService.stopPing()
   }
 
   login() {
