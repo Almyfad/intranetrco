@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, shareReplay, tap } from 'rxjs';
 import menuConf from './menu.yml';
 import { parse } from 'yaml'
 import { Menu } from './menu';
@@ -17,8 +17,9 @@ export class MenuService {
   }
 
   get SelectedMenu(): Observable<Menu> {
-    return this.SelectedMenu$Subject.asObservable();
+    return this.SelectedMenu$Subject.pipe(shareReplay(1));
   }
+
 
   private readonly auth = inject(AuthService);
 

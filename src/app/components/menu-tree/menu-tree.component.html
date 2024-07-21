@@ -3,7 +3,9 @@
     <mat-accordion (click)="this.onSelectMenu(menu)">
         <mat-expansion-panel [hideToggle]="!menu.hasChildren" [disabled]="!menu.hasChildren"
         class="menu-mat-expansion-panel">
-        <mat-expansion-panel-header #link="routerLinkActive" [routerLink]="menu.route" routerLinkActive
+        <mat-expansion-panel-header #link="routerLinkActive" 
+        [routerLink]="menu.route" routerLinkActive
+        [routerLinkActiveOptions]="{exact: true}"
         [ngClass]="{ 'isActive': link.isActive }">
         <mat-panel-title>
             <mat-icon class="icon" color="accent">{{menu.icon}}</mat-icon>

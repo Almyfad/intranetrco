@@ -15,7 +15,7 @@ import { Menu } from '../../core/services/menu';
   selector: 'app-menu-tree',
   standalone: true,
   imports: [RouterOutlet, MatToolbar, MatIcon, MatIconButton, MatSidenavModule, MatNavList, MatListItem, RouterModule, MatSidenavContent
-    , MatExpansionModule, AsyncPipe ,CommonModule],
+    , MatExpansionModule, AsyncPipe, CommonModule],
   templateUrl: './menu-tree.component.html',
   styleUrl: './menu-tree.component.scss',
 })
