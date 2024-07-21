@@ -84,5 +84,27 @@ root:
   - label: Administration
     icon: admin_panel_settings
     route: /admin
+  - label : Developpement
+    icon: code
+    route: /dev
+    children:
+      - label: Adress
+        icon: people
+        route: /address
+      - label: table
+        icon: admin_panel_settings
+        route: /table
+      - label: tree
+        icon: menu
+        route: /tree
+      - label: drag-drop
+        icon: verified_user
+        route: /drag-drop
+  - label: Aide
+    icon: help
+    route: /help
+  - label: Deconnexion
+    icon: exit_to_app
+    route: /logout
    
   

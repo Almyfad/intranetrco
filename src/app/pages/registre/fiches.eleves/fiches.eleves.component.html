@@ -1,5 +1,12 @@
-<div>Hello im here</div>
-<ag-grid-angular  class="ag-theme-quartz"
-style="height: 500px;"
-[rowData]="rowData"
-[columnDefs]="colDefs" />
+<div class="content">
+
+    <div>Hello im here</div>
+    <ag-grid-angular  class="ag-theme-quartz"
+    [pagination]="pagination"
+    [paginationPageSize]="paginationPageSize"
+    [paginationPageSizeSelector]="paginationPageSizeSelector"
+    style="height: 500px;"
+    [rowData]="rowData$ | async"
+    [columnDefs]="colDefs" />
+    
+</div>

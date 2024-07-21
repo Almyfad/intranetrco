@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, Subscription, catchError, concat, defer, delay, delayWhen, distinctUntilChanged, interval, map, of, retry, retryWhen, shareReplay, startWith, switchMap, takeUntil, tap, timer } from 'rxjs';
-import { UserInfo, UserService } from '../../../osmose-api-client';
 import { Router } from '@angular/router';
+import { UserInfo, UserService } from '../osmose-api-client';
 
 
 @Injectable({

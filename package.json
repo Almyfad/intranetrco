@@ -3,24 +3,25 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --ssl --ssl-key key.pem --ssl-cert cert.pem",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "gen:osmose": "rimraf src/osmose-api-client && openapi-generator-cli generate -i ./osmose-api.json -o src/osmose-api-client -g typescript-angular --additional-properties=supportsES6=true,npmVersion=6.9.0,typescriptThreePlus=true"
+    "gen:osmose": "rimraf src/app/core/osmose-api-client && openapi-generator-cli generate -i ./osmose-api.json -o src/app/core/osmose-api-client -g typescript-angular --additional-properties=supportsES6=true,npmVersion=6.9.0,typescriptThreePlus=true"
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^17.2.0",
-    "@angular/cdk": "^17.3.5",
-    "@angular/common": "^17.2.0",
-    "@angular/compiler": "^17.2.0",
-    "@angular/core": "^17.2.0",
-    "@angular/forms": "^17.2.0",
-    "@angular/material": "^17.3.5",
-    "@angular/platform-browser": "^17.2.0",
-    "@angular/platform-browser-dynamic": "^17.2.0",
-    "@angular/router": "^17.2.0",
+    "@angular/animations": "^18.1.0",
+    "@angular/cdk": "^18.1.1",
+    "@angular/common": "^18.1.0",
+    "@angular/compiler": "^18.1.0",
+    "@angular/core": "^18.1.0",
+    "@angular/forms": "^18.1.0",
+    "@angular/material": "^18.1.1",
+    "@angular/platform-browser": "^18.1.0",
+    "@angular/platform-browser-dynamic": "^18.1.0",
+    "@angular/router": "^18.1.0",
+    "@fontsource/roboto": "^5.0.13",
     "ag-grid-angular": "^32.0.2",
     "ngx-skeleton-loader": "^9.0.0",
     "rxjs": "~7.8.0",
@@ -29,10 +30,9 @@
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^17.2.2",
-    "@angular/cli": "^17.2.2",
-    "@angular/compiler-cli": "^17.2.0",
-    "@openapitools/openapi-generator-cli": "^2.13.4",
+    "@angular-devkit/build-angular": "^18.1.1",
+    "@angular/cli": "^18.1.1",
+    "@angular/compiler-cli": "^18.1.0",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
@@ -40,10 +40,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "rimraf": "^6.0.1",
-    "typescript": "~5.3.2"
-  },
-  "volta": {
-    "node": "20.9.0"
+    "typescript": "~5.5.2"
   }
 }

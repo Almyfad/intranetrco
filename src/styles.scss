@@ -1,0 +1,21 @@
+@use "@angular/material" as mat;
+@use "./app/layout/layout-component.theme";
+@use "./styles.m3-theme.scss" as m3-theme;
+
+@include mat.core();
+
+
+body {
+  margin: 0;
+  font-family: Roboto, sans-serif;
+}
+
+
+//primary: 4c364b, secondary: caa55c, tertiary: 8ed1fc
+:root {
+  @include mat.all-component-themes(m3-theme.$light-theme);
+  @include layout-component.theme(m3-theme.$light-theme);
+  --primary : #4c364b;
+  --secondary : #caa55c;
+  --tertiary : #8ed1fc;
+}

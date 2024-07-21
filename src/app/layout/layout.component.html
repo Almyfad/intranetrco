@@ -1,0 +1,42 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+     
+    <mat-toolbar>
+      <img src="assets/img/logo.svg">
+      <div>
+        Menu
+      </div>
+    </mat-toolbar>
+    
+    <app-menu-tree [menus]="menus"></app-menu-tree>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      @if (isHandset$ | async) {
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+      }
+      <div class="title">
+        @if(SelectedMenu$ | async; as _menu) {
+        <mat-icon>{{_menu?.title?.prefix_icon}}</mat-icon>
+        <span>{{_menu?.title?.label ?? _menu?.label}}</span>
+        <mat-icon>{{_menu?.title?.suffix_icon}}</mat-icon>
+        }
+    </div>
+    </mat-toolbar>
+    <div class="sidenav-scroll-wrapper">
+      <div class="sidenav-content">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

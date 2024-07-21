@@ -1,19 +1,20 @@
-@for (menu of menus | async; track menu) {
 
-<mat-accordion (click)="this.onSelectMenu(menu)">
-    <mat-expansion-panel [hideToggle]="!menu.hasChildren" [disabled]="!menu.hasChildren" [routerLink]="menu.route"
+@for (menu of menus | async; track menu) {
+    <mat-accordion (click)="this.onSelectMenu(menu)">
+        <mat-expansion-panel [hideToggle]="!menu.hasChildren" [disabled]="!menu.hasChildren"
         class="menu-mat-expansion-panel">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                <mat-icon class="icon" color="accent">{{menu.icon}}</mat-icon>
-            </mat-panel-title>
-            <mat-panel-description>
-                <span>{{menu.label}}</span>
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-        @if (menu.hasChildren) {
+        <mat-expansion-panel-header #link="routerLinkActive" [routerLink]="menu.route" routerLinkActive
+        [ngClass]="{ 'isActive': link.isActive }">
+        <mat-panel-title>
+            <mat-icon class="icon" color="accent">{{menu.icon}}</mat-icon>
+        </mat-panel-title>
+        <mat-panel-description>
+            <span>{{menu.label}}</span>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    @if (menu.hasChildren) {
         <app-menu-tree [menus]="menu.children$"></app-menu-tree>
-        }
-    </mat-expansion-panel>
+    }
+</mat-expansion-panel>
 </mat-accordion>
 }

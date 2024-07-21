@@ -1,11 +1,11 @@
-import { ApplicationConfig, Provider } from '@angular/core';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { ApplicationConfig, Provider, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { Configuration } from '../osmose-api-client/configuration';
+import { Configuration } from './core/osmose-api-client';
 
 
 export function apiConfigFactory(): Configuration {
@@ -20,12 +20,15 @@ const configurationProvider: Provider = {
   useFactory: apiConfigFactory,
 };
 
-
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes, withComponentInputBinding()),
+  providers: 
+  [
     configurationProvider,
-  provideHttpClient(
-    withInterceptors([authInterceptor])
-  ),
-  provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync(),]
+    provideZoneChangeDetection({ eventCoalescing: true }), 
+    provideRouter(routes), provideAnimationsAsync(),
+    provideAnimationsAsync(),
+    provideHttpClient(
+      withInterceptors([authInterceptor])
+    ),
+  ]
 };

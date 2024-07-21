@@ -1,0 +1,60 @@
+:host {
+    mat-icon {
+        color: var(--secondary);
+    }
+
+    .mat-expansion-panel-header {
+        &:hover {
+            background: var(--mat-expansion-header-hover-state-layer-color)
+        }
+    }
+
+    mat-expansion-panel {
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+        background: transparent;
+        border: unset;
+        box-shadow: unset;
+
+        .mat-expansion-panel-header.mat-expanded {
+            height: 48px
+        }
+
+        .mat-expansion-panel-header[aria-disabled=true] {
+            color: unset;
+        }
+
+        .mat-expansion-panel-content .ng-trigger .ng-trigger-bodyExpansion {      
+            height: 0px;
+        }
+
+
+        .isActive {
+            background-color: var(--secondary);
+            color: whitesmoke;
+            opacity: 0.8;
+
+            mat-icon {
+                color: var(--primary);
+                opacity: 0.9;
+            }
+        }
+
+
+
+    }
+
+    mat-list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        span {
+            color: white;
+            padding-left: 15px;
+        }
+    }
+
+
+}
