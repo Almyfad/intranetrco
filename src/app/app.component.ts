@@ -1,6 +1,5 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AuthService } from './core/services/auth.service';
 import { LayoutComponent } from './layout/layout.component';
 import { AsyncPipe } from '@angular/common';
 
@@ -11,17 +10,7 @@ import { AsyncPipe } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent  {
   title = 'intranetrco';
-  private readonly authService = inject(AuthService);
-
-  isLogged$ = this.authService.isLogged$;
-
-  ngOnInit() {
-    this.authService.ping$.subscribe()
-  }
-  ngOnDestroy() {
-    this.authService.stopPing()
-  }
 }
 

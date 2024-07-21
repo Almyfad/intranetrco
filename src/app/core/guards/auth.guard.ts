@@ -5,15 +5,15 @@ import { map, tap } from "rxjs";
 
 
 export const authGuard: CanActivateFn = () => {
-    const authService = inject(AuthService);
-    const router = inject(Router);
-  
-    return authService.isLogged$.pipe(
-      tap((isLogged) => {
-        if (!isLogged) {
-          router.navigateByUrl('/login'); // Rediriger si non connecté
-        }
-      }),
-      map(isLogged => isLogged) // Renvoyer la valeur booléenne finale
-    );
-  };
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  return authService.isLogged$.pipe(
+    tap((isLogged) => {
+      if (!isLogged) {
+        router.navigateByUrl('/login'); // Rediriger si non connecté
+      }
+    }),
+    map(isLogged => isLogged) // Renvoyer la valeur booléenne finale
+  );
+};

@@ -25,8 +25,7 @@ export class AuthService {
           }
           return timer(30000);
         }
-      }),
-      catchError(() => of({ isConnected: false, roles: [] }))
+      })
     )
   ).pipe(
     tap((ui) => {
@@ -34,6 +33,11 @@ export class AuthService {
       if (ui.isConnected === false) {
         this.router.navigateByUrl('/login');
       }
+    }),
+    catchError(() => {
+      this.UserInfos$Subject.next({ isConnected: false, roles: [] });
+      this.router.navigateByUrl('/login');
+      return of({ isConnected: false, roles: [] })
     }),
     takeUntil(this.stoPing$Subject)
   );
@@ -43,16 +47,24 @@ export class AuthService {
     this.stoPing$Subject.complete();
   }
 
-  get UserInfo$(): Observable<UserInfo> { return this.UserInfos$Subject.pipe(shareReplay(1), distinctUntilChanged(
-    (a, b) => a.isConnected === b.isConnected 
-              && a.roles?.join("|") === b.roles?.join("|")
-              && a.email === b.email
-              && a.nom === b.nom
-              && a.prenom === b.prenom
-              && a.id === b.id
-  )) }
-  get isLogged$(): Observable<boolean> { return this.UserInfo$.pipe(map(ui => ui.isConnected ?? false)) }
-  get UserRoles$(): Observable<string[]> { return this.UserInfo$.pipe(map(ui => ui.roles ?? [])) }
+  get UserInfo$(): Observable<UserInfo> {
+    return this.UserInfos$Subject.pipe(shareReplay(1),
+      distinctUntilChanged(
+        (a, b) => a.isConnected === b.isConnected
+          && a.roles?.join("|") === b.roles?.join("|")
+          && a.email === b.email
+          && a.nom === b.nom
+          && a.prenom === b.prenom
+          && a.id === b.id
+      ),
+    )
+  }
+  get isLogged$(): Observable<boolean> { return this.UserInfo$.pipe(
+    map(ui => ui.isConnected ?? false),
+  ); }
+  get UserRoles$(): Observable<string[]> { return this.UserInfo$.pipe(
+    map(ui => ui.roles ?? []),
+  ); }
 
   login(payload: { email: string, password: string }): Observable<boolean> {
     return this.osmose.apiLoginPost({ email: payload.email, password: payload.password })
