@@ -10,7 +10,7 @@ import { Configuration } from './core/osmose-api-client';
 
 export function apiConfigFactory(): Configuration {
   return new Configuration({
-    basePath: 'https://localhost:7265',
+    basePath: 'http://localhost:5033',
     withCredentials: true,
   });
 }
