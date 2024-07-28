@@ -19,4 +19,4 @@ jobs:
       - name: Deploy
         run: cd $HOME/intranet-rco && docker-compose up -d       
         env:
-          ANGULAR_ENVIRONMENT: Production
+          ANGULAR_ENVIRONMENT: production
