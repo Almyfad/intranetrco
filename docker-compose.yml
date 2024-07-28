@@ -4,9 +4,9 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik"    
-      - "traefik.http.routers.osmosedevpmy.rule=Host(`intranet-dev.${TRAEFIK_HTTP_ROUTERS_HOST}`)"
-      - "traefik.http.routers.osmosedevpmy.entrypoints=websecure"
-      - "traefik.http.routers.osmosedevpmy.tls.certresolver=myresolver"
+      - "traefik.http.routers.intranetrco.rule=Host(`intranet-dev.${TRAEFIK_HTTP_ROUTERS_HOST}`)"
+      - "traefik.http.routers.intranetrco.entrypoints=websecure"
+      - "traefik.http.routers.intranetrco.tls.certresolver=myresolver"
     networks:
       - traefik  
 networks:
