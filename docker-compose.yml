@@ -1,6 +1,6 @@
 services:
   intranet:
-    image: intranetrco:0.0.1
+    image: intranetrco:latest
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik"    
