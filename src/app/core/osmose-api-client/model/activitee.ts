@@ -9,25 +9,23 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Role } from './role';
+import { TypeActivitee } from './typeActivitee';
+import { Inscription } from './inscription';
 import { Aspect } from './aspect';
 import { Centre } from './centre';
 
 
-export interface Utilisateur { 
+export interface Activitee { 
     id?: number;
     creation?: string;
     modification?: string | null;
-    nom: string | null;
-    prenom: string | null;
-    email?: string | null;
-    telephone?: string | null;
-    adresse?: string | null;
-    codePostal?: string | null;
-    ville?: string | null;
-    pays?: string | null;
-    roles?: Array<Role> | null;
-    aspect: Aspect;
-    centres?: Centre;
+    libelle: string | null;
+    dateDebut: string;
+    dateFin: string;
+    description?: string | null;
+    typeActivitee: TypeActivitee;
+    centre: Centre;
+    aspects?: Array<Aspect> | null;
+    inscriptions?: Array<Inscription> | null;
 }
 

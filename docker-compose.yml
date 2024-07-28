@@ -1,0 +1,9 @@
+services:
+  intranet:
+    image: intranetrco:0.0.1
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"    
+      - "traefik.http.routers.osmosedevpmy.rule=Host(`intranet-dev.${TRAEFIK_HTTP_ROUTERS_HOST}`)"
+      - "traefik.http.routers.osmosedevpmy.entrypoints=websecure"
+      - "traefik.http.routers.osmosedevpmy.tls.certresolver=myresolver"

@@ -9,19 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Aspects } from './aspects';
 
 
-export interface UserInfo { 
-    id?: number;
-    email?: string | null;
-    nom?: string | null;
-    prenom?: string | null;
-    isConnected?: boolean;
-    aspect?: Aspects;
-    roles?: Array<string> | null;
-}
-export namespace UserInfo {
-}
+export type TypeCentres = 100 | 200;
 
+export const TypeCentres = {
+    NUMBER_100: 100 as TypeCentres,
+    NUMBER_200: 200 as TypeCentres
+};
 

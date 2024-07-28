@@ -9,19 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Aspects } from './aspects';
+import { TypesActivitees } from './typesActivitees';
+import { Activitee } from './activitee';
 
 
-export interface UserInfo { 
+export interface TypeActivitee { 
     id?: number;
-    email?: string | null;
-    nom?: string | null;
-    prenom?: string | null;
-    isConnected?: boolean;
-    aspect?: Aspects;
-    roles?: Array<string> | null;
+    creation?: string;
+    modification?: string | null;
+    code: TypesActivitees;
+    description?: string | null;
+    activites?: Array<Activitee> | null;
 }
-export namespace UserInfo {
+export namespace TypeActivitee {
 }
 
 

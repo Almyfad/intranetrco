@@ -6,11 +6,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { Configuration } from './core/osmose-api-client';
+import { environment } from '../environments/environment';
 
 
 export function apiConfigFactory(): Configuration {
   return new Configuration({
-    basePath: 'http://localhost:5033',
+    basePath: environment.apiURL,
     withCredentials: true,
   });
 }

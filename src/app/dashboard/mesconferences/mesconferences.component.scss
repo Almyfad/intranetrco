@@ -1,0 +1,33 @@
+
+    .circleAvatar {
+        background-color: var(--primary);
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 16px;
+        text-align: center;
+        line-height: 32px;
+        font-weight: bold;
+        font-size: 0.8em;
+        margin-right: 5px;
+    }
+
+
+    .registred {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-evenly;
+        background-color: var(--color-success);
+        color: white;
+        padding-left: 1px;
+        padding-right: 5px;
+        border-radius: 10px;
+        font-size: 0.9em;
+
+        mat-icon {
+            width: 15px;
+            font-size: 12px;
+            line-height: 24px;
+        }
+    }

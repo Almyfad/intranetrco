@@ -6,7 +6,7 @@
         <p>
           <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
-            <input matInput placeholder="Placeholder" formControlName="email">
+            <input matInput placeholder="Placeholder" formControlName="email" autocomplete="email">
             <mat-icon matSuffix>person</mat-icon>
             @if (propEmail.hasError('required')) {
               <mat-error>Email requis</mat-error>
@@ -16,7 +16,7 @@
       <p>
         <mat-form-field appearance="outline">
           <mat-label>Mot de passe</mat-label>
-          <input matInput placeholder="Placeholder" formControlName="password" type="password" >
+          <input matInput placeholder="Placeholder" formControlName="password" type="password"  autocomplete="current-password">
           <mat-icon matSuffix>key</mat-icon>
           @if (propPass.hasError('required')) {
             <mat-error>Mot de passe requis</mat-error>

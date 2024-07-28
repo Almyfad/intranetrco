@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit,OnDestroy {
   private builder: FormBuilder = inject(FormBuilder)
   loading = false;
 
-  propEmail: FormControl = new FormControl<string>('test@test.com', [
+  propEmail: FormControl = new FormControl<string>('admin@rco.com', [
     Validators.required,
     Validators.minLength(3),
   ])

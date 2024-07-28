@@ -9,19 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Aspects } from './aspects';
+import { TypeCentres } from './typeCentres';
+import { Centre } from './centre';
 
 
-export interface UserInfo { 
+export interface TypeCentre { 
     id?: number;
-    email?: string | null;
-    nom?: string | null;
-    prenom?: string | null;
-    isConnected?: boolean;
-    aspect?: Aspects;
-    roles?: Array<string> | null;
+    creation?: string;
+    modification?: string | null;
+    code: TypeCentres;
+    description?: string | null;
+    centres?: Array<Centre> | null;
 }
-export namespace UserInfo {
+export namespace TypeCentre {
 }
 
 

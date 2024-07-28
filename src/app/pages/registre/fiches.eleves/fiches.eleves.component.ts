@@ -5,8 +5,8 @@ import { ColDef } from 'ag-grid-community'; // Column Definition Type Interface
 import 'ag-grid-community/styles/ag-grid.css';
 /* Quartz Theme Specific CSS */
 import 'ag-grid-community/styles/ag-theme-quartz.css';
-import { UserService } from '../../../core/osmose-api-client';
 import { AsyncPipe } from '@angular/common';
+import { UserService } from '../../../core/osmose-api-client';
 
 @Component({
   selector: 'app-fiches.eleves',

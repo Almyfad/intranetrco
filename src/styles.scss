@@ -18,4 +18,19 @@ body {
   --primary : #4c364b;
   --secondary : #caa55c;
   --tertiary : #8ed1fc;
+  --color-success: #43a446;
+  --color-error: #f23a2f;
+}
+
+.mat-mdc-snack-bar-container {
+  --mat-mdc-snack-bar-button-color: #ffffff;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+
+  &.app-notification-error {
+    --mdc-snackbar-container-color: var(--color-error);
+  }
+
+  &.app-notification-success {
+    --mdc-snackbar-container-color: var(--color-success);
+  }
 }

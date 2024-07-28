@@ -10,18 +10,20 @@
  * Do not edit the class manually.
  */
 import { Aspects } from './aspects';
+import { Utilisateur } from './utilisateur';
+import { Activitee } from './activitee';
 
 
-export interface UserInfo { 
+export interface Aspect { 
     id?: number;
-    email?: string | null;
-    nom?: string | null;
-    prenom?: string | null;
-    isConnected?: boolean;
-    aspect?: Aspects;
-    roles?: Array<string> | null;
+    creation?: string;
+    modification?: string | null;
+    code: Aspects;
+    description?: string | null;
+    utilisateurs?: Array<Utilisateur> | null;
+    activitees?: Array<Activitee> | null;
 }
-export namespace UserInfo {
+export namespace Aspect {
 }
 
 

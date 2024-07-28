@@ -3,6 +3,7 @@
 }
 
 .dashboard-card {
+  overflow: hidden; 
   position: absolute;
   top: 15px;
   left: 15px;
@@ -10,12 +11,28 @@
   bottom: 15px;
 }
 
+
 .more-button {
   position: absolute;
   top: 5px;
   right: 10px;
 }
 
+.dashboard-card.scrollable-content {
+  overflow-y: auto; /* Active le défilement vertical uniquement si nécessaire */
+}
+
+
 .dashboard-card-content {
-  text-align: center;
+  max-height: inherit; 
+  overflow-y: auto; 
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgb(218, 216, 216);
+  } 
 }

@@ -1,0 +1,61 @@
+<mat-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Arrivée-Départ</ng-template>
+            <h5>J'arrive : {{arriveeSelectionnee}}</h5> 
+            <div>
+                <mat-radio-group aria-label="Select an option" formControlName="ArriveCtrl" (change)="afficherArrivee()">
+                    <mat-radio-button value="Jeudi">Jeudi</mat-radio-button>
+                    <mat-radio-button value="Vendredi">Vendredi</mat-radio-button>
+                    <mat-radio-button value="Samedi">Samedi</mat-radio-button>
+                    <mat-radio-button value="Dimanche">Dimanche</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div>
+                <mat-radio-group aria-label="Select an option" formControlName="ArriveHeureCtrl" (change)="afficherArrivee()">
+                    <mat-radio-button value="Matin">Matin</mat-radio-button>
+                    <mat-radio-button value="Soir">Soir</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <h5>Et je repars : {{departSelectionnee}}</h5>
+            <div>
+                <mat-radio-group aria-label="Select an option" formControlName="DepartCtrl" (change)="afficherDepart()">
+                    <mat-radio-button value="Jeudi">Jeudi</mat-radio-button>
+                    <mat-radio-button value="Vendredi">Vendredi</mat-radio-button>
+                    <mat-radio-button value="Samedi">Samedi</mat-radio-button>
+                    <mat-radio-button value="Dimanche">Dimanche</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div>
+                <mat-radio-group aria-label="Select an option" formControlName="DepartHeureCtrl" (change)="afficherDepart()">
+                    <mat-radio-button value="Matin">Matin</mat-radio-button>
+                    <mat-radio-button value="Soir">Soir</mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <div>
+                <button mat-button matStepperNext>Suivant</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
+        <form [formGroup]="secondFormGroup">
+            <mat-form-field>
+                <mat-label>Address</mat-label>
+                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperPrevious>Retour</button>
+                <button mat-button matStepperNext>Suivant</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+    </mat-step>
+</mat-stepper>

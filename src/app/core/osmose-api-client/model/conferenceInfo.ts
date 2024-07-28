@@ -9,19 +9,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Aspects } from './aspects';
+import { CentreInfo } from './centreInfo';
 
 
-export interface UserInfo { 
-    id?: number;
-    email?: string | null;
-    nom?: string | null;
-    prenom?: string | null;
-    isConnected?: boolean;
-    aspect?: Aspects;
-    roles?: Array<string> | null;
+export interface ConferenceInfo { 
+    libelle?: string | null;
+    dateDebut?: string | null;
+    dateFin?: string | null;
+    description?: string | null;
+    typeActivitee?: string | null;
+    centre?: CentreInfo;
+    isRegistered?: boolean;
 }
-export namespace UserInfo {
-}
-
 

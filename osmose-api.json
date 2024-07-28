@@ -5,6 +5,200 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Conference/conference": {
+      "get": {
+        "tags": [
+          "Conference"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConferenceInfo"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConferenceInfo"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConferenceInfo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SysAdmin/generate/users": {
+      "post": {
+        "tags": [
+          "SysAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "count",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SysAdmin/generate/activities": {
+      "post": {
+        "tags": [
+          "SysAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "count",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/logout": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/user/infos": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/user": {
       "get": {
         "tags": [
@@ -144,66 +338,6 @@
         }
       }
     },
-    "/api/user/infos": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserInfo"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserInfo"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserInfo"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/login": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/create": {
       "post": {
         "tags": [
@@ -234,64 +368,256 @@
           }
         }
       }
-    },
-    "/api/logout": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/generate": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "parameters": [
-          {
-            "name": "count",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
     "schemas": {
+      "Activitee": {
+        "required": [
+          "centre",
+          "dateDebut",
+          "dateFin",
+          "libelle",
+          "typeActivitee"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "creation": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modification": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "libelle": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateDebut": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dateFin": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeActivitee": {
+            "$ref": "#/components/schemas/TypeActivitee"
+          },
+          "centre": {
+            "$ref": "#/components/schemas/Centre"
+          },
+          "aspects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Aspect"
+            },
+            "nullable": true
+          },
+          "inscriptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Inscription"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Aspect": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "creation": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modification": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "code": {
+            "$ref": "#/components/schemas/Aspects"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "utilisateurs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Utilisateur"
+            },
+            "nullable": true
+          },
+          "activitees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Activitee"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Aspects": {
+        "enum": [
+          100,
+          200,
+          300,
+          400,
+          500,
+          600,
+          700,
+          800,
+          900
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "Centre": {
+        "required": [
+          "code",
+          "libelle",
+          "typeCentre"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "creation": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modification": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeCentre": {
+            "$ref": "#/components/schemas/TypeCentre"
+          },
+          "libelle": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "adresse": {
+            "type": "string",
+            "nullable": true
+          },
+          "codePostal": {
+            "type": "string",
+            "nullable": true
+          },
+          "ville": {
+            "type": "string",
+            "nullable": true
+          },
+          "pays": {
+            "type": "string",
+            "nullable": true
+          },
+          "capacite": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "utilisateurs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Utilisateur"
+            },
+            "nullable": true
+          },
+          "activites": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Activitee"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CentreInfo": {
+        "required": [
+          "code",
+          "libelle"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "libelle": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ConferenceInfo": {
+        "type": "object",
+        "properties": {
+          "libelle": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateDebut": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateFin": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeActivitee": {
+            "type": "string",
+            "nullable": true
+          },
+          "centre": {
+            "$ref": "#/components/schemas/CentreInfo"
+          },
+          "isRegistered": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateUser": {
         "required": [
           "email",
@@ -313,6 +639,9 @@
           "email": {
             "type": "string",
             "nullable": true
+          },
+          "aspect": {
+            "$ref": "#/components/schemas/Aspects"
           },
           "motDePasse": {
             "type": "string",
@@ -344,6 +673,35 @@
               "$ref": "#/components/schemas/Roles"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Inscription": {
+        "required": [
+          "activitee",
+          "utilisateur"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "creation": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modification": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "utilisateur": {
+            "$ref": "#/components/schemas/Utilisateur"
+          },
+          "activitee": {
+            "$ref": "#/components/schemas/Activitee"
           }
         },
         "additionalProperties": false
@@ -412,6 +770,100 @@
         "type": "integer",
         "format": "int32"
       },
+      "TypeActivitee": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "creation": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modification": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "code": {
+            "$ref": "#/components/schemas/TypesActivitees"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "activites": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Activitee"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TypeCentre": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "creation": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modification": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "code": {
+            "$ref": "#/components/schemas/TypeCentres"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "centres": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Centre"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TypeCentres": {
+        "enum": [
+          100,
+          200
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TypesActivitees": {
+        "enum": [
+          100,
+          200,
+          300,
+          400,
+          500,
+          600,
+          700,
+          800
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "UserInfo": {
         "type": "object",
         "properties": {
@@ -434,6 +886,9 @@
           "isConnected": {
             "type": "boolean"
           },
+          "aspect": {
+            "$ref": "#/components/schemas/Aspects"
+          },
           "roles": {
             "type": "array",
             "items": {
@@ -446,6 +901,7 @@
       },
       "Utilisateur": {
         "required": [
+          "aspect",
           "nom",
           "prenom"
         ],
@@ -502,6 +958,12 @@
               "$ref": "#/components/schemas/Role"
             },
             "nullable": true
+          },
+          "aspect": {
+            "$ref": "#/components/schemas/Aspect"
+          },
+          "centres": {
+            "$ref": "#/components/schemas/Centre"
           }
         },
         "additionalProperties": false
