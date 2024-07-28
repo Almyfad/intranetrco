@@ -7,3 +7,8 @@ services:
       - "traefik.http.routers.osmosedevpmy.rule=Host(`intranet-dev.${TRAEFIK_HTTP_ROUTERS_HOST}`)"
       - "traefik.http.routers.osmosedevpmy.entrypoints=websecure"
       - "traefik.http.routers.osmosedevpmy.tls.certresolver=myresolver"
+    networks:
+      - traefik  
+networks:
+  traefik:
+    external: true       
