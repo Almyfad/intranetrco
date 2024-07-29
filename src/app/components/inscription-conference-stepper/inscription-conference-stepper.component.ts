@@ -25,13 +25,21 @@ export class InscriptionConferenceStepperComponent {
   
 
   firstFormGroup = this._formBuilder.group({
+    participeCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this._formBuilder.group({
     ArriveCtrl: ['', Validators.required],
     DepartCtrl: ['', Validators.required],
     ArriveHeureCtrl: ['', Validators.required],
     DepartHeureCtrl: ['', Validators.required],
   });
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
+  thirdFormGroup = this._formBuilder.group({
+    tachesCtrl: ['', Validators.required],
+  });
+  fourthFormGroup = this._formBuilder.group({
+    dortoirCtrl: ['', Validators.required],
+  });
+  fifthFormGroup = this._formBuilder.group({
   });
   isLinear = true;
 

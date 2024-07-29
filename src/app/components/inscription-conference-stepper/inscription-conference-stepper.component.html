@@ -1,10 +1,24 @@
 <mat-stepper [linear]="isLinear" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
+    <mat-step [stepControl]="firstFormGroup" label="Inscription">
         <form [formGroup]="firstFormGroup">
-            <ng-template matStepLabel>Arrivée-Départ</ng-template>
-            <h5>J'arrive : {{arriveeSelectionnee}}</h5> 
             <div>
-                <mat-radio-group aria-label="Select an option" formControlName="ArriveCtrl" (change)="afficherArrivee()">
+                <mat-radio-group aria-label="Select an option" class="radiovertical" formControlName="participeCtrl"
+                    (change)="afficherArrivee()">
+                    <mat-radio-button value="Jeudi">Je viens seul(e)</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div>             
+                <button mat-button mat-flat-button matStepperNext>Suivant</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Arrivée-Départ</ng-template>
+            <h5>J'arrive : {{arriveeSelectionnee}}</h5>
+            <div>
+                <mat-radio-group aria-label="Select an option" formControlName="ArriveCtrl"
+                    (change)="afficherArrivee()">
                     <mat-radio-button value="Jeudi">Jeudi</mat-radio-button>
                     <mat-radio-button value="Vendredi">Vendredi</mat-radio-button>
                     <mat-radio-button value="Samedi">Samedi</mat-radio-button>
@@ -12,7 +26,8 @@
                 </mat-radio-group>
             </div>
             <div>
-                <mat-radio-group aria-label="Select an option" formControlName="ArriveHeureCtrl" (change)="afficherArrivee()">
+                <mat-radio-group aria-label="Select an option" formControlName="ArriveHeureCtrl"
+                    (change)="afficherArrivee()">
                     <mat-radio-button value="Matin">Matin</mat-radio-button>
                     <mat-radio-button value="Soir">Soir</mat-radio-button>
                 </mat-radio-group>
@@ -27,35 +42,51 @@
                 </mat-radio-group>
             </div>
             <div>
-                <mat-radio-group aria-label="Select an option" formControlName="DepartHeureCtrl" (change)="afficherDepart()">
+                <mat-radio-group aria-label="Select an option" formControlName="DepartHeureCtrl"
+                    (change)="afficherDepart()">
                     <mat-radio-button value="Matin">Matin</mat-radio-button>
                     <mat-radio-button value="Soir">Soir</mat-radio-button>
                 </mat-radio-group>
             </div>
-
-            <div>
-                <button mat-button matStepperNext>Suivant</button>
+            <div><button mat-button matStepperPrevious>Retour</button>
+                <button mat-button mat-flat-button matStepperNext>Suivant</button>
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
-        <form [formGroup]="secondFormGroup">
-            <mat-form-field>
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
-            </mat-form-field>
+    <mat-step [stepControl]="thirdFormGroup" label="Service">
+        <form [formGroup]="thirdFormGroup">
+            <div>
+                <mat-radio-group aria-label="Select an option" class="radiovertical" formControlName="tachesCtrl"
+                    (change)="afficherArrivee()">
+                    <mat-radio-button value="Jeudi">C'est avec plaisir que je participe aux tâches</mat-radio-button>
+                    <mat-radio-button value="Vendredi">Au Besoin je participerai aux tâches</mat-radio-button>
+                    <mat-radio-button value="Samedi">Sans moi cette fois-ci</mat-radio-button>
+                </mat-radio-group>
+            </div>
             <div>
                 <button mat-button matStepperPrevious>Retour</button>
-                <button mat-button matStepperNext>Suivant</button>
+                <button mat-button mat-flat-button matStepperNext>Suivant</button>
             </div>
         </form>
     </mat-step>
-    <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        <p>You are now done.</p>
+    <mat-step [stepControl]="fourthFormGroup" >
+        <ng-template matStepLabel>Dortoir</ng-template>
+        <form [formGroup]="fourthFormGroup">
+            <div>
+                <mat-radio-group aria-label="Select an option" class="radiovertical" formControlName="dortoirCtrl"
+                    (change)="afficherArrivee()">
+                    <mat-radio-button value="Jeudi">Je n'ai aucune préference pour le lit</mat-radio-button>
+                    <mat-radio-button value="Vendredi">Je préfere le lit du supérieur</mat-radio-button>
+                    <mat-radio-button value="Samedi">Le lit inférieur siouplaît</mat-radio-button>
+                    <mat-radio-button value="Samedi">Dormir ? sert a quoi ? pas besoin de lit !</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div>
+                <button mat-button (click)="stepper.reset()">Reset</button>
+                <button mat-button mat-flat-button matStepperNext>Terminer</button>
+            </div>
+        </form>
         <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
         </div>
     </mat-step>
 </mat-stepper>
