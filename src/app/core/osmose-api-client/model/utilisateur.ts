@@ -10,24 +10,18 @@
  * Do not edit the class manually.
  */
 import { Role } from './role';
-import { Aspect } from './aspect';
-import { Centre } from './centre';
+import { Membre } from './membre';
+import { Droit } from './droit';
 
 
 export interface Utilisateur { 
     id?: number;
     creation?: string;
     modification?: string | null;
-    nom: string | null;
-    prenom: string | null;
-    email?: string | null;
-    telephone?: string | null;
-    adresse?: string | null;
-    codePostal?: string | null;
-    ville?: string | null;
-    pays?: string | null;
+    email: string | null;
+    membre?: Membre;
+    membreId?: number | null;
+    droits?: Array<Droit> | null;
     roles?: Array<Role> | null;
-    aspect: Aspect;
-    centres?: Centre;
 }
 

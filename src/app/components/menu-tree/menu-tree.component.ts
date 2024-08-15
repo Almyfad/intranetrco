@@ -6,10 +6,10 @@ import { MatIconButton } from '@angular/material/button';
 import { MatSidenavContent, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListItem, MatNavList } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MenuService } from '../../core/services/menu.service';
-import { Menu } from '../../core/services/menu';
+import { Module } from '../../core/osmose-api-client';
 
 @Component({
   selector: 'app-menu-tree',
@@ -20,11 +20,15 @@ import { Menu } from '../../core/services/menu';
   styleUrl: './menu-tree.component.scss',
 })
 export class MenuTreeComponent {
-  @Input() menus: Observable<Menu[]> = new Observable<Menu[]>();
+  @Input() menus: Observable<Module[]> = new Observable<Module[]>();
   private readonly menuService = inject(MenuService);
 
-  onSelectMenu(menu: Menu) {
+  onSelectMenu(menu: Module) {
     this.menuService.SelectedMenu = menu;
   };
+
+  hasChildren= (menu:Module) => menu.sousMenus?.length ?? 0 > 0;
+
+  ofSousMenus = (menu:Module) => of(menu.sousMenus ?? []);
 
 }

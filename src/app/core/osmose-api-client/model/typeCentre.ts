@@ -15,10 +15,10 @@ import { Centre } from './centre';
 
 export interface TypeCentre { 
     id?: number;
+    description?: string | null;
+    code?: TypeCentres;
     creation?: string;
     modification?: string | null;
-    code: TypeCentres;
-    description?: string | null;
     centres?: Array<Centre> | null;
 }
 export namespace TypeCentre {

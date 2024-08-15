@@ -1,10 +1,10 @@
 
 @for (menu of menus | async; track menu) {
     <mat-accordion (click)="this.onSelectMenu(menu)">
-        <mat-expansion-panel [hideToggle]="!menu.hasChildren" [disabled]="!menu.hasChildren"
+        <mat-expansion-panel [hideToggle]="!hasChildren(menu)" [disabled]="!hasChildren(menu)"
         class="menu-mat-expansion-panel">
         <mat-expansion-panel-header #link="routerLinkActive" 
-        [routerLink]="menu.route" routerLinkActive
+        [routerLink]="menu.path" routerLinkActive
         [routerLinkActiveOptions]="{exact: true}"
         [ngClass]="{ 'isActive': link.isActive }">
         <mat-panel-title>
@@ -14,8 +14,8 @@
             <span>{{menu.label}}</span>
         </mat-panel-description>
     </mat-expansion-panel-header>
-    @if (menu.hasChildren) {
-        <app-menu-tree [menus]="menu.children$"></app-menu-tree>
+    @if (hasChildren(menu)) {
+        <app-menu-tree [menus]="ofSousMenus(menu)"></app-menu-tree>
     }
 </mat-expansion-panel>
 </mat-accordion>

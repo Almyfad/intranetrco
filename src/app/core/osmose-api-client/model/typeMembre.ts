@@ -9,19 +9,21 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Roles } from './roles';
-import { Utilisateur } from './utilisateur';
+import { Membre } from './membre';
+import { TypesMembres } from './typesMembres';
+import { Activitee } from './activitee';
 
 
-export interface Role { 
+export interface TypeMembre { 
     id?: number;
     description?: string | null;
-    code?: Roles;
+    code?: TypesMembres;
     creation?: string;
     modification?: string | null;
-    utilisateurs?: Array<Utilisateur> | null;
+    membres?: Array<Membre> | null;
+    activitees?: Array<Activitee> | null;
 }
-export namespace Role {
+export namespace TypeMembre {
 }
 
 

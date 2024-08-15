@@ -51,7 +51,6 @@ export class LoginComponent implements OnInit,OnDestroy {
   login() {
     if (this.form.invalid) return
     this.loading = true;
-
     this.authService.login(this.form.value).subscribe({
       next: (v) => {
         if (v)
@@ -65,9 +64,6 @@ export class LoginComponent implements OnInit,OnDestroy {
       complete: () => this.loading = false
     })
   }
-
-
-
 }
 
 

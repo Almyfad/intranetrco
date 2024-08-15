@@ -9,19 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Roles } from './roles';
-import { Utilisateur } from './utilisateur';
 
 
-export interface Role { 
-    id?: number;
-    description?: string | null;
-    code?: Roles;
-    creation?: string;
-    modification?: string | null;
-    utilisateurs?: Array<Utilisateur> | null;
-}
-export namespace Role {
-}
+export type Civilites = 100 | 200;
 
+export const Civilites = {
+    NUMBER_100: 100 as Civilites,
+    NUMBER_200: 200 as Civilites
+};
 

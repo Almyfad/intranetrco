@@ -1,30 +1,31 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
-import { BehaviorSubject, map, Observable, of, shareReplay, tap } from 'rxjs';
-import menuConf from './menu.yml';
-import { parse } from 'yaml'
-import { Menu } from './menu';
+import { BehaviorSubject, map, Observable, shareReplay } from 'rxjs';
+import { Module } from '../osmose-api-client';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class MenuService {
-  private Allmenus: Menu[] = parse(menuConf).root.map((menu: any) => new Menu(menu));
-  private SelectedMenu$Subject = new BehaviorSubject<Menu>(this.Allmenus[0]);
+  private SelectedMenu$Subject = new BehaviorSubject<Module | undefined>(undefined);
 
-  set SelectedMenu(menu: Menu) {
+  set SelectedMenu(menu: Module) {
     this.SelectedMenu$Subject.next(menu);
   }
 
-  get SelectedMenu(): Observable<Menu> {
+  get SelectedMenu(): Observable<Module | undefined> {
     return this.SelectedMenu$Subject.pipe(shareReplay(1));
   }
 
 
   private readonly auth = inject(AuthService);
 
-  get menus(): Observable<Menu[]> {
-    return Menu.getAllowedMenus(this.Allmenus, this.auth.UserRoles$);
+  get menus(): Observable<Module[]> {
+    return this.auth.UserInfo$.pipe(
+      map((userInfo) => {
+        return (userInfo.modules ?? []) as [];
+      }));
 
   }
   constructor() { }

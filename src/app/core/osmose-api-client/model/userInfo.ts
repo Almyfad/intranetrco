@@ -9,19 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Aspects } from './aspects';
+import { Module } from './module';
 
 
 export interface UserInfo { 
-    id?: number;
     email?: string | null;
     nom?: string | null;
     prenom?: string | null;
     isConnected?: boolean;
-    aspect?: Aspects;
-    roles?: Array<string> | null;
+    modules?: Array<Module> | null;
 }
-export namespace UserInfo {
-}
-
 

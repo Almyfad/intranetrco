@@ -15,10 +15,10 @@ import { Activitee } from './activitee';
 
 export interface TypeActivitee { 
     id?: number;
+    description?: string | null;
+    code?: TypesActivitees;
     creation?: string;
     modification?: string | null;
-    code: TypesActivitees;
-    description?: string | null;
     activites?: Array<Activitee> | null;
 }
 export namespace TypeActivitee {

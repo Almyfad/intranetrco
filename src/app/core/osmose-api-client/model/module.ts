@@ -9,21 +9,26 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Aspects } from './aspects';
-import { Utilisateur } from './utilisateur';
-import { Activitee } from './activitee';
+import { Modules } from './modules';
 
 
-export interface Aspect { 
+export interface Module { 
     id?: number;
+    description?: string | null;
+    code?: Modules;
     creation?: string;
     modification?: string | null;
-    code: Aspects;
-    description?: string | null;
-    utilisateurs?: Array<Utilisateur> | null;
-    activitees?: Array<Activitee> | null;
+    label: string | null;
+    path: string | null;
+    parentId?: number | null;
+    sousMenus?: Array<Module> | null;
+    icon?: string | null;
+    title?: string | null;
+    prefixIcon?: string | null;
+    suffixIcon?: string | null;
+    isPublic?: boolean;
 }
-export namespace Aspect {
+export namespace Module {
 }
 
 

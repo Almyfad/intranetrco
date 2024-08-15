@@ -9,19 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Roles } from './roles';
-import { Utilisateur } from './utilisateur';
 
 
-export interface Role { 
-    id?: number;
-    description?: string | null;
-    code?: Roles;
-    creation?: string;
-    modification?: string | null;
-    utilisateurs?: Array<Utilisateur> | null;
-}
-export namespace Role {
-}
+export type Droits = 100 | 200 | 300;
 
+export const Droits = {
+    NUMBER_100: 100 as Droits,
+    NUMBER_200: 200 as Droits,
+    NUMBER_300: 300 as Droits
+};
 

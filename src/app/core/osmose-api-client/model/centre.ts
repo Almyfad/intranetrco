@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Membre } from './membre';
 import { TypeCentre } from './typeCentre';
-import { Utilisateur } from './utilisateur';
 import { Activitee } from './activitee';
 
 
@@ -27,7 +27,7 @@ export interface Centre {
     ville?: string | null;
     pays?: string | null;
     capacite?: number | null;
-    utilisateurs?: Array<Utilisateur> | null;
+    membres?: Array<Membre> | null;
     activites?: Array<Activitee> | null;
 }
 

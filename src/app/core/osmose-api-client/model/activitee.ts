@@ -11,7 +11,7 @@
  */
 import { TypeActivitee } from './typeActivitee';
 import { Inscription } from './inscription';
-import { Aspect } from './aspect';
+import { TypeMembre } from './typeMembre';
 import { Centre } from './centre';
 
 
@@ -25,7 +25,7 @@ export interface Activitee {
     description?: string | null;
     typeActivitee: TypeActivitee;
     centre: Centre;
-    aspects?: Array<Aspect> | null;
+    aspects?: Array<TypeMembre> | null;
     inscriptions?: Array<Inscription> | null;
 }
 

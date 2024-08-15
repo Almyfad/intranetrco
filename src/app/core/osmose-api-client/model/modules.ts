@@ -9,19 +9,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Roles } from './roles';
-import { Utilisateur } from './utilisateur';
 
 
-export interface Role { 
-    id?: number;
-    description?: string | null;
-    code?: Roles;
-    creation?: string;
-    modification?: string | null;
-    utilisateurs?: Array<Utilisateur> | null;
-}
-export namespace Role {
-}
+export type Modules = 1000 | 2000 | 2100 | 2200 | 3000 | 4000;
 
+export const Modules = {
+    NUMBER_1000: 1000 as Modules,
+    NUMBER_2000: 2000 as Modules,
+    NUMBER_2100: 2100 as Modules,
+    NUMBER_2200: 2200 as Modules,
+    NUMBER_3000: 3000 as Modules,
+    NUMBER_4000: 4000 as Modules
+};
 

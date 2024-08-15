@@ -3,15 +3,23 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --configuration=development",
+    "start:local": "ng serve --configuration=development",
+    "start": "run-p start:local compose-osmose osmose",
     "build": "ng build",
     "build:prod": "ng build --configuration=production",
     "watch": "ng build --watch --configuration=development",
     "test": "ng test",
+    "compose-osmose": "cd /users/lsene/source/repos/osmose-api/dev-compose && docker-compose up",
+    "osmose": "cd /users/lsene/source/repos/osmose-api/osmose-api && dotnet watch run --non-interactive  --launch-profile fromangular",
     "gen:osmose": "rimraf src/app/core/osmose-api-client && openapi-generator-cli generate -i ./osmose-api.json -o src/app/core/osmose-api-client -g typescript-angular --additional-properties=supportsES6=true,npmVersion=6.9.0,typescriptThreePlus=true"
   },
   "private": true,
   "dependencies": {
+    "@ag-grid-community/angular": "^32.1.0",
+    "@ag-grid-community/client-side-row-model": "^32.1.0",
+    "@ag-grid-community/core": "^32.1.0",
+    "@ag-grid-community/locale": "^32.1.0",
+    "@ag-grid-community/styles": "^32.1.0",
     "@angular/animations": "^18.1.0",
     "@angular/cdk": "^18.1.1",
     "@angular/common": "^18.1.0",
@@ -24,11 +32,10 @@
     "@angular/router": "^18.1.0",
     "@fontsource/roboto": "^5.0.13",
     "@openapitools/openapi-generator-cli": "^2.13.4",
-    "ag-grid-angular": "^32.0.2",
     "ngx-skeleton-loader": "^9.0.0",
+    "npm-run-all": "^4.1.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "yaml": "^2.4.5",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {

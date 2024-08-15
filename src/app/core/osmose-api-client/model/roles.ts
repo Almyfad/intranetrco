@@ -11,16 +11,11 @@
  */
 
 
-export type Roles = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800;
+export type Roles = 100 | 200 | 300;
 
 export const Roles = {
     NUMBER_100: 100 as Roles,
     NUMBER_200: 200 as Roles,
-    NUMBER_300: 300 as Roles,
-    NUMBER_400: 400 as Roles,
-    NUMBER_500: 500 as Roles,
-    NUMBER_600: 600 as Roles,
-    NUMBER_700: 700 as Roles,
-    NUMBER_800: 800 as Roles
+    NUMBER_300: 300 as Roles
 };
 
