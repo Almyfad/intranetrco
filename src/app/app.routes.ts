@@ -46,12 +46,36 @@ export const routes: Routes = [
         ]
       },
       {
+        path: 'conferences',
+        loadComponent: () =>
+          import('./address-form/address-form.component').then(
+            (c) => c.AddressFormComponent
+          ),
+        title: 'Conferences'
+      },
+      {
         path: 'registre/fiches/eleves',
         loadComponent: () =>
           import('./pages/registre/fiches.eleves/fiches.eleves.component').then(
             (c) => c.FichesElevesComponent
           ),
         title: 'Fiches Eleves'
+      },
+      {
+        path: 'administation',
+        loadComponent: () =>
+          import('./pages/administration/administration.component').then(
+            (c) => c.AdministrationComponent
+          ),
+        title: 'Administation'
+      },
+      {
+        path: 'developpment',
+        loadComponent: () =>
+          import('./pages/development/development.component').then(
+            (c) => c.DevelopmentComponent
+          ),
+        title: 'Developpment'
       },
       {
         path: 'address',
@@ -85,6 +109,7 @@ export const routes: Routes = [
     pathMatch: 'full',
     component: LoginComponent,
   },
+
   {
     path: 'logout',
     pathMatch: 'full',

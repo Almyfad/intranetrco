@@ -1,6 +1,7 @@
 @use "@angular/material" as mat;
 @use "./app/layout/layout-component.theme";
 @use "./styles.m3-theme.scss" as m3-theme;
+@use "./theme.scss" as theme ;
 
 @include mat.core();
 
@@ -10,16 +11,9 @@ body {
   font-family: Roboto, sans-serif;
 }
 
-
-//primary: 4c364b, secondary: caa55c, tertiary: 8ed1fc
 :root {
   @include mat.all-component-themes(m3-theme.$light-theme);
   @include layout-component.theme(m3-theme.$light-theme);
-  --primary : #4c364b;
-  --secondary : #caa55c;
-  --tertiary : #8ed1fc;
-  --color-success: #43a446;
-  --color-error: #f23a2f;
 }
 
 .mat-mdc-snack-bar-container {
@@ -27,10 +21,47 @@ body {
   --mdc-snackbar-supporting-text-color: #ffffff;
 
   &.app-notification-error {
-    --mdc-snackbar-container-color: var(--color-error);
+    --mdc-snackbar-container-color: theme.$color-error;
   }
 
   &.app-notification-success {
-    --mdc-snackbar-container-color: var(--color-success);
+    --mdc-snackbar-container-color: theme.$color-success;
   }
+}
+
+.color-primary {
+  color: theme.$primary;
+}
+.color-secondary {
+  color: theme.$secondary;
+}
+.color-tertiary {
+  color: theme.$tertiary;
+}
+.color-success {
+  color: theme.$color-success;
+}
+.color-error {
+  color: theme.$color-error;
+}
+.color-white {
+  color: white;
+}
+.bg-primary {
+  background-color: theme.$primary;
+}
+.bg-secondary {
+  background-color: theme.$secondary;
+}
+.bg-tertiary {
+  background-color: theme.$tertiary;
+}
+.bg-success {
+  background-color: theme.$color-success;
+}
+.bg-error {
+  background-color: theme.$color-error;
+}
+.bg-white {
+  background-color: white;
 }

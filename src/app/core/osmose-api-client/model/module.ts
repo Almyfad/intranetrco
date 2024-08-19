@@ -26,7 +26,6 @@ export interface Module {
     title?: string | null;
     prefixIcon?: string | null;
     suffixIcon?: string | null;
-    isPublic?: boolean;
 }
 export namespace Module {
 }

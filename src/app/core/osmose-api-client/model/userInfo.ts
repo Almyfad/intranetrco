@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { CentreModule } from './centreModule';
 import { Module } from './module';
 
 
@@ -17,6 +18,8 @@ export interface UserInfo {
     nom?: string | null;
     prenom?: string | null;
     isConnected?: boolean;
-    modules?: Array<Module> | null;
+    centreModules?: Array<CentreModule> | null;
+    sysAdminModules?: Array<Module> | null;
+    adminModules?: Array<Module> | null;
 }
 

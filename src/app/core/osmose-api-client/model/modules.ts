@@ -11,14 +11,17 @@
  */
 
 
-export type Modules = 1000 | 2000 | 2100 | 2200 | 3000 | 4000;
+export type Modules = 'Accueil' | 'Conferences' | 'ConferencesInscriptions' | 'ConferencesUserInscriptions' | 'Registre' | 'RegistreFicheEleves' | 'Comptabilite' | 'Administation' | 'Developpement';
 
 export const Modules = {
-    NUMBER_1000: 1000 as Modules,
-    NUMBER_2000: 2000 as Modules,
-    NUMBER_2100: 2100 as Modules,
-    NUMBER_2200: 2200 as Modules,
-    NUMBER_3000: 3000 as Modules,
-    NUMBER_4000: 4000 as Modules
+    Accueil: 'Accueil' as Modules,
+    Conferences: 'Conferences' as Modules,
+    ConferencesInscriptions: 'ConferencesInscriptions' as Modules,
+    ConferencesUserInscriptions: 'ConferencesUserInscriptions' as Modules,
+    Registre: 'Registre' as Modules,
+    RegistreFicheEleves: 'RegistreFicheEleves' as Modules,
+    Comptabilite: 'Comptabilite' as Modules,
+    Administation: 'Administation' as Modules,
+    Developpement: 'Developpement' as Modules
 };
 

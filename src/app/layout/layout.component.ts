@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, Host, inject } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -11,12 +11,24 @@ import { map, shareReplay } from 'rxjs/operators';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MenuTreeComponent } from "../components/menu-tree/menu-tree.component";
 import { MenuService } from '../core/services/menu.service';
-
+import { MatTabsModule } from '@angular/material/tabs';
+import { trigger, style, transition, animate } from '@angular/animations';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
   standalone: true,
+  animations: [
+    trigger('expand', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms ease-in', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('300ms ease-out', style({opacity:0}))
+      ])
+    ])
+  ],
   imports: [
     MatToolbarModule,
     MatButtonModule,
@@ -26,13 +38,19 @@ import { MenuService } from '../core/services/menu.service';
     AsyncPipe,
     RouterLink,
     RouterLinkActive,
-    MenuTreeComponent
-]
+    MenuTreeComponent,
+    MatTabsModule
+  ]
 })
 export class LayoutComponent {
   private readonly menuService = inject(MenuService);
   menus = this.menuService.menus;
   SelectedMenu$ = this.menuService.SelectedMenu;
+  centres = this.menuService.centres;
+  tabsEnable = this.menuService.TabsEnable;
+
+
+
   private breakpointObserver = inject(BreakpointObserver);
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(

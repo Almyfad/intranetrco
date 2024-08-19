@@ -1,6 +1,7 @@
 
+    @import './../../../theme.scss';
     .circleAvatar {
-        background-color: var(--primary);
+        background-color: $primary;
         color: white;
         width: 32px;
         height: 32px;
@@ -18,7 +19,7 @@
         width: 100%;
         align-items: center;
         justify-content: space-evenly;
-        background-color: var(--color-success);
+        background-color: $color-success;
         color: white;
         padding-left: 1px;
         padding-right: 5px;

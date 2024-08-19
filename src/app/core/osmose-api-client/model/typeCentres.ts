@@ -11,10 +11,10 @@
  */
 
 
-export type TypeCentres = 100 | 200;
+export type TypeCentres = 'Renouvellement' | 'Ville';
 
 export const TypeCentres = {
-    NUMBER_100: 100 as TypeCentres,
-    NUMBER_200: 200 as TypeCentres
+    Renouvellement: 'Renouvellement' as TypeCentres,
+    Ville: 'Ville' as TypeCentres
 };
 

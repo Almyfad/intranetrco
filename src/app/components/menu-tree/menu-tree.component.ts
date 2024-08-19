@@ -27,8 +27,14 @@ export class MenuTreeComponent {
     this.menuService.SelectedMenu = menu;
   };
 
-  hasChildren= (menu:Module) => menu.sousMenus?.length ?? 0 > 0;
+  hasChildren = (menu: Module) => menu.sousMenus?.length ?? 0 > 0;
 
-  ofSousMenus = (menu:Module) => of(menu.sousMenus ?? []);
+  ofSousMenus = (menu: Module) => of(menu.sousMenus ?? []);
+
+  isActive(menu: Module): Observable<boolean> {
+    return this.menuService.isActive(menu);
+  }
 
 }
+
+

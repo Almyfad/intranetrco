@@ -15,9 +15,9 @@ export class AuthService {
 
   
     ping$: Observable<UserInfo> = concat(
-      defer(() => this.userService.apiUserUserInfosGet()),
-      interval(30000).pipe(
-        switchMap(() => this.userService.apiUserUserInfosGet()),
+      //defer(() => this.userService.apiUserInfosGet()),
+      interval(300000).pipe(
+        switchMap(() => this.userService.apiUserInfosGet()),
         retry({
           delay: error => {
             if (error.status === 401) {
@@ -48,7 +48,7 @@ export class AuthService {
     }
    
     get UserInfoGuard$(): Observable<UserInfo> {
-      return this.userService.apiUserUserInfosGet().pipe(
+      return this.userService.apiUserInfosGet().pipe(
         tap((ui) => {
           this.UserInfos$Subject.next(ui);
           if (ui.isConnected === false) {
@@ -83,7 +83,7 @@ export class AuthService {
   login(payload: { email: string, password: string }): Observable<boolean> {
     return this.userService.apiUserLoginPost({ email: payload.email, password: payload.password })
       .pipe(
-        switchMap(() => this.userService.apiUserUserInfosGet()),
+        switchMap(() => this.userService.apiUserInfosGet()),
         tap((ui) => {
           this.UserInfos$Subject.next(ui)
         }),

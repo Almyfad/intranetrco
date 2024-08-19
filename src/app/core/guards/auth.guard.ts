@@ -7,10 +7,10 @@ import { map, tap } from "rxjs";
 export const authGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
-
+  //TODO : Check module access
   return authService.UserInfoGuard$.pipe(
     tap((userInfo) => {
-      console.log('authGuard', userInfo)
+      console.log('authGuard', router.url, userInfo)
       if (userInfo?.isConnected === false) {
         router.navigateByUrl('/login'); // Rediriger si non connecté
       }

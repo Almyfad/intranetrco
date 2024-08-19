@@ -11,18 +11,18 @@
  */
 
 
-export type TypesMembres = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 1000;
+export type TypesMembres = 'PremierAspect' | 'DeuxiemeAspect' | 'ECS' | 'ECCLESIA' | 'GRAAL' | 'CinquiemeAspect' | 'SixiemeAspect' | 'SeptiemeAspect' | 'Interesse' | 'Jeunesse';
 
 export const TypesMembres = {
-    NUMBER_100: 100 as TypesMembres,
-    NUMBER_200: 200 as TypesMembres,
-    NUMBER_300: 300 as TypesMembres,
-    NUMBER_400: 400 as TypesMembres,
-    NUMBER_500: 500 as TypesMembres,
-    NUMBER_600: 600 as TypesMembres,
-    NUMBER_700: 700 as TypesMembres,
-    NUMBER_800: 800 as TypesMembres,
-    NUMBER_900: 900 as TypesMembres,
-    NUMBER_1000: 1000 as TypesMembres
+    PremierAspect: 'PremierAspect' as TypesMembres,
+    DeuxiemeAspect: 'DeuxiemeAspect' as TypesMembres,
+    Ecs: 'ECS' as TypesMembres,
+    Ecclesia: 'ECCLESIA' as TypesMembres,
+    Graal: 'GRAAL' as TypesMembres,
+    CinquiemeAspect: 'CinquiemeAspect' as TypesMembres,
+    SixiemeAspect: 'SixiemeAspect' as TypesMembres,
+    SeptiemeAspect: 'SeptiemeAspect' as TypesMembres,
+    Interesse: 'Interesse' as TypesMembres,
+    Jeunesse: 'Jeunesse' as TypesMembres
 };
 

@@ -11,11 +11,11 @@
  */
 
 
-export type Roles = 100 | 200 | 300;
+export type Roles = 'SYSADMIN' | 'ADMIN_FULL_ACCESS' | 'USER_MANAGER';
 
 export const Roles = {
-    NUMBER_100: 100 as Roles,
-    NUMBER_200: 200 as Roles,
-    NUMBER_300: 300 as Roles
+    Sysadmin: 'SYSADMIN' as Roles,
+    AdminFullAccess: 'ADMIN_FULL_ACCESS' as Roles,
+    UserManager: 'USER_MANAGER' as Roles
 };
 

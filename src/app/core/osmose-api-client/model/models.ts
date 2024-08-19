@@ -1,6 +1,7 @@
 export * from './activitee';
 export * from './centre';
 export * from './centreInfo';
+export * from './centreModule';
 export * from './civilite';
 export * from './civilites';
 export * from './conferenceInfo';

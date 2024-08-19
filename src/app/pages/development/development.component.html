@@ -1,0 +1,31 @@
+<button mat-raised-button color="primary" [disabled]="loading" (click)="adminuser()">
+    @if (loading) {
+    <mat-spinner diameter="20"></mat-spinner>
+    }
+    Se connecter : avec Admin User
+</button>
+
+<button mat-raised-button color="primary" [disabled]="loading" (click)="standarUser()">
+    @if (loading) {
+    <mat-spinner diameter="20"></mat-spinner>
+    }
+    Se connecter : avec Standard User
+</button>
+
+
+<button mat-raised-button color="primary" [disabled]="loading" (click)="importusers()">
+    @if (loading) {
+    <mat-spinner diameter="20"></mat-spinner>
+    }
+    Importer les Utilisateurs
+</button>
+
+<button mat-raised-button color="primary" [disabled]="loading" (click)="genactivities()">
+    @if (loading) {
+    <mat-spinner diameter="20"></mat-spinner>
+    }
+    Génerer es activités
+</button>
+
+
+

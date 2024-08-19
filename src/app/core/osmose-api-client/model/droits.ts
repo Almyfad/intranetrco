@@ -11,11 +11,11 @@
  */
 
 
-export type Droits = 100 | 200 | 300;
+export type Droits = 'LECTURE' | 'AJOUT' | 'MODIFICATION';
 
 export const Droits = {
-    NUMBER_100: 100 as Droits,
-    NUMBER_200: 200 as Droits,
-    NUMBER_300: 300 as Droits
+    Lecture: 'LECTURE' as Droits,
+    Ajout: 'AJOUT' as Droits,
+    Modification: 'MODIFICATION' as Droits
 };
 

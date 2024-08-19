@@ -14,6 +14,7 @@ index.ts
 model/activitee.ts
 model/centre.ts
 model/centreInfo.ts
+model/centreModule.ts
 model/civilite.ts
 model/civilites.ts
 model/conferenceInfo.ts

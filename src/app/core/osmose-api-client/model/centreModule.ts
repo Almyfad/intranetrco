@@ -9,12 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Centre } from './centre';
+import { Module } from './module';
 
 
-export type Civilites = 'Monsieur' | 'Madame';
-
-export const Civilites = {
-    Monsieur: 'Monsieur' as Civilites,
-    Madame: 'Madame' as Civilites
-};
+export interface CentreModule { 
+    centre: Centre;
+    modules?: Array<Module> | null;
+}
 

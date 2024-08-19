@@ -2,7 +2,7 @@ interface Centre {
     id: number;
     nom: string;
 }
-
+// TODO : DELETE THIS FILE
 interface TypeConference {
     id: number;
     nom: string;

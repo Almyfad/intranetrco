@@ -1,14 +1,15 @@
+@import './../../../theme.scss';
 :host {
+    --mat-expansion-header-hover-state-layer-color : #{lighten($primary, 50%)};
+    --mat-expansion-header-indicator-color : white;
     mat-icon {
-        color: var(--secondary);
+        color: $secondary;
     }
-
     .mat-expansion-panel-header {
         &:hover {
             background: var(--mat-expansion-header-hover-state-layer-color)
         }
     }
-
     mat-expansion-panel {
         margin: 0;
         padding: 0;
@@ -25,19 +26,15 @@
             color: unset;
         }
 
-        .mat-expansion-panel-content .ng-trigger .ng-trigger-bodyExpansion {      
+        .mat-expansion-panel-content .ng-trigger .ng-trigger-bodyExpansion {
             height: 0px;
         }
 
 
         .isActive {
-            background-color: var(--secondary);
-            color: whitesmoke;
-            opacity: 0.8;
-
+            background-color: $secondary;
             mat-icon {
-                color: var(--primary);
-                opacity: 0.9;
+                color: white;
             }
         }
 

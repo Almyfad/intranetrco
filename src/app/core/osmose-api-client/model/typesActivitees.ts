@@ -11,16 +11,16 @@
  */
 
 
-export type TypesActivitees = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800;
+export type TypesActivitees = 'ServiceTempleInteresse' | 'ServiceApprofondissement' | 'WeekEndVille' | 'ConferenceRenouvellement' | 'ConferenceECS' | 'ConferenceECC' | 'ConferenceECS_ECC' | 'ConventGraalCTO';
 
 export const TypesActivitees = {
-    NUMBER_100: 100 as TypesActivitees,
-    NUMBER_200: 200 as TypesActivitees,
-    NUMBER_300: 300 as TypesActivitees,
-    NUMBER_400: 400 as TypesActivitees,
-    NUMBER_500: 500 as TypesActivitees,
-    NUMBER_600: 600 as TypesActivitees,
-    NUMBER_700: 700 as TypesActivitees,
-    NUMBER_800: 800 as TypesActivitees
+    ServiceTempleInteresse: 'ServiceTempleInteresse' as TypesActivitees,
+    ServiceApprofondissement: 'ServiceApprofondissement' as TypesActivitees,
+    WeekEndVille: 'WeekEndVille' as TypesActivitees,
+    ConferenceRenouvellement: 'ConferenceRenouvellement' as TypesActivitees,
+    ConferenceEcs: 'ConferenceECS' as TypesActivitees,
+    ConferenceEcc: 'ConferenceECC' as TypesActivitees,
+    ConferenceEcsEcc: 'ConferenceECS_ECC' as TypesActivitees,
+    ConventGraalCto: 'ConventGraalCTO' as TypesActivitees
 };
 
