@@ -27,15 +27,20 @@
         }
       </div>
     </mat-toolbar>
-    @if(tabsEnable | async) {
+    @if(tabsEnable | async) {      
       <div [@expand]="(tabsEnable | async )">
+
+
+        <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+          @for (centre of centres|async ;track centre) { 
+            <a mat-tab-link
+              (click)="selectedTabs = centre"
+              [active]="selectedTabs === centre"> {{centre.libelle}}</a>
+          }        
+        </nav>
+        <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+
         
-        <mat-tab-group>
-          @for (centre of centres|async ;track centre) {
-          <mat-tab label={{centre.libelle}} >
-          </mat-tab>
-          }
-        </mat-tab-group>
       </div>
       }
     <div class="sidenav-scroll-wrapper">

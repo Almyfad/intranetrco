@@ -1,4 +1,4 @@
-import { Component, Host, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -8,11 +8,12 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { MenuTreeComponent } from "../components/menu-tree/menu-tree.component";
 import { MenuService } from '../core/services/menu.service';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { trigger, style, transition, animate } from '@angular/animations';
+import { Centre } from '../core/osmose-api-client';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
@@ -25,7 +26,7 @@ import { trigger, style, transition, animate } from '@angular/animations';
         animate('300ms ease-in', style({ opacity: 1 }))
       ]),
       transition(':leave', [
-        animate('300ms ease-out', style({opacity:0}))
+        animate('300ms ease-out', style({ opacity: 0 }))
       ])
     ])
   ],
@@ -39,15 +40,23 @@ import { trigger, style, transition, animate } from '@angular/animations';
     RouterLink,
     RouterLinkActive,
     MenuTreeComponent,
-    MatTabsModule
+    MatTabsModule,
+    RouterModule,
   ]
 })
 export class LayoutComponent {
   private readonly menuService = inject(MenuService);
-  menus = this.menuService.menus;
+  private readonly router = inject(Router);
+
+  menus = this.menuService.Menus;
   SelectedMenu$ = this.menuService.SelectedMenu;
   centres = this.menuService.centres;
   tabsEnable = this.menuService.TabsEnable;
+
+  set selectedTabs(centre: Centre) {
+    this.menuService.SelectedCenter = centre
+
+  }
 
 
 

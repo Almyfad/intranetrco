@@ -2,13 +2,25 @@
     @if (loading) {
     <mat-spinner diameter="20"></mat-spinner>
     }
+    <mat-icon>security</mat-icon>
     Se connecter : avec Admin User
 </button>
+
+
+<button mat-raised-button color="primary" [disabled]="loading" (click)="usermanager()">
+    @if (loading) {
+    <mat-spinner diameter="20"></mat-spinner>
+    }
+    <mat-icon>shield_person</mat-icon>
+    Se connecter : avec User Manager
+</button>
+
 
 <button mat-raised-button color="primary" [disabled]="loading" (click)="standarUser()">
     @if (loading) {
     <mat-spinner diameter="20"></mat-spinner>
     }
+    <mat-icon>person</mat-icon>
     Se connecter : avec Standard User
 </button>
 
@@ -17,6 +29,8 @@
     @if (loading) {
     <mat-spinner diameter="20"></mat-spinner>
     }
+    <mat-icon>backup</mat-icon>
+
     Importer les Utilisateurs
 </button>
 
@@ -24,8 +38,6 @@
     @if (loading) {
     <mat-spinner diameter="20"></mat-spinner>
     }
+    <mat-icon>backup</mat-icon>
     Génerer es activités
 </button>
-
-
-
