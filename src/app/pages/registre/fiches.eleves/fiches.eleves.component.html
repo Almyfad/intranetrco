@@ -1,13 +1,8 @@
 <div class="content">
 
-    <ag-grid-angular  
-    [gridOptions]="gridOptions"
-    class="ag-theme-quartz"
-    [pagination]="pagination"
-    [paginationPageSize]="paginationPageSize"
-    [paginationPageSizeSelector]="paginationPageSizeSelector"
-    style="height: 85vh"
-    [rowData]="rowData$ | async"
-    [columnDefs]="colDefs" />
-    
+    <ag-grid-angular [gridOptions]="gridOptions" class="ag-theme-quartz" [pagination]="pagination"
+        [paginationPageSize]="paginationPageSize" [paginationPageSizeSelector]="paginationPageSizeSelector"
+        [style]="{'width': '100%', 'height': height+'px'}" [rowHeight]="42" [rowData]="rowData$ | async"
+        [columnDefs]="colDefs" />
+
 </div>

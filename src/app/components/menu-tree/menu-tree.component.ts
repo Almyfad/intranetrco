@@ -32,7 +32,7 @@ export class MenuTreeComponent {
   ofSousMenus = (menu: Module) => of(menu.sousMenus ?? []);
 
   isActive(menu: Module): Observable<boolean> {
-    return this.menuService.isActive(menu);
+    return this.menuService.isModuleActive(menu);
   }
 
 }

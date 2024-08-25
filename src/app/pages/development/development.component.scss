@@ -1,6 +1,12 @@
 :host {
     display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 3rem;
+    .list {
+
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
 }

@@ -1,43 +1,29 @@
-<button mat-raised-button color="primary" [disabled]="loading" (click)="adminuser()">
-    @if (loading) {
-    <mat-spinner diameter="20"></mat-spinner>
-    }
-    <mat-icon>security</mat-icon>
-    Se connecter : avec Admin User
-</button>
+<div class="list">
+
+    <app-button-loading color="primary" [observe]="adminuser" icon="security">
+        Se connecter : avec Admin User
+    </app-button-loading>
 
 
-<button mat-raised-button color="primary" [disabled]="loading" (click)="usermanager()">
-    @if (loading) {
-    <mat-spinner diameter="20"></mat-spinner>
-    }
-    <mat-icon>shield_person</mat-icon>
-    Se connecter : avec User Manager
-</button>
+    <app-button-loading color="primary" [observe]="usermanager" icon="shield_person">
+        Se connecter : avec User Manager
+
+    </app-button-loading>
+
+    <app-button-loading color="primary" [observe]="standarUser" icon="person">
+        Se connecter : avec Standard User
+    </app-button-loading>
 
 
-<button mat-raised-button color="primary" [disabled]="loading" (click)="standarUser()">
-    @if (loading) {
-    <mat-spinner diameter="20"></mat-spinner>
-    }
-    <mat-icon>person</mat-icon>
-    Se connecter : avec Standard User
-</button>
 
+</div>
 
-<button mat-raised-button color="primary" [disabled]="loading" (click)="importusers()">
-    @if (loading) {
-    <mat-spinner diameter="20"></mat-spinner>
-    }
-    <mat-icon>backup</mat-icon>
+<div class="list">
+    <app-button-loading color="primary" [observe]="importusers" icon="backup">
+        Importer les Utilisateurs
+    </app-button-loading>
+    <app-button-loading color="primary" [observe]="generateactivities" icon="backup">
+        Génerer des activités
+    </app-button-loading>
 
-    Importer les Utilisateurs
-</button>
-
-<button mat-raised-button color="primary" [disabled]="loading" (click)="genactivities()">
-    @if (loading) {
-    <mat-spinner diameter="20"></mat-spinner>
-    }
-    <mat-icon>backup</mat-icon>
-    Génerer es activités
-</button>
+</div>

@@ -35,7 +35,7 @@
           @for (centre of centres|async ;track centre) { 
             <a mat-tab-link
               (click)="selectedTabs = centre"
-              [active]="selectedTabs === centre"> {{centre.libelle}}</a>
+              [active]="isTabSelected(centre) | async"> {{centre.libelle}}</a>
           }        
         </nav>
         <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>

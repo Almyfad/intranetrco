@@ -1,0 +1,45 @@
+@if(isStroked) {
+<button mat-filled-button color="primary" [disabled]="loading" (click)="click()">
+  <div class="content"> 
+      @if (loading) {
+          <mat-spinner diameter="20"></mat-spinner>
+        }
+        @else {
+            @if(icon) {
+                <mat-icon>{{icon}}</mat-icon>
+            }
+        }
+        <ng-content></ng-content>
+    </div>
+</button>
+
+}
+@if(isFlat) {
+<button mat-flat-button color="primary" [disabled]="loading" (click)="click()">
+    <div class="content"> 
+        @if (loading) {
+    <mat-spinner diameter="20"></mat-spinner>
+    } @else {
+    @if(icon) {
+    <mat-icon>{{icon}}</mat-icon>
+    }
+    }
+    <ng-content></ng-content>
+</div>
+</button>
+}
+
+@if(isRaised) {
+<button mat-raised-button color="primary" [disabled]="loading" (click)="click()">
+    <div class="content"> 
+        @if (loading) {
+    <mat-spinner diameter="20"></mat-spinner>
+    } @else {
+    @if(icon) {
+    <mat-icon>{{icon}}</mat-icon>
+    }
+    }
+    <ng-content></ng-content>
+</div>
+</button>
+}

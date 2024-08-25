@@ -91,9 +91,15 @@ export class MenuService {
     return this.TabsEnable$Subject.pipe(shareReplay(1));
   }
 
-  isActive(menu: Module): Observable<boolean> {
+  isModuleActive(menu: Module): Observable<boolean> {
     return this.SelectedMenu$Subject.pipe(
       map((selectedMenu) => selectedMenu?.id === menu.id)
+    );
+  }
+
+  isCentreActive(centre: Centre): Observable<boolean> {
+    return this.SelectedCenter$Subject.pipe(
+      map((selectedCentre) => selectedCentre?.id === centre.id)
     );
   }
 

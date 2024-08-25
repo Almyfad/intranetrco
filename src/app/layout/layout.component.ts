@@ -55,7 +55,12 @@ export class LayoutComponent {
 
   set selectedTabs(centre: Centre) {
     this.menuService.SelectedCenter = centre
+  }
 
+
+
+  isTabSelected(centre: Centre) {
+    return this.menuService.isCentreActive(centre);
   }
 
 
