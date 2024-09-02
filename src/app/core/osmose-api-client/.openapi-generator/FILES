@@ -22,6 +22,7 @@ model/droit.ts
 model/droits.ts
 model/inscription.ts
 model/loginRequest.ts
+model/memberFilter.ts
 model/membre.ts
 model/membreOutput.ts
 model/models.ts

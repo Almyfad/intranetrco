@@ -9,6 +9,7 @@ export * from './droit';
 export * from './droits';
 export * from './inscription';
 export * from './loginRequest';
+export * from './memberFilter';
 export * from './membre';
 export * from './membreOutput';
 export * from './module';

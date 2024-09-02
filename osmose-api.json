@@ -43,11 +43,68 @@
         }
       }
     },
-    "/api/Registre/membres": {
+    "/api/Registre/aspects": {
       "get": {
         "tags": [
           "Registre"
         ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeMembre"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeMembre"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeMembre"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Registre/membres": {
+      "post": {
+        "tags": [
+          "Registre"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberFilter"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberFilter"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberFilter"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -73,6 +130,44 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/MembreOutput"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Registre/centres": {
+      "get": {
+        "tags": [
+          "Registre"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Centre"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Centre"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Centre"
                   }
                 }
               }
@@ -630,6 +725,68 @@
           "password": {
             "minLength": 1,
             "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MemberFilter": {
+        "type": "object",
+        "properties": {
+          "nom": {
+            "type": "string",
+            "nullable": true
+          },
+          "prenom": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "ville": {
+            "type": "string",
+            "nullable": true
+          },
+          "pays": {
+            "type": "string",
+            "nullable": true
+          },
+          "centre": {
+            "type": "string",
+            "nullable": true
+          },
+          "aspect": {
+            "type": "string",
+            "nullable": true
+          },
+          "l_villes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "l_pays": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "l_centres": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "l_aspects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TypesMembres"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

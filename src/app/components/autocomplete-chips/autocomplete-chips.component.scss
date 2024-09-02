@@ -1,0 +1,15 @@
+@import './../../../theme.scss';
+
+:host {
+    mat-form-field {
+        width: 100%;
+    }
+
+    --mdc-chip-label-text-color: white;
+    --mdc-chip-with-trailing-icon-trailing-icon-color : white;
+
+    mat-chip-row {
+        background-color: $secondary;
+        border: none;
+    }
+}

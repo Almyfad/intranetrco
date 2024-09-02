@@ -1,7 +1,37 @@
-:host{
-    .content  {
-        padding-top: 5rem;
+@import './../../../../theme.scss';
+:host {
+    .content {
+        padding-top:10px;
         width: 95%;
         margin: auto;
+    }
+
+    h3 {
+        text-align: center;
+        color: $secondary;
+    }
+    .searchpanel {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    app-autocomplete-chips {
+        flex:1;
+        margin: 5px;
+    }
+
+    form {
+       max-width: 800px;
+       margin: auto;
+       margin-bottom: 20px;
+       mat-card {
+           padding: 20px;
+           margin-bottom: 20px;
+       }
+    }
+    .count {
+        text-align: right;
+        margin: 10px 0;
     }
 }

@@ -1,8 +1,43 @@
 <div class="content">
+  <form [formGroup]="searchForm">
+    <mat-card>
+      <h3>Recherche</h3>
+      <div class="searchpanel">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input matInput placeholder="Ex. Doe" formControlName="nom">
+          <mat-icon matPrefix>person</mat-icon>
 
-    <ag-grid-angular [gridOptions]="gridOptions" class="ag-theme-quartz" [pagination]="pagination"
-        [paginationPageSize]="paginationPageSize" [paginationPageSizeSelector]="paginationPageSizeSelector"
-        [style]="{'width': '100%', 'height': height+'px'}" [rowHeight]="42" [rowData]="rowData$ | async"
-        [columnDefs]="colDefs" />
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Prenom</mat-label>
+          <input matInput placeholder="Ex. John" formControlName="prenom">
+          <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Ex. John" formControlName="email">
+          <mat-icon matPrefix>email</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="searchpanel">
+        <app-autocomplete-chips [items]="(aspects | async) ?? []" [keySelector]="aspectKeySelector" label="Aspect(s)"
+          placeholder="Ex. 1er Aspect" [displayWith]="aspectDisplayWith" (selectedItemsChange)="onAspectChange($event)">
+        </app-autocomplete-chips>
+      </div>
+      <div class="searchpanel">
+        <app-autocomplete-chips [items]="(centres | async) ?? []" [keySelector]="centreKeySelector" label="Centre(s)"
+          placeholder="Ex.  Paris" [displayWith]="centreDisplayWith" (selectedItemsChange)="onCentreChange($event)">
+        </app-autocomplete-chips>
+      </div>
+      <span class="count">
+        {{itemsCount | async}} élèves trouvés
+      </span>
+    </mat-card>
+  </form>
+
+  @for(item of items | async;track item) {
+  <app-fiche-eleve [eleve]="item"></app-fiche-eleve>
+  }
 
 </div>
