@@ -36,5 +36,7 @@ export interface Membre {
     commentaires?: string | null;
     dateNaissance?: string;
     utilisateur?: Utilisateur;
+    parents?: Array<Membre> | null;
+    enfants?: Array<Membre> | null;
 }
 

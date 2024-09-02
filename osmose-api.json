@@ -43,6 +43,44 @@
         }
       }
     },
+    "/api/Registre/centres": {
+      "get": {
+        "tags": [
+          "Registre"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Centre"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Centre"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Centre"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Registre/aspects": {
       "get": {
         "tags": [
@@ -130,44 +168,6 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/MembreOutput"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Registre/centres": {
-      "get": {
-        "tags": [
-          "Registre"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Centre"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Centre"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Centre"
                   }
                 }
               }
@@ -875,6 +875,20 @@
           },
           "utilisateur": {
             "$ref": "#/components/schemas/Utilisateur"
+          },
+          "parents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Membre"
+            },
+            "nullable": true
+          },
+          "enfants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Membre"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -928,6 +942,20 @@
           },
           "centre": {
             "$ref": "#/components/schemas/Centre"
+          },
+          "parents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MembreOutput"
+            },
+            "nullable": true
+          },
+          "enfants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MembreOutput"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

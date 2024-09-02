@@ -31,6 +31,27 @@
     <span class="">{{eleve.pays ?? "n/a"}}</span>
   </div>
 
+  @if(eleve.parents?.length ??0 > 0) {
+  <div class="field link">
+    <span class="label">Parents :</span>
+    <div class="parents">
+      @for(parent of eleve.parents;track parent) {
+      <app-fiche-eleve [eleve]="parent"></app-fiche-eleve>
+      }
+    </div>
+  </div>
+  }
+  @if(eleve.enfants?.length ??0 > 0) {
+  <div class="field link">
+    <span class="label">Enfants :</span>
+    <div class="enfants">
+      @for(enfant of eleve.enfants;track enfant) {
+      <app-fiche-eleve [eleve]="enfant"></app-fiche-eleve>
+      }
+    </div>
+  </div>
+  }
+
   <div class="actions">
     <button mat-raised-button><mat-icon>person_off</mat-icon>Rendre Inactif</button>
     <button mat-flat-button><mat-icon>edit</mat-icon>Editer</button>

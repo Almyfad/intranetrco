@@ -53,6 +53,7 @@ export class MenuService {
   _enabletabs(menu: Module) {
     if (menu.code === 'Accueil'
       || menu.code === 'ConferencesInscriptions' || menu.code === 'ConferencesUserInscriptions' || menu.code === 'Conferences'
+      || menu.code === 'Registre' || menu.code === 'RegistreFicheEleves' 
       || menu.code === 'Administation' || menu.code === 'Developpement'
     )
       this.TabsEnable = false

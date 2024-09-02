@@ -1,10 +1,13 @@
 @import './../../../theme.scss';
+
 :host {
-    mat-expansion-panel{
+    mat-expansion-panel {
         margin: 5px;
+
         .status {
-            font-size: 0.8em;        
+            font-size: 0.8em;
         }
+
         .actif {
             color: $color-success;
         }
@@ -14,9 +17,10 @@
         .label {
             font-weight: bold;
             padding-right: 5px;
-            color : $primary;
+            color: $primary;
         }
     }
+
     .actions {
         display: flex;
         justify-content: flex-end;
@@ -38,12 +42,41 @@
         animation: pulse-animation 2s infinite;
     }
 
+    .link {
+        display: flex;
+        align-items: center;
+
+        .parents,
+        .enfants {
+            flex: 1;
+        }
+        .parents
+         {
+            flex: 1;
+            .mat-expansion-panel,
+            .mat-expansion-panel-header.mat-expanded,
+            .mat-expansion-panel-header.mat-expanded:hover {
+                background: lighten($primary, 50%);
+            }
+        }
+        
+        .enfants {
+            flex: 1;
+            .mat-expansion-panel,
+            .mat-expansion-panel-header.mat-expanded,
+            .mat-expansion-panel-header.mat-expanded:hover {
+                background: lighten($secondary, 15%);
+            }
+        }
+    }
 }
+
 @keyframes pulse-animation {
     0% {
-         background: whitesmoke;
+        background: whitesmoke;
     }
+
     100% {
-         background: white;
+        background: white;
     }
-  }
+}

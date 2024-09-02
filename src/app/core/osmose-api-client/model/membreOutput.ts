@@ -25,5 +25,7 @@ export interface MembreOutput {
     pays?: string | null;
     typeMembre: TypeMembre;
     centre?: Centre;
+    parents?: Array<MembreOutput> | null;
+    enfants?: Array<MembreOutput> | null;
 }
 
