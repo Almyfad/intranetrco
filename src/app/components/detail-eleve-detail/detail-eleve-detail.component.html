@@ -1,0 +1,41 @@
+<div class="field">
+    <span class="label">telephone :</span>
+    <span class="">{{eleve.telephone ?? "n/a"}}</span>
+</div>
+<div class="field">
+    <span class="label">adresse :</span>
+    <span class="">{{eleve.adresse ?? "n/a"}}</span>
+</div>
+<div class="field">
+    <span class="label">Ville :</span>
+    <span class="">{{eleve.ville ?? "n/a"}}</span>
+</div>
+<div class="field">
+    <span class="label">Code Postal :</span>
+    <span class="">{{eleve.codePostal ?? "n/a"}}</span>
+</div>
+<div class="field">
+    <span class="label">Pays :</span>
+    <span class="">{{eleve.pays ?? "n/a"}}</span>
+</div>
+
+@if(eleve.parents?.length ??0 > 0) {
+<div class="field link">
+    <span class="label">Parents :</span>
+    <div class="parents">
+        @for(parent of eleve.parents;track parent) {
+        <app-detail-eleve [eleve]="parent" color="parents"></app-detail-eleve>
+        }
+    </div>
+</div>
+}
+@if(eleve.enfants?.length ??0 > 0) {
+<div class="field link">
+    <span class="label">Enfants :</span>
+    <div class="enfants">
+        @for(enfant of eleve.enfants;track enfant) {
+        <app-detail-eleve [eleve]="enfant" color="enfants"></app-detail-eleve>
+        }
+    </div>
+</div>
+}

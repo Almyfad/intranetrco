@@ -1,7 +1,7 @@
 @use "@angular/material" as mat;
 @use "./app/layout/layout-component.theme";
 @use "./styles.m3-theme.scss" as m3-theme;
-@use "./theme.scss" as theme ;
+@use "./theme.scss" as theme;
 
 @include mat.core();
 
@@ -21,47 +21,58 @@ body {
   --mdc-snackbar-supporting-text-color: #ffffff;
 
   &.app-notification-error {
-    --mdc-snackbar-container-color: theme.$color-error;
+    --mdc-snackbar-container-color: #{theme.$color-error};
   }
 
   &.app-notification-success {
-    --mdc-snackbar-container-color: theme.$color-success;
+    --mdc-snackbar-container-color: #{theme.$color-success};
   }
 }
 
 .color-primary {
   color: theme.$primary;
 }
+
 .color-secondary {
   color: theme.$secondary;
 }
+
 .color-tertiary {
   color: theme.$tertiary;
 }
+
 .color-success {
   color: theme.$color-success;
 }
+
 .color-error {
   color: theme.$color-error;
 }
+
 .color-white {
   color: white;
 }
+
 .bg-primary {
   background-color: theme.$primary;
 }
+
 .bg-secondary {
   background-color: theme.$secondary;
 }
+
 .bg-tertiary {
   background-color: theme.$tertiary;
 }
+
 .bg-success {
   background-color: theme.$color-success;
 }
+
 .bg-error {
   background-color: theme.$color-error;
 }
+
 .bg-white {
   background-color: white;
 }

@@ -1,0 +1,41 @@
+@defer (on viewport) {
+
+<mat-expansion-panel [class]="color">
+    <mat-expansion-panel-header>
+        <mat-panel-description style="flex:1"> {{eleve.centre?.code}} </mat-panel-description>
+        <mat-panel-description style="flex:10"> {{eleve.nom}} {{eleve.prenom}} </mat-panel-description>
+        <mat-panel-description style="flex:10"> {{eleve.email}} </mat-panel-description>
+        <mat-panel-description style="flex:10"> {{eleve.typeMembre.description}} </mat-panel-description>
+        <mat-panel-description style="flex:5" class="status actif"> ACTIF </mat-panel-description>
+
+    </mat-expansion-panel-header>
+
+
+
+
+        @if (isDetailMode) {
+        <div style="display: block;" [@toogleView]>
+            <app-detail-eleve-detail [eleve]="eleve"></app-detail-eleve-detail>
+        </div>
+        } @else if (isEditMode) {
+        <div style="display: block;" [@toogleView]>
+            <app-detail-eleve-edit [eleve]="eleve" (eleveChange)="swithView()"></app-detail-eleve-edit>
+        </div>
+        }
+
+
+
+        <div class="actions">
+            <button mat-raised-button><mat-icon>person_off</mat-icon>Rendre Inactif</button>
+            @if(isDetailMode) {
+            <button mat-flat-button (click)="swithView()"><mat-icon>edit</mat-icon>Editer</button>
+            }
+            @if(isEditMode) {
+            <button mat-raised-button (click)="swithView()"><mat-icon>cancel</mat-icon>Annuler</button>
+            }
+        </div>
+</mat-expansion-panel>
+}
+@placeholder {
+<div class="skeleton">&nbsp;</div>
+}

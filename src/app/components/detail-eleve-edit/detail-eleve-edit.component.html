@@ -1,0 +1,26 @@
+<form [formGroup]="editForm!" (ngSubmit)="save()">
+    <div class="row">
+
+        <mat-form-field>
+            <mat-label>Nom</mat-label>
+            <mat-icon matPrefix>person</mat-icon>
+            <input matInput formControlName="nom">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Prenom</mat-label>
+            <mat-icon matPrefix>person</mat-icon>
+            <input matInput formControlName="prenom">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Date de naissance</mat-label>
+            <mat-icon matPrefix>cake</mat-icon>
+            <input matInput>
+        </mat-form-field>
+
+    </div>
+    <div class="left">
+        <button mat-flat-button><mat-icon>save</mat-icon>Enregistrer</button>
+    </div>
+</form>

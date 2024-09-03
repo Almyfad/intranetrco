@@ -4,7 +4,6 @@ import { UserService } from '../../../core/osmose-api-client/api/user.service';
 import { RegistreService } from '../../../core/osmose-api-client/api/registre.service';
 import { MenuService } from '../../../core/services/menu.service';
 import { MatCardModule } from '@angular/material/card';
-import { FicheEleveComponent } from "../../../components/fiche-eleve/fiche-eleve.component";
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -13,15 +12,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutocompleteChipsComponent } from '../../../components/autocomplete-chips/autocomplete-chips.component';
-import { Centre, TypeCentres, TypeMembre } from '../../../core/osmose-api-client';
+import { Centre, TypeMembre } from '../../../core/osmose-api-client';
 import { FormGroup, FormControl } from '@angular/forms';
-import { debounceTime, iif, map, merge, of, switchMap } from 'rxjs';
+import { debounceTime, map, merge, of, switchMap } from 'rxjs';
+import { DetailEleveComponent } from "../../../components/detail-eleve/detail-eleve.component";
 
 @Component({
   selector: 'app-fiches.eleves',
   standalone: true,
-  imports: [AsyncPipe, MatCardModule, FicheEleveComponent, MatExpansionModule, MatFormFieldModule, MatInputModule,
-    MatAutocompleteModule, MatChipsModule, MatIconModule, FormsModule, AutocompleteChipsComponent, FormsModule, ReactiveFormsModule],
+  imports: [AsyncPipe, MatCardModule, MatExpansionModule, MatFormFieldModule, MatInputModule,
+    MatAutocompleteModule, MatChipsModule, MatIconModule, FormsModule, AutocompleteChipsComponent, FormsModule, ReactiveFormsModule, DetailEleveComponent],
   templateUrl: './fiches.eleves.component.html',
   styleUrl: './fiches.eleves.component.scss'
 })
