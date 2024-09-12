@@ -25,6 +25,7 @@ model/loginRequest.ts
 model/memberFilter.ts
 model/membre.ts
 model/membreOutput.ts
+model/membreOutputDataPager.ts
 model/models.ts
 model/module.ts
 model/modules.ts

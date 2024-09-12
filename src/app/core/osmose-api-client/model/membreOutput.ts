@@ -23,9 +23,9 @@ export interface MembreOutput {
     codePostal?: string | null;
     ville?: string | null;
     pays?: string | null;
-    typeMembre: TypeMembre;
-    centre?: Centre;
     parents?: Array<MembreOutput> | null;
     enfants?: Array<MembreOutput> | null;
+    typeMembre: TypeMembre;
+    centre?: Centre;
 }
 

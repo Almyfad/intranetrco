@@ -12,6 +12,7 @@ export * from './loginRequest';
 export * from './memberFilter';
 export * from './membre';
 export * from './membreOutput';
+export * from './membreOutputDataPager';
 export * from './module';
 export * from './modules';
 export * from './role';

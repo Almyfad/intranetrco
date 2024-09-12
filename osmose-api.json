@@ -124,6 +124,24 @@
         "tags": [
           "Registre"
         ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -149,26 +167,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MembreOutput"
-                  }
+                  "$ref": "#/components/schemas/MembreOutputDataPager"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MembreOutput"
-                  }
+                  "$ref": "#/components/schemas/MembreOutputDataPager"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MembreOutput"
-                  }
+                  "$ref": "#/components/schemas/MembreOutputDataPager"
                 }
               }
             }
@@ -937,12 +946,6 @@
             "type": "string",
             "nullable": true
           },
-          "typeMembre": {
-            "$ref": "#/components/schemas/TypeMembre"
-          },
-          "centre": {
-            "$ref": "#/components/schemas/Centre"
-          },
           "parents": {
             "type": "array",
             "items": {
@@ -951,6 +954,44 @@
             "nullable": true
           },
           "enfants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MembreOutput"
+            },
+            "nullable": true
+          },
+          "typeMembre": {
+            "$ref": "#/components/schemas/TypeMembre"
+          },
+          "centre": {
+            "$ref": "#/components/schemas/Centre"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MembreOutputDataPager": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalpage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/MembreOutput"

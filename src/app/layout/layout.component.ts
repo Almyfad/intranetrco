@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -14,6 +14,7 @@ import { MenuService } from '../core/services/menu.service';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { trigger, style, transition, animate } from '@angular/animations';
 import { Centre } from '../core/osmose-api-client';
+import { ScrollService } from '../core/services/scroll.service';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
@@ -44,19 +45,35 @@ import { Centre } from '../core/osmose-api-client';
     RouterModule,
   ]
 })
-export class LayoutComponent {
+export class LayoutComponent implements AfterViewInit {
   private readonly menuService = inject(MenuService);
   private readonly router = inject(Router);
+  private readonly scrollService = inject(ScrollService);
 
   menus = this.menuService.Menus;
   SelectedMenu$ = this.menuService.SelectedMenu;
   centres = this.menuService.centres;
   tabsEnable = this.menuService.TabsEnable;
+  @ViewChild('scrollableDiv') scrollableDiv!: ElementRef;
 
   set selectedTabs(centre: Centre) {
     this.menuService.SelectedCenter = centre
   }
 
+  ngAfterViewInit(): void {
+    this.scrollableDiv.nativeElement.addEventListener('scroll', this.onDivScroll.bind(this));
+  }
+
+  onDivScroll(event: any): void {
+    const element = event.target;
+    const scrollPosition = element.scrollTop + element.clientHeight;
+    const scrollHeight = element.scrollHeight;
+    this.scrollService.onScroll({
+      scrollHeight,
+      scrollTop: element.scrollTop,
+      clientHeight: element.clientHeight
+    });
+  }
 
 
   isTabSelected(centre: Centre) {

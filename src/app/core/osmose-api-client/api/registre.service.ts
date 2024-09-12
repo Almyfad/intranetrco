@@ -23,7 +23,7 @@ import { Centre } from '../model/centre';
 // @ts-ignore
 import { MemberFilter } from '../model/memberFilter';
 // @ts-ignore
-import { MembreOutput } from '../model/membreOutput';
+import { MembreOutputDataPager } from '../model/membreOutputDataPager';
 // @ts-ignore
 import { TypeMembre } from '../model/typeMembre';
 
@@ -221,14 +221,26 @@ export class RegistreService {
     }
 
     /**
+     * @param page 
+     * @param size 
      * @param memberFilter 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiRegistreMembresPost(memberFilter?: MemberFilter, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<MembreOutput>>;
-    public apiRegistreMembresPost(memberFilter?: MemberFilter, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<MembreOutput>>>;
-    public apiRegistreMembresPost(memberFilter?: MemberFilter, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<MembreOutput>>>;
-    public apiRegistreMembresPost(memberFilter?: MemberFilter, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiRegistreMembresPost(page?: number, size?: number, memberFilter?: MemberFilter, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<MembreOutputDataPager>;
+    public apiRegistreMembresPost(page?: number, size?: number, memberFilter?: MemberFilter, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<MembreOutputDataPager>>;
+    public apiRegistreMembresPost(page?: number, size?: number, memberFilter?: MemberFilter, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<MembreOutputDataPager>>;
+    public apiRegistreMembresPost(page?: number, size?: number, memberFilter?: MemberFilter, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (page !== undefined && page !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>page, 'page');
+        }
+        if (size !== undefined && size !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>size, 'size');
+        }
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -280,10 +292,11 @@ export class RegistreService {
         }
 
         let localVarPath = `/api/Registre/membres`;
-        return this.httpClient.request<Array<MembreOutput>>('post', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<MembreOutputDataPager>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: memberFilter,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
