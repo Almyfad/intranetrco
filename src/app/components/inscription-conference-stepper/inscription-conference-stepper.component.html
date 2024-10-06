@@ -1,51 +1,84 @@
-<mat-stepper [linear]="isLinear" #stepper>
-    <mat-step [stepControl]="firstFormGroup" label="Inscription">
-        <form [formGroup]="firstFormGroup">
+<span class="title">{{currentTitle(stepper)}}</span>
+<img src="assets/img/famille.png" alt="inscription" class="inscription">
+
+
+<mat-stepper>
+    <!-- #docregion label -->
+    <mat-step label="Step 1" state="phone">
+        <p>Put down your phones.</p>
+        <div>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+    </mat-step>
+    <!-- #enddocregion label -->
+    <mat-step label="Step 2" state="chat">
+        <p>Socialize with each other.</p>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+    </mat-step>
+    <mat-step label="Step 3">
+        <p>You're welcome.</p>
+    </mat-step>
+
+    <!-- Icon overrides. -->
+    <!-- #docregion override-icons -->
+    <ng-template matStepperIcon="phone">
+        <mat-icon>call_end</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="chat">
+        <mat-icon>forum</mat-icon>
+    </ng-template>
+</mat-stepper>
+
+
+
+<mat-stepper #stepper>
+    <mat-step [stepControl]="familyFormGroup" completed="true" state="done">
+        <ng-template matStepLabel><mat-icon>family_restroom</mat-icon></ng-template>
+        <form [formGroup]="familyFormGroup">
             <div>
-                <mat-radio-group aria-label="Select an option" class="radiovertical" formControlName="participeCtrl"
-                    (change)="afficherArrivee()">
-                    <mat-radio-button value="Jeudi">Je viens seul(e)</mat-radio-button>
+                <mat-radio-group class="radiovertical" formControlName="participeCtrl"
+                    [(ngModel)]="selectedParticipation">
+                    @for (ck of participationValues;track ck) {
+                    <mat-radio-button [value]="ck">{{ck.displayValue}}</mat-radio-button>
+                    }
+
                 </mat-radio-group>
+                @if(this.avecEnfant) {
+                @for(enfant of (mesEnfants$ | async);track enfant) {
+                <mat-checkbox [checked]="false" value="{{enfant}}" formControlName="{{enfant.id}}">
+                    {{enfant.prenom}}
+                </mat-checkbox>
+                }
+                @if(aucunEnfantRepertorie$ | async) {
+                <h5>Aucun enfant trouvé</h5>
+                }
+
+                }
             </div>
-            <div>             
+            <div>
                 <button mat-button mat-flat-button matStepperNext>Suivant</button>
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
-            <ng-template matStepLabel>Arrivée-Départ</ng-template>
-            <h5>J'arrive : {{arriveeSelectionnee}}</h5>
+    <mat-step [stepControl]="AriveeFormGroup" completed="true" state="done">
+        <form [formGroup]="AriveeFormGroup">
+            <ng-template matStepLabel><mat-icon>update</mat-icon></ng-template>
+            <h5>J'arrive : {{selectedArrivee?.displayValue}} {{selectedArriveeHeure?.displayValue}}</h5>
             <div>
-                <mat-radio-group aria-label="Select an option" formControlName="ArriveCtrl"
-                    (change)="afficherArrivee()">
-                    <mat-radio-button value="Jeudi">Jeudi</mat-radio-button>
-                    <mat-radio-button value="Vendredi">Vendredi</mat-radio-button>
-                    <mat-radio-button value="Samedi">Samedi</mat-radio-button>
-                    <mat-radio-button value="Dimanche">Dimanche</mat-radio-button>
+                <mat-radio-group formControlName="ArriveCtrl" [(ngModel)]="selectedArrivee">
+                    @for(ck of arriveeValues;track ck) {
+                    <mat-radio-button [value]="ck">{{ck.displayValue}}</mat-radio-button>
+                    }
                 </mat-radio-group>
             </div>
             <div>
-                <mat-radio-group aria-label="Select an option" formControlName="ArriveHeureCtrl"
-                    (change)="afficherArrivee()">
-                    <mat-radio-button value="Matin">Matin</mat-radio-button>
-                    <mat-radio-button value="Soir">Soir</mat-radio-button>
-                </mat-radio-group>
-            </div>
-            <h5>Et je repars : {{departSelectionnee}}</h5>
-            <div>
-                <mat-radio-group aria-label="Select an option" formControlName="DepartCtrl" (change)="afficherDepart()">
-                    <mat-radio-button value="Jeudi">Jeudi</mat-radio-button>
-                    <mat-radio-button value="Vendredi">Vendredi</mat-radio-button>
-                    <mat-radio-button value="Samedi">Samedi</mat-radio-button>
-                    <mat-radio-button value="Dimanche">Dimanche</mat-radio-button>
-                </mat-radio-group>
-            </div>
-            <div>
-                <mat-radio-group aria-label="Select an option" formControlName="DepartHeureCtrl"
-                    (change)="afficherDepart()">
-                    <mat-radio-button value="Matin">Matin</mat-radio-button>
-                    <mat-radio-button value="Soir">Soir</mat-radio-button>
+                <mat-radio-group formControlName="ArriveHeureCtrl" [(ngModel)]="selectedArriveeHeure">
+                    @for(ck of arriveeHeureValues;track ck) {
+                    <mat-radio-button [value]="ck">{{ck.displayValue}}</mat-radio-button>
+                    }
                 </mat-radio-group>
             </div>
             <div><button mat-button matStepperPrevious>Retour</button>
@@ -53,14 +86,37 @@
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="thirdFormGroup" label="Service">
-        <form [formGroup]="thirdFormGroup">
+    <mat-step [stepControl]="DepartFormGroup" completed="true" state="done">
+        <form [formGroup]="DepartFormGroup">
+            <ng-template matStepLabel><mat-icon>history_toggle_off</mat-icon></ng-template>
+            <h5>Et je repars : {{selectedDepart?.displayValue}} {{selectedDepartHeure?.displayValue}}</h5>
             <div>
-                <mat-radio-group aria-label="Select an option" class="radiovertical" formControlName="tachesCtrl"
-                    (change)="afficherArrivee()">
-                    <mat-radio-button value="Jeudi">C'est avec plaisir que je participe aux tâches</mat-radio-button>
-                    <mat-radio-button value="Vendredi">Au Besoin je participerai aux tâches</mat-radio-button>
-                    <mat-radio-button value="Samedi">Sans moi cette fois-ci</mat-radio-button>
+                <mat-radio-group formControlName="DepartCtrl" [(ngModel)]="selectedDepart">
+                    @for(ck of departValues;track ck) {
+                    <mat-radio-button [value]="ck">{{ck.displayValue}}</mat-radio-button>
+                    }
+                </mat-radio-group>
+            </div>
+            <div>
+                <mat-radio-group formControlName="DepartHeureCtrl" [(ngModel)]="selectedDepartHeure">
+                    @for(ck of departHeureValues;track ck) {
+                    <mat-radio-button [value]="ck">{{ck.displayValue}}</mat-radio-button>
+                    }
+                </mat-radio-group>
+            </div>
+            <div><button mat-button matStepperPrevious>Retour</button>
+                <button mat-button mat-flat-button matStepperNext>Suivant</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="tacheFormGroup" editable="false">
+        <ng-template matStepLabel><mat-icon>cleaning_services</mat-icon></ng-template>
+        <form [formGroup]="tacheFormGroup">
+            <div>
+                <mat-radio-group class="radiovertical" formControlName="tachesCtrl" [(ngModel)]="selectedTaches">
+                    @for(ck of tachesValues;track ck) {
+                    <mat-radio-button [value]="ck">{{ck.displayValue}}</mat-radio-button>
+                    }
                 </mat-radio-group>
             </div>
             <div>
@@ -69,24 +125,34 @@
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="fourthFormGroup" >
-        <ng-template matStepLabel>Dortoir</ng-template>
-        <form [formGroup]="fourthFormGroup">
+    <mat-step [stepControl]="LitFormGroup" editable="false">
+        <ng-template matStepLabel><mat-icon>bed</mat-icon></ng-template>
+        <form [formGroup]="LitFormGroup">
             <div>
-                <mat-radio-group aria-label="Select an option" class="radiovertical" formControlName="dortoirCtrl"
-                    (change)="afficherArrivee()">
-                    <mat-radio-button value="Jeudi">Je n'ai aucune préference pour le lit</mat-radio-button>
-                    <mat-radio-button value="Vendredi">Je préfere le lit du supérieur</mat-radio-button>
-                    <mat-radio-button value="Samedi">Le lit inférieur siouplaît</mat-radio-button>
-                    <mat-radio-button value="Samedi">Dormir ? sert a quoi ? pas besoin de lit !</mat-radio-button>
+                <mat-radio-group class="radiovertical" formControlName="dortoirCtrl" [(ngModel)]="selectedDortoir">
+                    @for(ck of dortoirValues;track ck) {
+                    <mat-radio-button [value]="ck">{{ck.displayValue}}</mat-radio-button>
+                    }
                 </mat-radio-group>
             </div>
             <div>
-                <button mat-button (click)="stepper.reset()">Reset</button>
-                <button mat-button mat-flat-button matStepperNext>Terminer</button>
+                <button mat-button matStepperPrevious>Retour</button>
+                <button mat-button mat-flat-button matStepperNext>Suivant</button>
             </div>
         </form>
         <div>
+        </div>
+    </mat-step>
+    <mat-step editable="false">
+        <ng-template matStepLabel><mat-icon>description</mat-icon></ng-template>
+        <div class="summary">
+            @for(sum of summary;track sum) {
+            <div>{{sum}}</div>
+            }
+        </div>
+        <div>
+            <button mat-button matStepperPrevious>Retour</button>
+            <button mat-button mat-flat-button matStepperNext (click)="save()">Confirmer</button>
         </div>
     </mat-step>
 </mat-stepper>

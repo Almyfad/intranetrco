@@ -13,7 +13,7 @@ import { InscriptionConferenceStepperComponent } from '../../components/inscript
 @Component({
   selector: 'app-mesconferences',
   standalone: true,
-  imports: [AsyncPipe,MatListModule,DatePipe,MatButtonModule,MatIconModule,MatGridListModule],
+  imports: [AsyncPipe, MatListModule, DatePipe, MatButtonModule, MatIconModule, MatGridListModule],
   templateUrl: './mesconferences.component.html',
   styleUrl: './mesconferences.component.scss'
 })
@@ -27,14 +27,14 @@ export class MesconferencesComponent {
 
   subscribe(conf: ConferenceInfo) {
     const dialogRef = this.dialog.open(InscriptionConferenceStepperComponent, {
-      width: '600px',   
+      width: '1000px',
       data: conf
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
-    }
+  }
 
 
 }
