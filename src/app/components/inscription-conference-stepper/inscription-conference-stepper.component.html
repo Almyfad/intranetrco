@@ -1,42 +1,30 @@
+<span class="title">{{titre}}</span>
 <span class="title">{{currentTitle(stepper)}}</span>
-<img src="assets/img/famille.png" alt="inscription" class="inscription">
+
+<div class="slider">
+    @if(stepper.selectedIndex === 0) {
+    <img src="assets/img/famille.png" alt="inscription" class="inscription" [@fadeAnimation]="stepper.selectedIndex">
+    }
+    @if(stepper.selectedIndex === 1) {
+    <img src="assets/img/arrivee.png" alt="inscription" class="inscription" [@fadeAnimation]="stepper.selectedIndex">
+    }
+    @if(stepper.selectedIndex === 2) {
+    <img src="assets/img/depart.png" alt="inscription" class="inscription" [@fadeAnimation]="stepper.selectedIndex">
+    }
+    @if(stepper.selectedIndex === 3) {
+    <img src="assets/img/vaisselle.png" alt="inscription" class="inscription" [@fadeAnimation]="stepper.selectedIndex">
+    }
+    @if(stepper.selectedIndex === 4) {
+    <img src="assets/img/lit.png" alt="inscription" class="inscription" [@fadeAnimation]="stepper.selectedIndex">
+    }
+    @if(stepper.selectedIndex === 5) {
+    <img src="assets/img/validation.png" alt="inscription" class="inscription" [@fadeAnimation]="stepper.selectedIndex">
+    }
+</div>
 
 
-<mat-stepper>
-    <!-- #docregion label -->
-    <mat-step label="Step 1" state="phone">
-        <p>Put down your phones.</p>
-        <div>
-            <button mat-button matStepperNext>Next</button>
-        </div>
-    </mat-step>
-    <!-- #enddocregion label -->
-    <mat-step label="Step 2" state="chat">
-        <p>Socialize with each other.</p>
-        <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
-        </div>
-    </mat-step>
-    <mat-step label="Step 3">
-        <p>You're welcome.</p>
-    </mat-step>
-
-    <!-- Icon overrides. -->
-    <!-- #docregion override-icons -->
-    <ng-template matStepperIcon="phone">
-        <mat-icon>call_end</mat-icon>
-    </ng-template>
-    <ng-template matStepperIcon="chat">
-        <mat-icon>forum</mat-icon>
-    </ng-template>
-</mat-stepper>
-
-
-
-<mat-stepper #stepper>
-    <mat-step [stepControl]="familyFormGroup" completed="true" state="done">
-        <ng-template matStepLabel><mat-icon>family_restroom</mat-icon></ng-template>
+<mat-stepper linear #stepper>
+    <mat-step [stepControl]="familyFormGroup" state="family_restroom">
         <form [formGroup]="familyFormGroup">
             <div>
                 <mat-radio-group class="radiovertical" formControlName="participeCtrl"
@@ -63,9 +51,8 @@
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="AriveeFormGroup" completed="true" state="done">
+    <mat-step [stepControl]="AriveeFormGroup" state="update">
         <form [formGroup]="AriveeFormGroup">
-            <ng-template matStepLabel><mat-icon>update</mat-icon></ng-template>
             <h5>J'arrive : {{selectedArrivee?.displayValue}} {{selectedArriveeHeure?.displayValue}}</h5>
             <div>
                 <mat-radio-group formControlName="ArriveCtrl" [(ngModel)]="selectedArrivee">
@@ -86,9 +73,8 @@
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="DepartFormGroup" completed="true" state="done">
+    <mat-step [stepControl]="DepartFormGroup" state="history_toggle_off">
         <form [formGroup]="DepartFormGroup">
-            <ng-template matStepLabel><mat-icon>history_toggle_off</mat-icon></ng-template>
             <h5>Et je repars : {{selectedDepart?.displayValue}} {{selectedDepartHeure?.displayValue}}</h5>
             <div>
                 <mat-radio-group formControlName="DepartCtrl" [(ngModel)]="selectedDepart">
@@ -109,8 +95,7 @@
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="tacheFormGroup" editable="false">
-        <ng-template matStepLabel><mat-icon>cleaning_services</mat-icon></ng-template>
+    <mat-step [stepControl]="tacheFormGroup" state="cleaning_services">
         <form [formGroup]="tacheFormGroup">
             <div>
                 <mat-radio-group class="radiovertical" formControlName="tachesCtrl" [(ngModel)]="selectedTaches">
@@ -125,8 +110,7 @@
             </div>
         </form>
     </mat-step>
-    <mat-step [stepControl]="LitFormGroup" editable="false">
-        <ng-template matStepLabel><mat-icon>bed</mat-icon></ng-template>
+    <mat-step [stepControl]="LitFormGroup" state="bed">
         <form [formGroup]="LitFormGroup">
             <div>
                 <mat-radio-group class="radiovertical" formControlName="dortoirCtrl" [(ngModel)]="selectedDortoir">
@@ -143,8 +127,7 @@
         <div>
         </div>
     </mat-step>
-    <mat-step editable="false">
-        <ng-template matStepLabel><mat-icon>description</mat-icon></ng-template>
+    <mat-step state="description">
         <div class="summary">
             @for(sum of summary;track sum) {
             <div>{{sum}}</div>
@@ -155,4 +138,27 @@
             <button mat-button mat-flat-button matStepperNext (click)="save()">Confirmer</button>
         </div>
     </mat-step>
+
+
+    <ng-template matStepperIcon="family_restroom">
+        <mat-icon>family_restroom</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="update">
+        <mat-icon>update</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="history_toggle_off">
+        <mat-icon>history_toggle_off</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="cleaning_services">
+        <mat-icon>cleaning_services</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="bed">
+        <mat-icon>bed</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="description">
+        <mat-icon>description</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="done">
+        <mat-icon class="checked">check</mat-icon>
+    </ng-template>
 </mat-stepper>

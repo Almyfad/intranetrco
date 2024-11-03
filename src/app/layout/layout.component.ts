@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { MenuTreeComponent } from "../components/menu-tree/menu-tree.component";
-import { MenuService } from '../core/services/menu.service';
+import { MenuService, Tab } from '../core/services/menu.service';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { trigger, style, transition, animate } from '@angular/animations';
 import { Centre } from '../core/osmose-api-client';
@@ -52,12 +52,12 @@ export class LayoutComponent implements AfterViewInit {
 
   menus = this.menuService.Menus;
   SelectedMenu$ = this.menuService.SelectedMenu;
-  centres = this.menuService.centres;
   tabsEnable = this.menuService.TabsEnable;
+  tabs = this.menuService.Tabs;
   @ViewChild('scrollableDiv') scrollableDiv!: ElementRef;
 
-  set selectedTabs(centre: Centre) {
-    this.menuService.SelectedCenter = centre
+  set selectedTabs(tab: Tab) {
+    this.menuService.SelectedTab = tab
   }
 
   ngAfterViewInit(): void {
@@ -76,8 +76,8 @@ export class LayoutComponent implements AfterViewInit {
   }
 
 
-  isTabSelected(centre: Centre) {
-    return this.menuService.isCentreActive(centre);
+  isTabSelected(tab: Tab) {
+    return this.menuService.isTabActive(tab);
   }
 
 

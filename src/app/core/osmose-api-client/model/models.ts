@@ -15,6 +15,7 @@ export * from './membreOutput';
 export * from './membreOutputDataPager';
 export * from './module';
 export * from './modules';
+export * from './registerConferenceRequest';
 export * from './role';
 export * from './roles';
 export * from './typeActivitee';

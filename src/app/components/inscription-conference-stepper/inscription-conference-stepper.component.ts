@@ -6,12 +6,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { Membre, UserService } from '../../core/osmose-api-client';
+import { ConferenceInfo, Membre, UserService } from '../../core/osmose-api-client';
 import { AsyncPipe } from '@angular/common';
 import { map, shareReplay, tap } from 'rxjs';
 import IChecboxKeyValue, { Dortoir, Taches } from './inscription-conference-stepper.class';
 import { MatIconModule } from '@angular/material/icon';
-import { CdkStepper } from '@angular/cdk/stepper';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-inscription-conference-stepper',
@@ -23,16 +25,35 @@ import { CdkStepper } from '@angular/cdk/stepper';
     MatFormFieldModule, MatIconModule,
     MatCheckboxModule,
     MatInputModule,],
+  animations: [
+    trigger('fadeAnimation', [
+      state('void', style({ opacity: 0 })),
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('500ms ease-in-out', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('500ms ease-in-out', style({
+          opacity:
+            0
+        }))
+      ])
+    ])
+  ],
   templateUrl: './inscription-conference-stepper.component.html',
-  styleUrl: './inscription-conference-stepper.component.scss'
+  styleUrl: './inscription-conference-stepper.component.scss',
+  providers: [
+    { provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false } }
+  ]
 })
 export class InscriptionConferenceStepperComponent {
   private readonly _formBuilder = inject(FormBuilder);
   private readonly user = inject(UserService);
-
-
-
-
+  data: ConferenceInfo = inject(MAT_DIALOG_DATA)
+  get titre() {
+    console.log(this.data);
+    return this.data.description;
+  }
 
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required]
@@ -141,13 +162,16 @@ export class InscriptionConferenceStepperComponent {
   currentTitle(stepper: MatStepper) {
     return [
       'Inscription',
-      'Arrivée et départ',
+      'Arrivée',
+      'Départ',
       'Participations aux tâches',
       'Dortoir',
       'Confirmation de vos choix'
 
     ][stepper.selectedIndex];
   }
+
+
 
 
   get summary(): String[] {

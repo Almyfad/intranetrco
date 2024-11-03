@@ -9,23 +9,20 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Droits } from './droits';
-import { Centre } from './centre';
-import { Module } from './module';
-import { Utilisateur } from './utilisateur';
+import { TypesActivitees } from './typesActivitees';
+import { TypesMembres } from './typesMembres';
 
 
-export interface Droit { 
-    id?: number;
+export interface RegisterConferenceRequest { 
+    centreId: number;
+    codeTypeActivitee: TypesActivitees;
+    libelle: string | null;
     description?: string | null;
-    code?: Droits;
-    creation?: string;
-    modification?: string | null;
-    utilisateur?: Utilisateur;
-    centre?: Centre;
-    module: Module;
+    dateDebut: string;
+    dateFin: string;
+    typeMembres: Array<TypesMembres> | null;
 }
-export namespace Droit {
+export namespace RegisterConferenceRequest {
 }
 
 

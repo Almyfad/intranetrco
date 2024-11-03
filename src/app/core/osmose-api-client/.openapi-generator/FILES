@@ -29,6 +29,7 @@ model/membreOutputDataPager.ts
 model/models.ts
 model/module.ts
 model/modules.ts
+model/registerConferenceRequest.ts
 model/role.ts
 model/roles.ts
 model/typeActivitee.ts

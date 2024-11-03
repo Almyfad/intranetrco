@@ -17,7 +17,10 @@ export interface Inscription {
     id?: number;
     creation?: string;
     modification?: string | null;
-    utilisateur: Utilisateur;
-    activitee: Activitee;
+    utilisateur?: Utilisateur;
+    utilisateurId?: number | null;
+    activitee?: Activitee;
+    activiteeId?: number | null;
+    infos?: string | null;
 }
 

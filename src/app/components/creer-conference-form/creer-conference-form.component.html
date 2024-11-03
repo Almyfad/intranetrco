@@ -1,0 +1,86 @@
+<form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+    <mat-card class="shipping-card">
+        <mat-card-header>
+            <mat-card-title>Creer une nouvelle Conférence</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Centre de Renouvellement</mat-label>
+                        <input matInput formControlName="centre" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Titre de la Conférence</mat-label>
+                        <input matInput formControlName="libelle">
+                        @if (form.controls['libelle'].hasError('required')) {
+                        <mat-error>Le libellé est<strong>obligatoire</strong></mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Type Conférence</mat-label>
+                        <mat-select formControlName="typeconference">
+                            @for (type of (typeActivitees | async); track type) {
+                            <mat-option [value]="type">{{type.description}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Aspect concernés</mat-label>
+                        <mat-select formControlName="aspect" multiple>
+                            @for (type of (aspects | async); track type) {
+                            <mat-option [value]="type">{{type.description}}</mat-option>
+                            }
+                            @if(form.controls['aspect'].hasError('required')) {
+                            <mat-error>Les aspects concernés sont<strong>obligatoires</strong></mat-error>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Date de début</mat-label>
+                        <input matInput [matDatepicker]="pickerstart" formControlName="dateDebut">
+                        <mat-datepicker-toggle matIconSuffix [for]="pickerstart"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerstart></mat-datepicker>
+                        @if (form.controls['dateDebut'].hasError('required')) {
+                        <mat-error>La date de début est<strong>obligatoire</strong></mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Date de fin</mat-label>
+                        <input matInput [matDatepicker]="pickerend" formControlName="dateFin">
+                        <mat-datepicker-toggle matIconSuffix [for]="pickerend"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerend></mat-datepicker>
+                        @if (form.controls['dateFin'].hasError('required')) {
+                        <mat-error>La date de fin est<strong>obligatoire</strong></mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput placeholder="Description" formControlName="description"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" type="submit">Enregister</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

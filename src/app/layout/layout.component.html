@@ -27,23 +27,19 @@
         }
       </div>
     </mat-toolbar>
-    @if(tabsEnable | async) {      
-      <div [@expand]="(tabsEnable | async )">
+    @if(tabsEnable | async) {
+    <div [@expand]="(tabsEnable | async )">
+      <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+        @for (t of tabs|async ;track t) {
+        <a mat-tab-link (click)="selectedTabs = t" [active]="isTabSelected(t) | async"> {{t.libelle}}</a>
+        }
+      </nav>
+      <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
 
 
-        <nav mat-tab-nav-bar [tabPanel]="tabPanel">
-          @for (centre of centres|async ;track centre) { 
-            <a mat-tab-link
-              (click)="selectedTabs = centre"
-              [active]="isTabSelected(centre) | async"> {{centre.libelle}}</a>
-          }        
-        </nav>
-        <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
-
-        
-      </div>
-      }
-    <div  class="sidenav-scroll-wrapper">
+    </div>
+    }
+    <div class="sidenav-scroll-wrapper">
       <div #scrollableDiv class="sidenav-content">
         <ng-content></ng-content>
       </div>

@@ -41,6 +41,128 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Conference"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterConferenceRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterConferenceRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterConferenceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Activitee"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Activitee"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Activitee"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Conference/conference/types": {
+      "get": {
+        "tags": [
+          "Conference"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeActivitee"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeActivitee"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeActivitee"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Conference/conference/aspect": {
+      "get": {
+        "tags": [
+          "Conference"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeMembre"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeMembre"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeMembre"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/Registre/centres": {
@@ -396,7 +518,8 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true
       }
     },
     "/api/User/mesenfants": {
@@ -433,6 +556,35 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/User/inscription": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "ActiviteeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Infos",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -685,7 +837,7 @@
       },
       "Droit": {
         "required": [
-          "utilisateur"
+          "module"
         ],
         "type": "object",
         "properties": {
@@ -723,6 +875,7 @@
       },
       "Droits": {
         "enum": [
+          "PUBLIC",
           "LECTURE",
           "AJOUT",
           "MODIFICATION"
@@ -730,10 +883,6 @@
         "type": "string"
       },
       "Inscription": {
-        "required": [
-          "activitee",
-          "utilisateur"
-        ],
         "type": "object",
         "properties": {
           "id": {
@@ -752,8 +901,22 @@
           "utilisateur": {
             "$ref": "#/components/schemas/Utilisateur"
           },
+          "utilisateurId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "activitee": {
             "$ref": "#/components/schemas/Activitee"
+          },
+          "activiteeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "infos": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1107,17 +1270,79 @@
       },
       "Modules": {
         "enum": [
+          "SysAdmin",
           "Accueil",
           "Conferences",
           "ConferencesInscriptions",
           "ConferencesUserInscriptions",
+          "CreateConference",
           "Registre",
           "RegistreFicheEleves",
+          "RegistreFicheParvis",
+          "RegistreFicheContacts",
+          "RegistreFicheJeunesses",
+          "RegistreFicheJeunesRosicruciens",
+          "RegistreSaisiePresences",
+          "RegistreSaisiePresencesVilles",
+          "RegistreSaisiePresencesCR",
+          "RegistreSaisiePresencesEI",
+          "RegistreStatistiques",
+          "RegistreStatistiquesPresences",
+          "RegistreStatistiquesMouvements",
           "Comptabilite",
+          "ComptabiliteEnLigne",
+          "ComptabiliteParametres",
+          "ComptabiliteSaisieEcrituresRepetitives",
+          "ComptabiliteComptesCaisse",
           "Administation",
-          "Developpement"
+          "Developpement",
+          "Logout"
         ],
         "type": "string"
+      },
+      "RegisterConferenceRequest": {
+        "required": [
+          "centreId",
+          "codeTypeActivitee",
+          "dateDebut",
+          "dateFin",
+          "libelle",
+          "typeMembres"
+        ],
+        "type": "object",
+        "properties": {
+          "centreId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codeTypeActivitee": {
+            "$ref": "#/components/schemas/TypesActivitees"
+          },
+          "libelle": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateDebut": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dateFin": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "typeMembres": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TypesMembres"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "Role": {
         "type": "object",

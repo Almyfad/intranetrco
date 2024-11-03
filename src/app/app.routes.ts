@@ -47,9 +47,17 @@ export const routes: Routes = [
       },
       {
         path: 'conferences',
+        title: 'Conferences',
         loadComponent: () =>
           import('./address-form/address-form.component').then(
             (c) => c.AddressFormComponent
+          ),
+      },
+      {
+        path: 'creer/conference',
+        loadComponent: () =>
+          import('./components/creer-conference-form/creer-conference-form.component').then(
+            (c) => c.CreerConferenceFormComponent
           ),
         title: 'Conferences'
       },

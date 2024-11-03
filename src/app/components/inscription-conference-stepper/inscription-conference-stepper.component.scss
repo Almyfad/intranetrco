@@ -12,10 +12,34 @@
     font-size: 20px;
     margin-bottom: 10px;
     text-align: center;
-    margin-top: 20px;
+    margin: 10px;
 }
 
 .summary {
     font-size: 15px;
     margin-bottom: 20px;
+
+}
+
+.checked {
+    color: white;
+    background-color: rgb(98, 158, 7);
+    padding: 9px;
+    border-radius: 50%;
+}
+
+.slider {
+    position: relative;
+    height: 200px;
+    width: 100%;
+
+    img {
+        height: 200px;
+        width: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+    }
 }

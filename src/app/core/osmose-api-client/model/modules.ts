@@ -11,17 +11,35 @@
  */
 
 
-export type Modules = 'Accueil' | 'Conferences' | 'ConferencesInscriptions' | 'ConferencesUserInscriptions' | 'Registre' | 'RegistreFicheEleves' | 'Comptabilite' | 'Administation' | 'Developpement';
+export type Modules = 'SysAdmin' | 'Accueil' | 'Conferences' | 'ConferencesInscriptions' | 'ConferencesUserInscriptions' | 'CreateConference' | 'Registre' | 'RegistreFicheEleves' | 'RegistreFicheParvis' | 'RegistreFicheContacts' | 'RegistreFicheJeunesses' | 'RegistreFicheJeunesRosicruciens' | 'RegistreSaisiePresences' | 'RegistreSaisiePresencesVilles' | 'RegistreSaisiePresencesCR' | 'RegistreSaisiePresencesEI' | 'RegistreStatistiques' | 'RegistreStatistiquesPresences' | 'RegistreStatistiquesMouvements' | 'Comptabilite' | 'ComptabiliteEnLigne' | 'ComptabiliteParametres' | 'ComptabiliteSaisieEcrituresRepetitives' | 'ComptabiliteComptesCaisse' | 'Administation' | 'Developpement' | 'Logout';
 
 export const Modules = {
+    SysAdmin: 'SysAdmin' as Modules,
     Accueil: 'Accueil' as Modules,
     Conferences: 'Conferences' as Modules,
     ConferencesInscriptions: 'ConferencesInscriptions' as Modules,
     ConferencesUserInscriptions: 'ConferencesUserInscriptions' as Modules,
+    CreateConference: 'CreateConference' as Modules,
     Registre: 'Registre' as Modules,
     RegistreFicheEleves: 'RegistreFicheEleves' as Modules,
+    RegistreFicheParvis: 'RegistreFicheParvis' as Modules,
+    RegistreFicheContacts: 'RegistreFicheContacts' as Modules,
+    RegistreFicheJeunesses: 'RegistreFicheJeunesses' as Modules,
+    RegistreFicheJeunesRosicruciens: 'RegistreFicheJeunesRosicruciens' as Modules,
+    RegistreSaisiePresences: 'RegistreSaisiePresences' as Modules,
+    RegistreSaisiePresencesVilles: 'RegistreSaisiePresencesVilles' as Modules,
+    RegistreSaisiePresencesCr: 'RegistreSaisiePresencesCR' as Modules,
+    RegistreSaisiePresencesEi: 'RegistreSaisiePresencesEI' as Modules,
+    RegistreStatistiques: 'RegistreStatistiques' as Modules,
+    RegistreStatistiquesPresences: 'RegistreStatistiquesPresences' as Modules,
+    RegistreStatistiquesMouvements: 'RegistreStatistiquesMouvements' as Modules,
     Comptabilite: 'Comptabilite' as Modules,
+    ComptabiliteEnLigne: 'ComptabiliteEnLigne' as Modules,
+    ComptabiliteParametres: 'ComptabiliteParametres' as Modules,
+    ComptabiliteSaisieEcrituresRepetitives: 'ComptabiliteSaisieEcrituresRepetitives' as Modules,
+    ComptabiliteComptesCaisse: 'ComptabiliteComptesCaisse' as Modules,
     Administation: 'Administation' as Modules,
-    Developpement: 'Developpement' as Modules
+    Developpement: 'Developpement' as Modules,
+    Logout: 'Logout' as Modules
 };
 

@@ -11,9 +11,10 @@
  */
 
 
-export type Droits = 'LECTURE' | 'AJOUT' | 'MODIFICATION';
+export type Droits = 'PUBLIC' | 'LECTURE' | 'AJOUT' | 'MODIFICATION';
 
 export const Droits = {
+    Public: 'PUBLIC' as Droits,
     Lecture: 'LECTURE' as Droits,
     Ajout: 'AJOUT' as Droits,
     Modification: 'MODIFICATION' as Droits
