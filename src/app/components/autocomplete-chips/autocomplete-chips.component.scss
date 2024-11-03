@@ -1,6 +1,8 @@
 @import './../../../theme.scss';
 
 :host {
+    --mdc-chip-outline-color: transparent;
+
     mat-form-field {
         width: 100%;
     }
@@ -12,4 +14,5 @@
         background-color: $secondary;
         border: none;
     }
+
 }

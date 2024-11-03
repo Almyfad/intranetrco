@@ -11,7 +11,7 @@
  */
 
 
-export type Modules = 'SysAdmin' | 'Accueil' | 'Conferences' | 'ConferencesInscriptions' | 'ConferencesUserInscriptions' | 'CreateConference' | 'Registre' | 'RegistreFicheEleves' | 'RegistreFicheParvis' | 'RegistreFicheContacts' | 'RegistreFicheJeunesses' | 'RegistreFicheJeunesRosicruciens' | 'RegistreSaisiePresences' | 'RegistreSaisiePresencesVilles' | 'RegistreSaisiePresencesCR' | 'RegistreSaisiePresencesEI' | 'RegistreStatistiques' | 'RegistreStatistiquesPresences' | 'RegistreStatistiquesMouvements' | 'Comptabilite' | 'ComptabiliteEnLigne' | 'ComptabiliteParametres' | 'ComptabiliteSaisieEcrituresRepetitives' | 'ComptabiliteComptesCaisse' | 'Administation' | 'Developpement' | 'Logout';
+export type Modules = 'SysAdmin' | 'Accueil' | 'Conferences' | 'ConferencesInscriptions' | 'ConferencesUserInscriptions' | 'CreateConference' | 'Registre' | 'RegistreFicheEleves' | 'RegistreFicheParvis' | 'RegistreFicheContacts' | 'RegistreFicheJeunesses' | 'RegistreFicheJeunesRosicruciens' | 'RegistreSaisiePresences' | 'RegistreSaisiePresencesVilles' | 'RegistreSaisiePresencesCR' | 'RegistreSaisiePresencesEI' | 'RegistreStatistiques' | 'RegistreStatistiquesPresences' | 'RegistreStatistiquesMouvements' | 'Comptabilite' | 'ComptabiliteEnLigne' | 'ComptabiliteParametres' | 'ComptabiliteSaisieEcrituresRepetitives' | 'ComptabiliteComptesCaisse' | 'Administation' | 'Mailing' | 'MailingListes' | 'MailingCampagnes' | 'Developpement' | 'Logout';
 
 export const Modules = {
     SysAdmin: 'SysAdmin' as Modules,
@@ -39,6 +39,9 @@ export const Modules = {
     ComptabiliteSaisieEcrituresRepetitives: 'ComptabiliteSaisieEcrituresRepetitives' as Modules,
     ComptabiliteComptesCaisse: 'ComptabiliteComptesCaisse' as Modules,
     Administation: 'Administation' as Modules,
+    Mailing: 'Mailing' as Modules,
+    MailingListes: 'MailingListes' as Modules,
+    MailingCampagnes: 'MailingCampagnes' as Modules,
     Developpement: 'Developpement' as Modules,
     Logout: 'Logout' as Modules
 };

@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { Civilite } from './civilite';
+import { MailingList } from './mailingList';
 import { TypeMembre } from './typeMembre';
 import { Centre } from './centre';
 import { Utilisateur } from './utilisateur';
@@ -38,5 +39,6 @@ export interface Membre {
     utilisateur?: Utilisateur;
     parents?: Array<Membre> | null;
     enfants?: Array<Membre> | null;
+    mailingLists?: Array<MailingList> | null;
 }
 

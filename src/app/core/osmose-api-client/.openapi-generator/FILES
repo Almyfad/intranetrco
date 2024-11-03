@@ -4,6 +4,7 @@ README.md
 api.module.ts
 api/api.ts
 api/conference.service.ts
+api/emailing.service.ts
 api/registre.service.ts
 api/sysAdmin.service.ts
 api/user.service.ts
@@ -22,6 +23,7 @@ model/droit.ts
 model/droits.ts
 model/inscription.ts
 model/loginRequest.ts
+model/mailingList.ts
 model/memberFilter.ts
 model/membre.ts
 model/membreOutput.ts

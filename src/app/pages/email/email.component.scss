@@ -1,0 +1,14 @@
+@import './../../../theme.scss';
+
+:host {
+    .content {
+        padding-top: 10px;
+        width: 95%;
+        margin: auto;
+
+    }
+
+    mat-card {
+        padding: 20px;
+    }
+}

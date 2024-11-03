@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, Input, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, Input, model, OnChanges, signal, SimpleChanges } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,31 +15,39 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './autocomplete-chips.component.html',
   styleUrl: './autocomplete-chips.component.scss'
 })
-export class AutocompleteChipsComponent<T> {
+export class AutocompleteChipsComponent<T> implements OnChanges {
 
   @Input() label: string = 'autocomplete-chips';
   @Input() placeholder: string = 'autocomplete-chips-placeholder';
   @Input() formControlName: string = 'autocomplete-chips-form-control-name';
-  @Input() items: T[] = [];
+  @Input({ required: true }) items: T[] | null | undefined;
   @Input() keySelector!: ((args: T | undefined) => string);
   @Input() displayWith!: ((args: T | undefined) => string);
 
 
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  readonly currentPattern = signal<string>("");
+  readonly currentPattern = signal<string | undefined | null>(null);
   readonly selectedItems = model<T[]>([]);
   readonly filteredItems = computed(() => {
     const currentItem = this.currentPattern()?.toUpperCase();
     return (currentItem
-      ? this.items
-      .filter(x => this.displayWith(x).toUpperCase().includes(currentItem))
-      : this.items.slice())
-      .filter(x => !this.selectedItems().map(s => this.keySelector(s)).includes(this.keySelector(x)))
+      ? this.items?.filter(x => this.displayWith(x).toUpperCase().includes(currentItem))
+      : this.items?.slice())
+      ?.filter(x => !this.selectedItems().map(s => this.keySelector(s)).includes(this.keySelector(x)))
       ;
   });
 
   readonly announcer = inject(LiveAnnouncer);
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['items'] && changes['items'].currentValue && changes['items'].currentValue.length > 0) {
+      // Set `currentPattern` to an empty string to trigger filtering when `items` is populated
+      this.currentPattern.set(undefined);
+      this.currentPattern.set(null);
+    }
+  }
+
 
   add(event: MatChipInputEvent): void {
     if (event.value) {

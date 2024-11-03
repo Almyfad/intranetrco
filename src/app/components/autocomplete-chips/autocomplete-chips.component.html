@@ -10,9 +10,9 @@
         </mat-chip-row>
         }
 
-        <input placeholder="{{placeholder}}" [(ngModel)]="currentPattern" [matChipInputFor]="chipGrid" clearOnBlur freeSolo
-            [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [value]="currentPattern()"
-            (matChipInputTokenEnd)="add($event)" />
+        <input placeholder="{{placeholder}}" [(ngModel)]="currentPattern" [matChipInputFor]="chipGrid" clearOnBlur
+            freeSolo [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [value]="currentPattern()" (matChipInputTokenEnd)="add($event)" />
         <mat-icon matSuffixt>person</mat-icon>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
             @for (item of filteredItems(); track item) {

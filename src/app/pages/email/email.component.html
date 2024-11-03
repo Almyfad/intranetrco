@@ -1,0 +1,7 @@
+<div class="content">
+    <mat-card>
+        <app-autocomplete-chips [items]="(list | async)" [keySelector]="aspectKeySelector" label="Mailing List"
+            placeholder="Interessé SUD" [displayWith]="aspectDisplayWith" (selectedItemsChange)="onlistChanged($event)">
+        </app-autocomplete-chips>
+    </mat-card>
+</div>
