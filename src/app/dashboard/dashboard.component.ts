@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MesconferencesComponent } from "./mesconferences/mesconferences.component";
 import { DashboardService } from './dashboard.service';
+import { AuthService } from '../core/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,11 +24,14 @@ import { DashboardService } from './dashboard.service';
     MatButtonModule,
     MatCardModule,
     MesconferencesComponent
-]
+  ]
 })
 export class DashboardComponent {
   private breakpointObserver = inject(BreakpointObserver);
   private readonly daschboardService = inject(DashboardService);
+  private readonly authService = inject(AuthService);
+
+  username = this.authService.UserInfo$.pipe(map(user => user?.prenom ?? user?.email));
 
 
   /** Based on the screen size, switch from standard to one column per row */
