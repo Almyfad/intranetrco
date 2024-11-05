@@ -1,23 +1,26 @@
-<mat-form-field appearance="outline">
-    <mat-label>{{label}}</mat-label>
-    <mat-chip-grid #chipGrid aria-label="Fruit selection">
-        @for (item of selectedItems(); track $index) {
-        <mat-chip-row (removed)="remove(item)" color="accent">
-            {{displayWith(item)}}
-            <button matChipRemove [attr.aria-label]="'remove ' + keySelector(item)">
-                <mat-icon>cancel</mat-icon>
-            </button>
-        </mat-chip-row>
-        }
+<div class="content">
 
-        <input placeholder="{{placeholder}}" [(ngModel)]="currentPattern" [matChipInputFor]="chipGrid" clearOnBlur
-            freeSolo [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [value]="currentPattern()" (matChipInputTokenEnd)="add($event)" />
-        <mat-icon matSuffixt>person</mat-icon>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-            @for (item of filteredItems(); track item) {
-            <mat-option [value]="item">{{displayWith(item)}}</mat-option>
+    <mat-form-field appearance="outline">
+        <mat-label>{{label}}</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Fruit selection">
+            @for (item of selectedItems(); track $index) {
+            <mat-chip-row (removed)="remove(item)" color="accent">
+                {{displayWith(item)}}
+                <button matChipRemove [attr.aria-label]="'remove ' + keySelector(item)">
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip-row>
             }
-        </mat-autocomplete>
-    </mat-chip-grid>
-</mat-form-field>
+
+            <input placeholder="{{placeholder}}" [(ngModel)]="currentPattern" [matChipInputFor]="chipGrid" clearOnBlur
+                freeSolo [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [value]="currentPattern()" (matChipInputTokenEnd)="add($event)" />
+            <mat-icon matSuffixt>person</mat-icon>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                @for (item of filteredItems(); track item) {
+                <mat-option [value]="item">{{displayWith(item)}}</mat-option>
+                }
+            </mat-autocomplete>
+        </mat-chip-grid>
+    </mat-form-field>
+</div>

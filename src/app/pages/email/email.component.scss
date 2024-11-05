@@ -6,9 +6,34 @@
         width: 95%;
         margin: auto;
 
+        >mat-card {
+            padding: 20px;
+
+            .row {
+                align-items: center;
+                gap: 1rem;
+            }
+
+            div.totalRecipient {
+                flex: none;
+                min-width: 200px;
+                max-width: 300px;
+
+                mat-card.totalRecipient {
+                    padding: 10px;
+                    font-size: 1.5rem;
+                    font-weight: 500;
+                    background-color: antiquewhite;
+                    color: $primary;
+
+
+                }
+            }
+        }
+
     }
 
-    mat-card {
-        padding: 20px;
-    }
+
+
+
 }

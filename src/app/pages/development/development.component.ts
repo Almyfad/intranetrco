@@ -26,7 +26,7 @@ export class DevelopmentComponent {
   get standarUser() { return this.sys.apiSysAdminImpersonateUsersGet("usercentre@rco.com") }
   get importusers() { return this.sys.apiSysAdminGenerateUsersGet() }
   get generateactivities() { return this.sys.apiSysAdminGenerateActivitiesPost(50) }
-
+  get generateMailingList() { return this.sys.apiSysAdminGenerateMailingListGet() }
 
 
 }

@@ -1,7 +1,32 @@
 <div class="content">
     <mat-card>
-        <app-autocomplete-chips [items]="(list | async)" [keySelector]="aspectKeySelector" label="Mailing List"
-            placeholder="Interessé SUD" [displayWith]="aspectDisplayWith" (selectedItemsChange)="onlistChanged($event)">
-        </app-autocomplete-chips>
+        <div class="row">
+            <div class="col">
+                <app-autocomplete-chips [items]="(list | async)" [keySelector]="aspectKeySelector" label="Mailing List"
+                    placeholder="Interessé SUD" [displayWith]="aspectDisplayWith"
+                    (selectedItemsChange)="onlistChanged($event)">
+                </app-autocomplete-chips>
+            </div>
+            <div class="col totalRecipient">
+                <mat-card class="totalRecipient">
+                    <span>Total Mail : {{totalRecipient | async }}</span>
+                </mat-card>
+            </div>
+
+        </div>
+
+        <div class="col">
+            <mat-form-field class="full-width">
+                <mat-label>Objet de la Campagne</mat-label>
+                <input matInput formControlName="objetCampagne">
+                <!--           @if (form.controls['libelle'].hasError('required')) {
+                                <mat-error>Le libellé est<strong>obligatoire</strong></mat-error>
+                                } -->
+            </mat-form-field>
+        </div>
+        <div class="container">
+            <button (click)="exportHtml()">Export</button>
+            <email-editor (loaded)="editorLoaded($event)" (ready)="editorReady($event)"></email-editor>
+        </div>
     </mat-card>
 </div>
