@@ -266,6 +266,64 @@
         }
       }
     },
+    "/api/Emailing/campaign/send": {
+      "post": {
+        "tags": [
+          "Emailing"
+        ],
+        "parameters": [
+          {
+            "name": "AutodeleteGeneratedList",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Registre/centres": {
       "get": {
         "tags": [
@@ -787,6 +845,44 @@
         },
         "additionalProperties": false
       },
+      "CampaignRequest": {
+        "required": [
+          "htmlContent",
+          "mails",
+          "name",
+          "sender",
+          "subject"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "mails": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "htmlContent": {
+            "type": "string",
+            "nullable": true
+          },
+          "sender": {
+            "$ref": "#/components/schemas/CreateEmailCampaignSender"
+          },
+          "params": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Centre": {
         "required": [
           "code",
@@ -964,6 +1060,25 @@
           },
           "isRegistered": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateEmailCampaignSender": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
           }
         },
         "additionalProperties": false

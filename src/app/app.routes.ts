@@ -59,6 +59,17 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/email/email.component').then(c => c.EmailComponent)
       },
       {
+        path: 'mailing/campagnes',
+        title: 'Email',
+        loadComponent: () => import('./pages/email/email.component').then(c => c.EmailComponent)
+      },
+      {
+        path: 'mailing/listes',
+        title: 'Email',
+        loadComponent: () => import('./pages/email/email.component').then(c => c.EmailComponent)
+      },
+      {
+
         path: 'creer/conference',
         loadComponent: () =>
           import('./components/creer-conference-form/creer-conference-form.component').then(

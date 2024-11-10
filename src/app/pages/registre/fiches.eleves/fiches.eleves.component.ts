@@ -86,7 +86,7 @@ export class FichesElevesComponent {
           l_centres: form?.centres?.map((x) => x.libelle!),
         })
       }),
-      tap((x) => {      
+      tap((x) => {
         if (x.data && (x.page ?? 0) > 1) {
           this.currentPage.data = [...this.currentPage.data!, ...x.data]
         }

@@ -1,18 +1,21 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { EmailingService, MailingList } from '../../core/osmose-api-client';
 import { AsyncPipe } from '@angular/common';
 import { AutocompleteChipsComponent } from '../../components/autocomplete-chips/autocomplete-chips.component';
 import { MatCardModule } from '@angular/material/card';
 import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { EmailEditorModule } from 'angular-email-editor';
+import { EmailEditorComponent, EmailEditorModule } from 'angular-email-editor';
+import { MatButtonModule } from '@angular/material/button';
+import sample from './sample.json';
+
 
 @Component({
   selector: 'app-email',
   standalone: true,
-  imports: [AsyncPipe, MatCardModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule,
+  imports: [AsyncPipe, MatCardModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatButtonModule,
     AutocompleteChipsComponent, EmailEditorModule
   ],
   templateUrl: './email.component.html',
@@ -21,27 +24,63 @@ import { EmailEditorModule } from 'angular-email-editor';
 
 
 export class EmailComponent {
-  editorReady($event: Event) {
-    throw new Error('Method not implemented.');
-  }
-  editorLoaded($event: Event) {
-    throw new Error('Method not implemented.');
-  }
-  exportHtml() {
-    throw new Error('Method not implemented.');
-  }
+  private readonly mailService = inject(EmailingService);
+  private fb = inject(FormBuilder);
+  form = this.fb.group({
+    titreCampagne: [null as string | null, Validators.required],
+    objet: [null as string | null, Validators.required],
+    description: [null as string | null],
+    content: [null as string | null, Validators.required],
+  });
+
   listSelected$ = new BehaviorSubject<MailingList[]>([])
   onlistChanged($event: MailingList[]) {
     this.listSelected$.next($event);
   }
-  private readonly mailService = inject(EmailingService);
+
   list = this.mailService.apiEmailingListGet();
 
   aspectKeySelector = (x: MailingList | undefined): string => x?.id?.toString() ?? '0'
   aspectDisplayWith = (x: MailingList | undefined): string => x?.libelle ?? ''
 
+  allmail: Observable<number> = this.listSelected$.pipe(
+    switchMap(l => this.mailService.apiEmailingCountRecipientPost(l.map(x => x.id ?? 0)),
+    ));
 
   totalRecipient: Observable<number> = this.listSelected$.pipe(
     switchMap(l => this.mailService.apiEmailingCountRecipientPost(l.map(x => x.id ?? 0)),
     ));
+
+
+  @ViewChild('editor')
+  private emailEditor: EmailEditorComponent | undefined;
+
+  onSubmit() {
+
+    this.emailEditor?.editor.exportHtml((data) => {
+      console.log('exportHtml', data)
+      this.mailService.apiEmailingCampaignSendPost(false, {
+        name: this.form.value.titreCampagne ?? '',
+        subject: this.form.value.objet ?? '',
+        sender: {
+          email: 'guadeloupe@rose-croix-d-or.org',
+          name: 'RCO MAIL TEST',
+        },
+        htmlContent: data.html,
+        mails: ["lary.sene@gmail.com"]
+      }).subscribe();
+    }
+    );
+  }
+
+  editorReady($event: Event) {
+    console.log('editor ready', $event);
+  }
+  editorLoaded($event: Event) {
+    console.log('editor loaded', $event);
+    this.emailEditor?.editor.loadDesign(sample.design);
+  }
+
+
+
 }

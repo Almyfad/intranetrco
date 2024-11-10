@@ -1,32 +1,58 @@
-<div class="content">
-    <mat-card>
-        <div class="row">
-            <div class="col">
-                <app-autocomplete-chips [items]="(list | async)" [keySelector]="aspectKeySelector" label="Mailing List"
-                    placeholder="Interessé SUD" [displayWith]="aspectDisplayWith"
-                    (selectedItemsChange)="onlistChanged($event)">
-                </app-autocomplete-chips>
-            </div>
-            <div class="col totalRecipient">
-                <mat-card class="totalRecipient">
-                    <span>Total Mail : {{totalRecipient | async }}</span>
-                </mat-card>
-            </div>
+<form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+    <div class="content">
+        <mat-card>
+            <div class="row">
+                <div class="col">
+                    <app-autocomplete-chips [items]="(list | async)" [keySelector]="aspectKeySelector"
+                        label="Mailing List" placeholder="Interessé SUD" [displayWith]="aspectDisplayWith"
+                        (selectedItemsChange)="onlistChanged($event)">
+                    </app-autocomplete-chips>
+                </div>
+                <div class="col totalRecipient">
+                    <mat-card class="totalRecipient">
+                        <span>Total Mail : {{totalRecipient | async }}</span>
+                    </mat-card>
+                </div>
 
-        </div>
-
-        <div class="col">
-            <mat-form-field class="full-width">
-                <mat-label>Objet de la Campagne</mat-label>
-                <input matInput formControlName="objetCampagne">
-                <!--           @if (form.controls['libelle'].hasError('required')) {
-                                <mat-error>Le libellé est<strong>obligatoire</strong></mat-error>
-                                } -->
-            </mat-form-field>
-        </div>
-        <div class="container">
-            <button (click)="exportHtml()">Export</button>
-            <email-editor (loaded)="editorLoaded($event)" (ready)="editorReady($event)"></email-editor>
-        </div>
-    </mat-card>
-</div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Titre de la Campagne</mat-label>
+                        <input matInput formControlName="titreCampagne">
+                        @if (form.controls['titreCampagne'].hasError('required')) {
+                        <mat-error>Le libellé est<strong>obligatoire</strong></mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Sujet du Mail</mat-label>
+                        <input matInput formControlName="objet">
+                        @if (form.controls['objet'].hasError('required')) {
+                        <mat-error>Le libellé est<strong>obligatoire</strong></mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Description du Mail</mat-label>
+                        <input matInput formControlName="description">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <email-editor (loaded)="editorLoaded($event)" (ready)="editorReady($event)" #editor></email-editor>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button mat-flat-button color="primary" type="submit">Envoyer</button>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</form>

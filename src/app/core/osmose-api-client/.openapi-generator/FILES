@@ -13,12 +13,14 @@ encoder.ts
 git_push.sh
 index.ts
 model/activitee.ts
+model/campaignRequest.ts
 model/centre.ts
 model/centreInfo.ts
 model/centreModule.ts
 model/civilite.ts
 model/civilites.ts
 model/conferenceInfo.ts
+model/createEmailCampaignSender.ts
 model/droit.ts
 model/droits.ts
 model/inscription.ts
