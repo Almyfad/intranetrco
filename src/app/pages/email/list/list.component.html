@@ -1,0 +1,103 @@
+@defer (on viewport) {
+
+<mat-accordion>
+    @for(list of (mailingLists | async) ?? [];track list.id) {
+    <mat-expansion-panel [class]="color" (opened)="onpanelOpen(list)">
+        <mat-expansion-panel-header>
+            <mat-panel-description style="flex:10">
+                @if(isEditMode(list.id)) {
+                <div (click)="$event.stopPropagation()" class="headermatformfield">
+                    <mat-form-field appearance="outline">
+                        <input matInput type="text" [(ngModel)]="list.libelle" />
+                    </mat-form-field>
+                </div>
+                }
+                @else {
+                {{list.libelle}}
+                }
+
+            </mat-panel-description>
+
+            <mat-panel-description style="flex:1"> {{list.centre?.libelle}} </mat-panel-description>
+
+            <mat-panel-description style="flex:1">
+                @if(isEditMode(list.id)) {
+                <button mat-icon-button (click)="onsave(list,$event)"><mat-icon>check</mat-icon></button>
+                <button mat-icon-button (click)="oncancel(list,$event)"><mat-icon>cancel</mat-icon></button>
+
+                }@else {
+                <button mat-icon-button (click)="onedit(list,$event)"><mat-icon>edit</mat-icon></button>
+
+                }
+                <button mat-icon-button (click)="ondelete(list,$event)"><mat-icon>delete</mat-icon></button>
+            </mat-panel-description>
+
+        </mat-expansion-panel-header>
+        @if(isPanelOpen(list)) {
+
+        <div class="add-member-button">
+            <button mat-flat-button color="primary" (click)="openFormAddContact(list.id)">
+                <mat-icon>person_add</mat-icon> Ajouter Membre
+            </button>
+        </div>
+        @if(isaddingMembre(list)) {
+
+        <div class="add-member" [@toogleView]>
+            <app-autocomplete-chips [asyncItems]="searchContacts" [keySelector]="aspectKeySelector"
+                label="Rechercher Contact(s)" placeholder="John Doe" [displayWith]="aspectDisplayWith"
+                (selectedItemsChange)="onlistChanged($event)">
+            </app-autocomplete-chips>
+            <div class="actions">
+                <div class="validate-button">
+                    <button mat-flat-button color="accent" (click)="onsaveAddMembre(list.id)">
+                        <mat-icon>check_circle</mat-icon> Valider
+                    </button>
+                </div>
+                <div class="cancel-button">
+                    <button mat-raised-button color="warn" (click)="closeFormAddContact()">
+                        <mat-icon>cancel</mat-icon> Annuler
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+        }
+        <div class="membre">
+            <table mat-table [dataSource]="getdataSource(list.id)">
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+                <ng-container matColumnDef="nom">
+                    <th mat-header-cell *matHeaderCellDef> Nom </th>
+                    <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
+                </ng-container>
+                <ng-container matColumnDef="prenom">
+                    <th mat-header-cell *matHeaderCellDef> Prenom </th>
+                    <td mat-cell *matCellDef="let element"> {{element.prenom}} </td>
+                </ng-container>
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> Mail </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> supprimer </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button
+                            (click)="ondeleteMembre(element.id,list ?? 0,$event)"><mat-icon>delete</mat-icon></button>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of membre">
+            </mat-paginator>
+        </div>
+
+    </mat-expansion-panel>
+    }
+</mat-accordion>
+}
+@placeholder {
+<div class="skeleton">&nbsp;</div>
+}

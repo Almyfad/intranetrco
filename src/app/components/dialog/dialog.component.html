@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<mat-dialog-content>
+
+    @for( msg of data.message; track msg) {
+    <div>
+        {{msg}}
+    </div>
+    }
+</mat-dialog-content>
+<mat-dialog-actions>
+    @for (action of data.actions; track action) {
+    @if(action.initial)
+    {
+    <button mat-button mat-dialog-close cdkFocusInitial
+        (click)="action.callback==undefined ? noaction() : action?.callback()">{{action.label}}</button>
+    }
+    @else
+    {
+    <button mat-button mat-dialog-close
+        (click)="action.callback==undefined ? noaction() : action?.callback()">{{action.label}}</button>
+    }
+    }
+</mat-dialog-actions>

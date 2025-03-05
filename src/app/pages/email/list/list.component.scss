@@ -1,0 +1,56 @@
+@import './../../../../theme.scss';
+
+:host {
+
+    .headermatformfield {
+        --mat-form-field-container-height: 10px;
+        --mat-form-field-container-vertical-padding: 5px;
+        width: 100%;
+    }
+
+    .add-member {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+
+        app-autocomplete-chips {
+            width: 95%;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .content {
+        padding-top: 10px;
+        width: 95%;
+        margin: auto;
+    }
+
+    mat-expansion-panel {
+        margin-bottom: 10px;
+    }
+
+    .membre {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .table {
+        width: 100%;
+    }
+
+    mat-panel-description {
+
+        mat-form-field {
+            width: 100%;
+            margin-top: 20px;
+        }
+    }
+
+}

@@ -6,11 +6,13 @@ import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { FormsModule } from '@angular/forms';
+import { Observable, of, tap } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-autocomplete-chips',
   standalone: true,
-  imports: [MatFormFieldModule, MatChipsModule, MatIconModule, MatAutocompleteModule, FormsModule],
+  imports: [MatFormFieldModule, MatChipsModule, MatIconModule, MatAutocompleteModule, FormsModule, AsyncPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './autocomplete-chips.component.html',
   styleUrl: './autocomplete-chips.component.scss'
@@ -20,7 +22,8 @@ export class AutocompleteChipsComponent<T> implements OnChanges {
   @Input() label: string = 'autocomplete-chips';
   @Input() placeholder: string = 'autocomplete-chips-placeholder';
   @Input() formControlName: string = 'autocomplete-chips-form-control-name';
-  @Input({ required: true }) items: T[] | null | undefined;
+  @Input() items: T[] | null | undefined;
+  @Input() asyncItems: ((arg0: string | null | undefined) => Observable<T[]>) | undefined;
   @Input() keySelector!: ((args: T | undefined) => string);
   @Input() displayWith!: ((args: T | undefined) => string);
 
@@ -31,11 +34,17 @@ export class AutocompleteChipsComponent<T> implements OnChanges {
   readonly selectedItems = model<T[]>([]);
   readonly filteredItems = computed(() => {
     const currentItem = this.currentPattern()?.toUpperCase();
-    return (currentItem
-      ? this.items?.filter(x => this.displayWith(x).toUpperCase().includes(currentItem))
-      : this.items?.slice())
-      ?.filter(x => !this.selectedItems().map(s => this.keySelector(s)).includes(this.keySelector(x)))
-      ;
+
+    if (this.asyncItems) {
+      return this.asyncItems(currentItem).pipe(
+        tap(x => this.items = x))
+    }
+    else
+      return of((currentItem
+        ? this.items?.filter(x => this.displayWith(x).toUpperCase().includes(currentItem))
+        : this.items?.slice())
+        ?.filter(x => !this.selectedItems().map(s => this.keySelector(s)).includes(this.keySelector(x))))
+        ;
   });
 
   readonly announcer = inject(LiveAnnouncer);

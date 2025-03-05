@@ -1,5 +1,5 @@
 import { Component, inject, ViewChild } from '@angular/core';
-import { EmailingService, MailingList } from '../../core/osmose-api-client';
+import { EmailService, MailingListOutput } from '../../core/osmose-api-client';
 import { AsyncPipe } from '@angular/common';
 import { AutocompleteChipsComponent } from '../../components/autocomplete-chips/autocomplete-chips.component';
 import { MatCardModule } from '@angular/material/card';
@@ -24,7 +24,7 @@ import sample from './sample.json';
 
 
 export class EmailComponent {
-  private readonly mailService = inject(EmailingService);
+  private readonly mailService = inject(EmailService);
   private fb = inject(FormBuilder);
   form = this.fb.group({
     titreCampagne: [null as string | null, Validators.required],
@@ -33,22 +33,22 @@ export class EmailComponent {
     content: [null as string | null, Validators.required],
   });
 
-  listSelected$ = new BehaviorSubject<MailingList[]>([])
-  onlistChanged($event: MailingList[]) {
+  listSelected$ = new BehaviorSubject<MailingListOutput[]>([])
+  onlistChanged($event: MailingListOutput[]) {
     this.listSelected$.next($event);
   }
 
-  list = this.mailService.apiEmailingListGet();
+  list = this.mailService.apiEmailListGet();
 
-  aspectKeySelector = (x: MailingList | undefined): string => x?.id?.toString() ?? '0'
-  aspectDisplayWith = (x: MailingList | undefined): string => x?.libelle ?? ''
+  aspectKeySelector = (x: MailingListOutput | undefined): string => x?.id?.toString() ?? '0'
+  aspectDisplayWith = (x: MailingListOutput | undefined): string => x?.libelle ?? ''
 
   allmail: Observable<number> = this.listSelected$.pipe(
-    switchMap(l => this.mailService.apiEmailingCountRecipientPost(l.map(x => x.id ?? 0)),
+    switchMap(l => this.mailService.apiEmailCountRecipientPost(l.map(x => x.id ?? 0)),
     ));
 
   totalRecipient: Observable<number> = this.listSelected$.pipe(
-    switchMap(l => this.mailService.apiEmailingCountRecipientPost(l.map(x => x.id ?? 0)),
+    switchMap(l => this.mailService.apiEmailCountRecipientPost(l.map(x => x.id ?? 0)),
     ));
 
 
@@ -59,7 +59,7 @@ export class EmailComponent {
 
     this.emailEditor?.editor.exportHtml((data) => {
       console.log('exportHtml', data)
-      this.mailService.apiEmailingCampaignSendPost(false, {
+      this.mailService.apiEmailCampaignSendPost(false, {
         name: this.form.value.titreCampagne ?? '',
         subject: this.form.value.objet ?? '',
         sender: {

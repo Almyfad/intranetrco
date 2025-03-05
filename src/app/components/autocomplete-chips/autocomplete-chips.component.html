@@ -17,7 +17,7 @@
                 [value]="currentPattern()" (matChipInputTokenEnd)="add($event)" />
             <mat-icon matSuffixt>person</mat-icon>
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                @for (item of filteredItems(); track item) {
+                @for (item of (filteredItems() | async); track item) {
                 <mat-option [value]="item">{{displayWith(item)}}</mat-option>
                 }
             </mat-autocomplete>

@@ -66,7 +66,7 @@ export const routes: Routes = [
       {
         path: 'mailing/listes',
         title: 'Email',
-        loadComponent: () => import('./pages/email/email.component').then(c => c.EmailComponent)
+        loadComponent: () => import('./pages/email/list/list.component').then(c => c.ListComponent)
       },
       {
 
