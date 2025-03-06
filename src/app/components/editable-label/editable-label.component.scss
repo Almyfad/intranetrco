@@ -1,0 +1,35 @@
+@import './../../../theme.scss';
+
+:host {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    .edit {
+        margin-top: 20px;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+
+        mat-form-field {
+            width: 80%;
+        }
+
+
+    }
+
+    .actions {
+        display: flex;
+        align-items: center;
+    }
+
+    .small {
+        --mat-form-field-container-height: 30px;
+        --mat-form-field-container-vertical-padding: 7px;
+
+
+    }
+}

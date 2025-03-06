@@ -1,12 +1,7 @@
 @import './../../../../theme.scss';
 
 :host {
-
-    .headermatformfield {
-        --mat-form-field-container-height: 10px;
-        --mat-form-field-container-vertical-padding: 5px;
-        width: 100%;
-    }
+    --mat-expansion-header-collapsed-state-height: 70px;
 
     .add-member {
         display: flex;
@@ -44,13 +39,4 @@
     .table {
         width: 100%;
     }
-
-    mat-panel-description {
-
-        mat-form-field {
-            width: 100%;
-            margin-top: 20px;
-        }
-    }
-
 }

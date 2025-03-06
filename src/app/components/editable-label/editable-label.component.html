@@ -1,0 +1,25 @@
+@if(isEditMode) {
+
+<div (click)="$event.stopPropagation()" class="small edit">
+    <mat-form-field appearance="outline" hideRequiredMarker>
+        @if(matlabel) {
+        <mat-label>{{ matlabel }}</mat-label>
+        }
+        <input matInput type="text" [(ngModel)]="tempValue" />
+    </mat-form-field>
+</div>
+@if(showIcon) {
+<div class="actions">
+    <button mat-icon-button color="primary"
+        (click)="$event.stopPropagation();validateEdit()"><mat-icon>check</mat-icon></button>
+    <button mat-icon-button color="warn"
+        (click)="$event.stopPropagation();cancelEdit()"><mat-icon>cancel</mat-icon></button>
+</div>
+}
+
+}
+@else {
+<span> {{ value }} </span>
+@if(showIcon) {
+<button mat-icon-button (click)="$event.stopPropagation();toggleEdit()"><mat-icon>edit</mat-icon></button>
+}}

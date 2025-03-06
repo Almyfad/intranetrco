@@ -18,6 +18,8 @@ import { debounceTime, switchMap, tap, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AutocompleteChipsComponent } from "../../../components/autocomplete-chips/autocomplete-chips.component";
+import { EditableLabelComponent } from "../../../components/editable-label/editable-label.component";
+import { DeleteConfirmComponent } from '../../../components/delete-confirm/delete-confirm.component';
 export type ExpansionColor = 'parents' | 'enfants' | undefined;
 
 enum Mode { detail, edit }
@@ -25,8 +27,8 @@ enum Mode { detail, edit }
   selector: 'app-list',
   standalone: true,
   imports: [MatInputModule, MatExpansionModule, MatCardModule, MatIconModule, AsyncPipe, MatButtonModule,
-    MatTableModule, MatPaginatorModule, FormsModule, ReactiveFormsModule, MatAccordion,
-    MatAutocompleteModule, AutocompleteChipsComponent],
+    MatTableModule, MatPaginatorModule, FormsModule, ReactiveFormsModule, MatAccordion, DeleteConfirmComponent,
+    MatAutocompleteModule, AutocompleteChipsComponent, EditableLabelComponent],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
   animations: [
@@ -144,7 +146,6 @@ export class ListComponent {
   }
 
   swithView(id: number) {
-
     if (this.editables.includes(id)) {
       this.editables = this.editables.filter(x => x !== id);
     } else {
@@ -152,28 +153,13 @@ export class ListComponent {
     }
   }
 
-  onedit(list: MailingListOutput, event: Event) {
-    event.stopPropagation();
-    this.swithView(list.id ?? 0);
-  }
-  onsave(list: MailingListOutput, event: Event) {
-    event.stopPropagation();
+  onsave(list: MailingListOutput,) {
     this.swithView(list.id ?? 0);
     this.mailService.apiEmailListIdPut(list.id ?? 0, { libelle: list.libelle }).subscribe(() => {
       this.mailingLists = this.mailService.apiEmailListGet();
     });
   }
-  oncancel(list: MailingListOutput, event: Event) {
-    event.stopPropagation();
-    this.swithView(list.id ?? 0);
-  };
 
-
-  ondelete(list: MailingListOutput, event: Event) {
-    event.stopPropagation();
-    this.openDialogDeleteList(list);
-    return;
-  }
 
   delete(list: MailingListOutput) {
     this.mailService.apiEmailListIdDelete(list.id ?? 0).subscribe(() => {
@@ -181,55 +167,10 @@ export class ListComponent {
       this.mailingLists = this.mailService.apiEmailListGet();
     });
   }
-
-  openDialogDeleteList(list: MailingListOutput, enterAnimationDuration: string = '300ms', exitAnimationDuration: string = '300ms'): void {
-    this.dialog.open(DialogComponent, {
-      width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-      data: {
-        title: 'Suppression',
-        message: ['Voulez-vous vraiment supprimer cette liste ?'],
-        actions: [
-          { label: 'Annuler' },
-          {
-            label: 'Confirmer', initial: true, callback: () => {
-              this.delete(list);
-            }
-          }
-        ]
-      }
-    });
-  }
-
-  ondeleteMembre(id: number, list: MailingListOutput, event: Event) {
-    event.stopPropagation();
-    this.openDialogDeleteMembre(id, list);
-  }
-
   deleteMembre(id: number, list: MailingListOutput) {
     this.mailService.apiEmailListIdPut(list.id ?? 0, { membresId: list.membres?.map(x => x.id).filter((x): x is number => x !== null && x !== undefined && x !== id) })
       .pipe(tap(() => this.updateMailingLists.next('member deleted')))
       .subscribe();
-  }
-  openDialogDeleteMembre(id: number, list: MailingListOutput, enterAnimationDuration: string = '300ms', exitAnimationDuration: string = '300ms'): void {
-    this.dialog.open(DialogComponent, {
-      width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-      data: {
-        title: 'Suppression',
-        message: ['Voulez-vous vraiment supprimer ce membre ?'],
-        actions: [
-          { label: 'Annuler' },
-          {
-            label: 'Confirmer', initial: true, callback: () => {
-              this.deleteMembre(id, list);
-            }
-          }
-        ]
-      }
-    });
   }
 }
 
