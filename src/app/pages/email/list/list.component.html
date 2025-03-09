@@ -1,21 +1,33 @@
 @defer (on viewport) {
 
+@if(mailingLists().length == 0) {
+<div class="empty">
+    <mat-card>
+        <p>Vous n'avez pas encore de liste de diffusion sur ce centre</p>
+        <button mat-flat-button color="primary">
+            <mat-icon>add</mat-icon> Ajouter une liste
+        </button>
+    </mat-card>
+</div>
+}
+
+
 <mat-accordion>
-    @for(list of (mailingLists | async) ?? [];track list.id) {
+    @for(list of mailingLists();track list.id) {
     <mat-expansion-panel [class]="color" (opened)="onpanelOpen(list)">
         <mat-expansion-panel-header>
             <mat-panel-description style="flex:10">
                 <app-editable-label [(ngModel)]="list.libelle" matlabel="Modifier nom de la liste"
-                    (onValidated)="onsave(list)"></app-editable-label>
+                    [showIcon]="(list?.id ?? 0)>0" (onValidated)="onsave(list)"></app-editable-label>
             </mat-panel-description>
-
+            @if((list?.id ?? 0)>0) {
             <mat-panel-description style="flex:1">
                 <app-delete-confirm (confirm)="delete(list)"
                     [message]="'Voulez-vous vraiment supprimer la liste ' + list.libelle + ' ?'">
                     <button mat-icon-button><mat-icon>delete</mat-icon></button>
                 </app-delete-confirm>
             </mat-panel-description>
-
+            }
         </mat-expansion-panel-header>
         @if(isPanelOpen(list)) {
 
@@ -47,37 +59,7 @@
         }
         }
         <div class="membre">
-            <table mat-table [dataSource]="getdataSource(list.id)">
-                <ng-container matColumnDef="position">
-                    <th mat-header-cell *matHeaderCellDef> No. </th>
-                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-                </ng-container>
-                <ng-container matColumnDef="nom">
-                    <th mat-header-cell *matHeaderCellDef> Nom </th>
-                    <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
-                </ng-container>
-                <ng-container matColumnDef="prenom">
-                    <th mat-header-cell *matHeaderCellDef> Prenom </th>
-                    <td mat-cell *matCellDef="let element"> {{element.prenom}} </td>
-                </ng-container>
-                <ng-container matColumnDef="email">
-                    <th mat-header-cell *matHeaderCellDef> Mail </th>
-                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-                </ng-container>
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef> supprimer </th>
-                    <td mat-cell *matCellDef="let element">
-                        <app-delete-confirm (confirm)="deleteMembre(element.id,list ?? 0)"
-                            [message]="'Voulez-vous vraiment supprimer ' + element.nom + ' ' + element.prenom + ' ?'">
-                            <button mat-icon-button><mat-icon>delete</mat-icon></button>
-                        </app-delete-confirm>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of membre">
-            </mat-paginator>
+            <app-email-list-table [mailingList]="list" [readonly]="(list?.id ?? 0)<0"></app-email-list-table>
         </div>
 
     </mat-expansion-panel>

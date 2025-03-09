@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { StatutsMembres } from './statutsMembres';
 
 
 export interface MembreOuput { 
@@ -16,5 +17,9 @@ export interface MembreOuput {
     nom?: string | null;
     prenom?: string | null;
     email?: string | null;
+    statut?: StatutsMembres;
 }
+export namespace MembreOuput {
+}
+
 

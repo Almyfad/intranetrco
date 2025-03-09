@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { StatutMembre } from './statutMembre';
 import { Civilite } from './civilite';
 import { MailingList } from './mailingList';
 import { TypeMembre } from './typeMembre';
@@ -24,6 +25,7 @@ export interface Membre {
     nom: string | null;
     prenom: string | null;
     typeMembre: TypeMembre;
+    statutMembre: StatutMembre;
     centre?: Centre;
     email?: string | null;
     profession?: string | null;

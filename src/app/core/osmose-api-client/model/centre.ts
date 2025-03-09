@@ -11,6 +11,7 @@
  */
 import { Membre } from './membre';
 import { TypeCentre } from './typeCentre';
+import { MailingList } from './mailingList';
 import { Activitee } from './activitee';
 
 
@@ -27,7 +28,9 @@ export interface Centre {
     ville?: string | null;
     pays?: string | null;
     capacite?: number | null;
+    brevoFolderId?: number | null;
     membres?: Array<Membre> | null;
     activites?: Array<Activitee> | null;
+    mailingLists?: Array<MailingList> | null;
 }
 

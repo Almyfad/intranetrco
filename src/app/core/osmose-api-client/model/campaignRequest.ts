@@ -9,15 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { CentreCampaignRequest } from './centreCampaignRequest';
 import { CreateEmailCampaignSender } from './createEmailCampaignSender';
 
 
 export interface CampaignRequest { 
     name: string | null;
     subject: string | null;
-    mails: Array<string> | null;
     htmlContent: string | null;
+    delay?: number | null;
     sender: CreateEmailCampaignSender;
     params?: any | null;
+    centreRequest?: Array<CentreCampaignRequest> | null;
+    listIds?: Array<number> | null;
+    scheduledAt?: string | null;
 }
 

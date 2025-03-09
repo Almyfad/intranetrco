@@ -9,17 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Membre } from './membre';
-import { Centre } from './centre';
+import { TypesMembres } from './typesMembres';
 
 
-export interface MailingList { 
-    id?: number;
-    creation?: string;
-    modification?: string | null;
-    libelle: string | null;
-    centre: Centre;
-    brevoListId?: number | null;
-    membres?: Array<Membre> | null;
+export interface CentreCampaignRequest { 
+    centreId: number;
+    typesMembres?: Array<TypesMembres> | null;
 }
 

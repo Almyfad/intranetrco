@@ -25,7 +25,6 @@ import { SnackbarService } from '../../core/services/snackbar.service';
     MatRadioModule,
     MatCardModule,
     ReactiveFormsModule,
-    AutocompleteChipsComponent,
   ],
   templateUrl: './creer-conference-form.component.html',
   styleUrl: './creer-conference-form.component.scss',

@@ -1,6 +1,7 @@
 export * from './activitee';
 export * from './campaignRequest';
 export * from './centre';
+export * from './centreCampaignRequest';
 export * from './centreInfo';
 export * from './centreModule';
 export * from './centreOutput';
@@ -26,6 +27,8 @@ export * from './modules';
 export * from './registerConferenceRequest';
 export * from './role';
 export * from './roles';
+export * from './statutMembre';
+export * from './statutsMembres';
 export * from './typeActivitee';
 export * from './typeCentre';
 export * from './typeCentres';

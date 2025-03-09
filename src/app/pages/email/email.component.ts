@@ -59,7 +59,7 @@ export class EmailComponent {
 
     this.emailEditor?.editor.exportHtml((data) => {
       console.log('exportHtml', data)
-      this.mailService.apiEmailCampaignSendPost(false, {
+      this.mailService.apiEmailCampaignSendPost({
         name: this.form.value.titreCampagne ?? '',
         subject: this.form.value.objet ?? '',
         sender: {
@@ -67,7 +67,7 @@ export class EmailComponent {
           name: 'RCO MAIL TEST',
         },
         htmlContent: data.html,
-        mails: ["lary.sene@gmail.com"]
+        listIds: [],
       }).subscribe();
     }
     );

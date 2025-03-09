@@ -9,17 +9,15 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Membre } from './membre';
-import { Centre } from './centre';
 
 
-export interface MailingList { 
-    id?: number;
-    creation?: string;
-    modification?: string | null;
-    libelle: string | null;
-    centre: Centre;
-    brevoListId?: number | null;
-    membres?: Array<Membre> | null;
-}
+export type StatutsMembres = 'Present' | 'Suivi' | 'Absent' | 'Demissionnaire' | 'Decede';
+
+export const StatutsMembres = {
+    Present: 'Present' as StatutsMembres,
+    Suivi: 'Suivi' as StatutsMembres,
+    Absent: 'Absent' as StatutsMembres,
+    Demissionnaire: 'Demissionnaire' as StatutsMembres,
+    Decede: 'Decede' as StatutsMembres
+};
 

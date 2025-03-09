@@ -1,25 +1,24 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, inject, Input, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, inject, Input, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { EmailService, MailingListOutput, MembreOuput, MembreOutput, } from '../../../core/osmose-api-client';
+import { EmailService, MailingListOutput, MembreOuput, } from '../../../core/osmose-api-client';
 import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { map, Observable, shareReplay, of, BehaviorSubject } from 'rxjs';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { of, BehaviorSubject } from 'rxjs';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../../../components/dialog/dialog.component';
+import { toSignal } from '@angular/core/rxjs-interop';
 
-import { debounceTime, switchMap, tap, catchError } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { switchMap, tap } from 'rxjs/operators';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AutocompleteChipsComponent } from "../../../components/autocomplete-chips/autocomplete-chips.component";
 import { EditableLabelComponent } from "../../../components/editable-label/editable-label.component";
 import { DeleteConfirmComponent } from '../../../components/delete-confirm/delete-confirm.component';
+import { MenuService } from '../../../core/services/menu.service';
+import { EmailListTableComponent } from "./email-list-table/email-list-table.component";
 export type ExpansionColor = 'parents' | 'enfants' | undefined;
 
 enum Mode { detail, edit }
@@ -27,8 +26,8 @@ enum Mode { detail, edit }
   selector: 'app-list',
   standalone: true,
   imports: [MatInputModule, MatExpansionModule, MatCardModule, MatIconModule, AsyncPipe, MatButtonModule,
-    MatTableModule, MatPaginatorModule, FormsModule, ReactiveFormsModule, MatAccordion, DeleteConfirmComponent,
-    MatAutocompleteModule, AutocompleteChipsComponent, EditableLabelComponent],
+    FormsModule, ReactiveFormsModule, MatAccordion, DeleteConfirmComponent,
+    MatAutocompleteModule, AutocompleteChipsComponent, EditableLabelComponent, EmailListTableComponent],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
   animations: [
@@ -66,7 +65,6 @@ export class ListComponent {
 
 
   @Input() color: ExpansionColor = undefined;
-  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   readonly openedPanel = signal<number | null | undefined>(null);
   readonly addingMembreId = signal<number | null | undefined>(null);
   membertoadd: number[] = [];
@@ -95,24 +93,24 @@ export class ListComponent {
   }
 
   readonly dialog = inject(MatDialog);
-  displayedColumns: string[] = ['position', 'nom', 'prenom', 'email', 'id'];
-  dataSources = new Map<number, MatTableDataSource<ListDataSource>>([]);
+  private readonly menuService = inject(MenuService)
   editables: Array<Number> = [];
 
-  mailingLists = this.updateMailingLists
-    .pipe(
-      switchMap(() => this.mailService.apiEmailListGet()),
-      shareReplay(1))
+  mailingLists$ = this.menuService.selectedCentre$.pipe(
+    switchMap(centre => centre ? this.mailService.apiEmailCentreCentreIdListsGet(centre.id ?? 0) : of([])),
+    tap(x => {
+      let i = 0;
+      return x.map(x => {
+        x.id ??= --i;
+        return x
+      })
+    }),
+  )
+
+  mailingLists = toSignal(this.mailingLists$, { initialValue: {} as MailingListOutput[] })
 
   onpanelOpen(list: MailingListOutput) {
     this.openedPanel.set(list.id);
-    this.getMembers(list.id ?? 0).subscribe(members => {
-      const dataSource = this.dataSources.get(list.id ?? 0);
-      if (dataSource) {
-        dataSource.paginator ??= this.paginator;
-        dataSource.data = members;
-      }
-    });
   }
 
   isPanelOpen(list: MailingListOutput): boolean {
@@ -122,21 +120,6 @@ export class ListComponent {
     return this.addingMembreId() === list.id;
   }
 
-  getdataSource(listid: number | null | undefined): MatTableDataSource<ListDataSource> {
-    if (!this.dataSources.has(listid ?? 0)) {
-      this.dataSources.set(listid ?? 0, new MatTableDataSource<ListDataSource>([]));
-
-    }
-    return this.dataSources.get(listid ?? 0) ?? new MatTableDataSource<ListDataSource>([]);
-  }
-
-  getMembers(listid: number): Observable<ListDataSource[]> {
-    return this.mailingLists
-      .pipe(map(list => list.find(x => x.id === listid)?.membres ?? []))
-      .pipe(map(members => members.map((x, i) => ({ position: i + 1, nom: x.nom, prenom: x.prenom, email: x.email, id: x.id })))
-
-      );
-  }
 
   isEditMode(id: number | null | undefined): boolean {
     if (id === null || id === undefined) {
@@ -156,15 +139,14 @@ export class ListComponent {
   onsave(list: MailingListOutput,) {
     this.swithView(list.id ?? 0);
     this.mailService.apiEmailListIdPut(list.id ?? 0, { libelle: list.libelle }).subscribe(() => {
-      this.mailingLists = this.mailService.apiEmailListGet();
+      this.mailingLists$ = this.mailService.apiEmailListGet();
     });
   }
 
 
   delete(list: MailingListOutput) {
     this.mailService.apiEmailListIdDelete(list.id ?? 0).subscribe(() => {
-      this.dataSources.delete(list.id ?? 0);
-      this.mailingLists = this.mailService.apiEmailListGet();
+      this.mailingLists$ = this.mailService.apiEmailListGet();
     });
   }
   deleteMembre(id: number, list: MailingListOutput) {
@@ -174,11 +156,3 @@ export class ListComponent {
   }
 }
 
-interface ListDataSource {
-  id: number | null | undefined;
-  position: number;
-  nom: string | null | undefined;
-  prenom: string | null | undefined;
-  email: string | null | undefined;
-
-}

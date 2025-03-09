@@ -36,7 +36,11 @@
         margin-bottom: 10px;
     }
 
-    .table {
-        width: 100%;
+    .empty {
+        mat-card {
+            padding: 20px;
+            text-align: center;
+        }
     }
+
 }

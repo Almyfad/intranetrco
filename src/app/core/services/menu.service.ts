@@ -46,9 +46,8 @@ export class MenuService {
   get selectedCenter(): Centre {
     return this.SelectedCenter$Subject.value!;
   }
-  get selectedCentre$(): Observable<Centre | undefined> {
-    return this.SelectedCenter$Subject.pipe(shareReplay(1));
-  }
+  public selectedCentre$: Observable<Centre | undefined> = this.SelectedCenter$Subject.asObservable();
+
 
   getmenus(): Observable<UserInfo> {
     return this.auth.UserInfo$.pipe(

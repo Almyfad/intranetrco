@@ -10,16 +10,18 @@
  * Do not edit the class manually.
  */
 import { Membre } from './membre';
-import { Centre } from './centre';
+import { StatutsMembres } from './statutsMembres';
 
 
-export interface MailingList { 
+export interface StatutMembre { 
     id?: number;
+    description?: string | null;
+    code?: StatutsMembres;
     creation?: string;
     modification?: string | null;
-    libelle: string | null;
-    centre: Centre;
-    brevoListId?: number | null;
     membres?: Array<Membre> | null;
 }
+export namespace StatutMembre {
+}
+
 
