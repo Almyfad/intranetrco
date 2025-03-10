@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, output, SimpleChanges, ViewChild } from '@angular/core';
 import { MailingListOutput, MembreOuput } from '../../../../core/osmose-api-client';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -28,11 +28,12 @@ export class EmailListTableComponent implements AfterViewInit, OnChanges {
     this.dataSource = new MatTableDataSource<MembreOuput>(this.mailingList.membres ?? []);
     this.dataSource.paginator = this.paginator
   }
-  deleteMembre(arg0: any) {
-    throw new Error('Method not implemented.');
+  deleteMembre(membre: MembreOuput) {
+    this.delete.emit(membre)
   }
   @Input() mailingList: MailingListOutput = {} as MailingListOutput;
   @Input() readonly = false;
+  @Output() delete = new EventEmitter<MembreOuput>();
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
 
   ngAfterViewInit() {

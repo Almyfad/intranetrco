@@ -1,0 +1,18 @@
+<div class="flex justify-between items-center overflow-hidden text-clip py-4">
+    @if(addingmode) {
+    <div class="flex gap-3 justify-between items-center" @inOutAnimation>
+        <ng-content />
+        <button mat-raised-button (click)="_cancel()" class="">
+            <mat-icon>cancel</mat-icon> Annuler </button>
+        <button mat-flat-button (click)="_save()">
+            <mat-icon>check</mat-icon>Valider </button>
+    </div>
+
+
+    }
+    @else {
+    <button mat-flat-button (click)="_add()" @inOutAnimation>
+        <mat-icon>{{icon}}</mat-icon> {{label}} </button>
+
+    }
+</div>

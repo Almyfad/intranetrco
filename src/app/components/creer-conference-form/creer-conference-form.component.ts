@@ -55,7 +55,7 @@ export class CreerConferenceFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.menuService.selectedCentre$.subscribe((centre) => {
+    this.menuService.selectedCenter$.subscribe((centre) => {
       if (centre) {
         this.form.get('centre')!.setValue(centre.libelle);
       }

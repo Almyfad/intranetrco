@@ -3,28 +3,6 @@
 :host {
     --mat-expansion-header-collapsed-state-height: 70px;
 
-    .add-member {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 10px;
-
-        app-autocomplete-chips {
-            width: 95%;
-        }
-
-        .actions {
-            display: flex;
-            align-items: center;
-        }
-    }
-
-    .content {
-        padding-top: 10px;
-        width: 95%;
-        margin: auto;
-    }
 
     mat-expansion-panel {
         margin-bottom: 10px;
@@ -36,11 +14,5 @@
         margin-bottom: 10px;
     }
 
-    .empty {
-        mat-card {
-            padding: 20px;
-            text-align: center;
-        }
-    }
 
 }

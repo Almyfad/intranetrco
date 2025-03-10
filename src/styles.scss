@@ -2,6 +2,10 @@
 @use "./app/layout/layout-component.theme";
 @use "./styles.m3-theme.scss" as m3-theme;
 @use "./theme.scss" as theme;
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
 
 @include mat.core();
 
