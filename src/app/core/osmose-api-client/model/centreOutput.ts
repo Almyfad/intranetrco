@@ -13,6 +13,7 @@
 
 export interface CentreOutput { 
     id?: number | null;
+    code?: string | null;
     libelle?: string | null;
 }
 

@@ -21,7 +21,6 @@ export interface CampaignRequest {
     sender: CreateEmailCampaignSender;
     params?: any | null;
     centreRequest?: Array<CentreCampaignRequest> | null;
-    listIds?: Array<number> | null;
     scheduledAt?: string | null;
 }
 

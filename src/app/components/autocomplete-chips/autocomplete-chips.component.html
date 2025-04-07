@@ -1,24 +1,44 @@
 <div class="content">
 
     <mat-form-field appearance="outline">
-        <mat-label>{{label}}</mat-label>
+        <mat-label>{{options.label}}</mat-label>
         <mat-chip-grid #chipGrid aria-label="Fruit selection">
-            @for (item of selectedItems(); track $index) {
+            @for (item of selectedIAutoCompleteChipsItems(); track $index) {
             <mat-chip-row (removed)="remove(item)" color="accent">
-                {{displayWith(item)}}
-                <button matChipRemove [attr.aria-label]="'remove ' + keySelector(item)">
+                <div class="flex  items-center">
+                    @if(item.displayAvatar) {
+                    <div class="circleAvatar">
+                        {{item.displayAvatar}}
+                    </div>
+                    }
+                    <div>
+                        {{item.displayWith}}
+                    </div>
+                </div>
+                <button matChipRemove [attr.aria-label]="'remove ' +item.id">
                     <mat-icon>cancel</mat-icon>
                 </button>
             </mat-chip-row>
             }
 
-            <input placeholder="{{placeholder}}" [(ngModel)]="currentPattern" [matChipInputFor]="chipGrid" clearOnBlur
-                freeSolo [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            <input placeholder="{{options.placeholder}}" [(ngModel)]="currentPattern" [matChipInputFor]="chipGrid"
+                clearOnBlur freeSolo [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 [value]="currentPattern()" (matChipInputTokenEnd)="add($event)" />
             <mat-icon matSuffixt>person</mat-icon>
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
                 @for (item of (filteredItems() | async); track item) {
-                <mat-option [value]="item">{{displayWith(item)}}</mat-option>
+                <mat-option [value]="item">
+                    <div class="flex  items-center">
+                        @if(item.displayAvatar) {
+                        <div class="circleAvatar">
+                            {{item.displayAvatar}}
+                        </div>
+                        }
+                        <div>
+                            {{item.displayWith}}
+                        </div>
+                    </div>
+                </mat-option>
                 }
             </mat-autocomplete>
         </mat-chip-grid>

@@ -41,9 +41,7 @@
 
         <app-email-list-add-button label="Ajouter un contact" icon="person_add" (save)="onsaveAddMembre(list.id)">
             <div class="w-128">
-                <app-autocomplete-chips [asyncItems]="searchContacts" [keySelector]="aspectKeySelector"
-                    label="Rechercher Contact(s)" placeholder="John Doe" [displayWith]="aspectDisplayWith"
-                    (selectedItemsChange)="onlistChanged($event)">
+                <app-autocomplete-chips [options]="searchContactOptions" (selectedItemsChange)="onlistChanged($event)">
                 </app-autocomplete-chips>
             </div>
         </app-email-list-add-button>

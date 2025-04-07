@@ -15,5 +15,6 @@ import { TypesMembres } from './typesMembres';
 export interface CentreCampaignRequest { 
     centreId: number;
     typesMembres?: Array<TypesMembres> | null;
+    listIds?: Array<number> | null;
 }
 

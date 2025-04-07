@@ -12,9 +12,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-import { startWith, switchMap, tap } from 'rxjs/operators';
+import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { AutocompleteChipsComponent } from "../../../components/autocomplete-chips/autocomplete-chips.component";
+import { AutocompleteChipsComponent, AutocompleteChipsDataSource, AutocompleteChipsInput } from "../../../components/autocomplete-chips/autocomplete-chips.component";
 import { EditableLabelComponent } from "../../../components/editable-label/editable-label.component";
 import { DeleteConfirmComponent } from '../../../components/delete-confirm/delete-confirm.component';
 import { MenuService } from '../../../core/services/menu.service';
@@ -70,10 +70,26 @@ export class ListComponent {
   membertoadd: number[] = [];
   private readonly mailService = inject(EmailService)
   private refreshSubject = new Subject<void>(); // déclencheur de rafraîchissement
-  searchContacts = (pattern: string | null | undefined) => pattern ? this.mailService.apiEmailContactSearchGet(pattern) : of([])
-  aspectKeySelector = (x: MembreOuput | undefined): string => x?.id?.toString() ?? '0'
-  aspectDisplayWith = (x: MembreOuput | undefined): string => `${x?.nom ?? ''} ${x?.prenom ?? ''}`
+  searchContacts = (pattern: string | null | undefined) =>
+    pattern ? this.mailService.apiEmailContactSearchGet(pattern).pipe(map(x => {
+      return x.map((x) => ({
+        id: x.id!,
+        item: x,
+        displayWith: `${x.nom} ${x.prenom}`,
+      }))
+    }))
+      : of([])
+
   newList: string = '';
+
+  searchContactOptions: AutocompleteChipsInput<MembreOuput> = {
+    label: 'Membre',
+    placeholder: 'Rechercher un membre',
+    formControlName: 'membre',
+    datasource: new AutocompleteChipsDataSource<MembreOuput>({
+      asyncDataPatern: this.searchContacts
+    })
+  }
 
 
   onsaveAddMembre(id: number | null | undefined) {

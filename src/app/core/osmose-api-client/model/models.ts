@@ -13,6 +13,7 @@ export * from './droit';
 export * from './droits';
 export * from './editMailingListInput';
 export * from './inscription';
+export * from './listCountQuery';
 export * from './loginRequest';
 export * from './mailingList';
 export * from './mailingListInput';

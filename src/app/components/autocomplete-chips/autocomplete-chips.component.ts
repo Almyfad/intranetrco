@@ -1,12 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject, Input, model, OnChanges, signal, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, Input, model, OnChanges, signal, SimpleChanges } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { FormsModule } from '@angular/forms';
-import { Observable, of, tap } from 'rxjs';
+import { combineLatest, map, Observable, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -19,35 +18,27 @@ import { AsyncPipe } from '@angular/common';
 })
 export class AutocompleteChipsComponent<T> implements OnChanges {
 
-  @Input() label: string = 'autocomplete-chips';
-  @Input() placeholder: string = 'autocomplete-chips-placeholder';
-  @Input() formControlName: string = 'autocomplete-chips-form-control-name';
-  @Input() items: T[] | null | undefined;
-  @Input() asyncItems: ((arg0: string | null | undefined) => Observable<T[]>) | undefined;
-  @Input() keySelector!: ((args: T | undefined) => string);
-  @Input() displayWith!: ((args: T | undefined) => string);
+  @Input({ required: true }) options!: AutocompleteChipsInput<T>;
 
-
+  constructor() {
+    effect(() => {
+      const items = this.selectedIAutoCompleteChipsItems();
+      this.selectedItems.set(items.map(x => x.item));
+    }, { allowSignalWrites: true });
+  }
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   readonly currentPattern = signal<string | undefined | null>(null);
+  readonly selectedIAutoCompleteChipsItems = model<AutocompleteChipsItem<T>[]>([]);
   readonly selectedItems = model<T[]>([]);
+
   readonly filteredItems = computed(() => {
     const currentItem = this.currentPattern()?.toUpperCase();
-
-    if (this.asyncItems) {
-      return this.asyncItems(currentItem).pipe(
-        tap(x => this.items = x))
-    }
-    else
-      return of((currentItem
-        ? this.items?.filter(x => this.displayWith(x).toUpperCase().includes(currentItem))
-        : this.items?.slice())
-        ?.filter(x => !this.selectedItems().map(s => this.keySelector(s)).includes(this.keySelector(x))))
-        ;
+    return this.options.datasource.buildDataSource(currentItem).pipe(
+      map((s) => s.filter(x => !this.selectedIAutoCompleteChipsItems().map(s => s.id).includes(x.id)))
+    );
   });
 
-  readonly announcer = inject(LiveAnnouncer);
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['items'] && changes['items'].currentValue && changes['items'].currentValue.length > 0) {
@@ -56,35 +47,87 @@ export class AutocompleteChipsComponent<T> implements OnChanges {
       this.currentPattern.set(null);
     }
   }
-
-
   add(event: MatChipInputEvent): void {
     if (event.value) {
-      this.selectedItems.update(x => [...x, event.value as T]);
+      this.selectedIAutoCompleteChipsItems.update(x => [...x, event.value as unknown as AutocompleteChipsItem<T>]);
     }
     // Clear the input value
     this.currentPattern.set("");
 
   }
 
-  remove(item: T): void {
-    this.selectedItems.update(items => {
+  remove(item: AutocompleteChipsItem<T>): void {
+    this.selectedIAutoCompleteChipsItems.update(items => {
       const index = items.indexOf(item);
       if (index < 0) {
         return items;
       }
 
       items.splice(index, 1);
-      this.announcer.announce(`Removed ${item}`);
       return [...items];
     });
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.selectedItems.update(x => [...x, event.option.value]);
+    this.selectedIAutoCompleteChipsItems.update(x => [...x, event.option.value]);
     this.currentPattern.set("");
     event.option.deselect();
   }
 
 
+}
+
+export class AutocompleteChipsItem<T> {
+  id!: string | number;
+  displayWith?: string | undefined | null;
+  displayAvatar?: string | undefined | null;
+  item!: T;
+}
+
+export class AutocompleteChipsDataSource<T> {
+  data?: AutocompleteChipsItem<T>[] | undefined;
+  asyncDataPatern?: ((arg0: string | null | undefined) => Observable<AutocompleteChipsItem<T>[]>) | undefined;
+  asyncData?: Observable<AutocompleteChipsItem<T>[]> | undefined;
+
+
+  private filter(patern: string | null | undefined, data: Observable<AutocompleteChipsItem<T>[]> | undefined) {
+    return data?.pipe(
+      map((data) => data.filter(x => x.displayWith?.toUpperCase().includes(patern?.toUpperCase() ?? '')))
+    );
+  }
+  constructor({
+    data,
+    asyncData,
+    asyncDataPatern
+  }: {
+    data?: AutocompleteChipsItem<T>[] | undefined;
+    asyncData?: Observable<AutocompleteChipsItem<T>[]> | undefined;
+    asyncDataPatern?: ((arg0: string | null | undefined) => Observable<AutocompleteChipsItem<T>[]>) | undefined;
+  }) {
+    this.data = data;
+    this.asyncData = asyncData;
+    this.asyncDataPatern = asyncDataPatern;
+  }
+  buildDataSource(patern?: string | null) {
+    let data$ = this.data ? this.filter(patern, of(this.data)) : undefined;
+    let asyncData$ = this.asyncData ? this.filter(patern, this.asyncData) : undefined;
+    let asyncDataPatern$ = this.asyncDataPatern ? this.asyncDataPatern(patern) : undefined;
+
+    let validObservables: Observable<AutocompleteChipsItem<T>[]>[] = [
+      data$,
+      asyncData$,
+      asyncDataPatern$
+    ].filter(obs => obs !== undefined) as Observable<AutocompleteChipsItem<T>[]>[]; // filtre les observables valides
+
+    return combineLatest(validObservables).pipe(
+      map(results => results.flat())
+    )
+  }
+}
+
+export type AutocompleteChipsInput<T> = {
+  label: string;
+  placeholder: string;
+  formControlName: string;
+  datasource: AutocompleteChipsDataSource<T>;
 }

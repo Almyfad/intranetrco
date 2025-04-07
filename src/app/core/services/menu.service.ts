@@ -92,14 +92,16 @@ export class MenuService {
     this.centres.pipe(
       tap((centres) => {
         let code = this.SelectedMenu$Subject.value?.code
-        console.log("configureTabs============>", code)
         if (code === 'CreateConference')
           return this.Tabs$Subject.next(Tab.TabsCentre(centres.filter((c) => c.typeCentre.code === 'Renouvellement')))
 
-        if (code === 'Accueil'
-          || code === 'ConferencesInscriptions' || code === 'ConferencesUserInscriptions' || code === 'Conferences'
-          || code === 'Registre' || code === 'RegistreFicheEleves'
-          || code === 'Administation' || code === 'Developpement') return this.Tabs$Subject.next([])
+        if ([undefined,
+          'Accueil',
+          'Registre', 'RegistreFicheEleves',
+          'Administation', 'Developpement',
+          'ConferencesInscriptions', 'ConferencesUserInscriptions', 'Conferences',
+          'MailingCampagnes'
+        ].includes(code)) return this.Tabs$Subject.next([])
 
         return this.Tabs$Subject.next(Tab.TabsCentre(centres))
       })

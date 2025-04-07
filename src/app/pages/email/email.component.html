@@ -3,14 +3,20 @@
         <mat-card>
             <div class="row">
                 <div class="col">
-                    <app-autocomplete-chips [items]="(list | async)" [keySelector]="aspectKeySelector"
-                        label="Mailing List" placeholder="Interessé SUD" [displayWith]="aspectDisplayWith"
-                        (selectedItemsChange)="onlistChanged($event)">
+                    <mat-form-field class="full-width">
+                        <mat-label>Centre</mat-label>
+                        <mat-select [value]="selectedCentre()" (selectionChange)="selectedCentre.set($event.value)">
+                            @for (ctr of (centres$ | async); track ctr) {
+                            <mat-option [value]="ctr">{{ctr.libelle}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <app-autocomplete-chips [(selectedItems)]="listsSelected" [options]="autocompleteChipsOptions">
                     </app-autocomplete-chips>
                 </div>
                 <div class="col totalRecipient">
                     <mat-card class="totalRecipient">
-                        <span>Total Mail : {{totalRecipient | async }}</span>
+                        <span>Total Mail : {{totalRecipient() | async }}</span>
                     </mat-card>
                 </div>
 

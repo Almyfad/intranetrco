@@ -98,3 +98,16 @@ body {
 .col:last-child {
   margin-right: 0;
 }
+
+.circleAvatar {
+  background-color: theme.$primary;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  text-align: center;
+  line-height: 32px;
+  font-weight: bold;
+  font-size: 0.8em;
+  margin-right: 5px;
+}

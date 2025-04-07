@@ -9,20 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MembreOuput } from './membreOuput';
-import { CentreOutput } from './centreOutput';
 import { TypesMembres } from './typesMembres';
 
 
-export interface MailingListOutput { 
-    id?: number | null;
-    libelle?: string | null;
-    typeMembre?: TypesMembres;
-    readonly listePersonnalisee?: boolean;
-    centre?: CentreOutput;
-    membres?: Array<MembreOuput> | null;
+export interface ListCountQuery { 
+    listsIds?: Array<number> | null;
+    typesMembres?: Array<TypesMembres> | null;
 }
-export namespace MailingListOutput {
-}
-
 

@@ -27,6 +27,7 @@ model/droit.ts
 model/droits.ts
 model/editMailingListInput.ts
 model/inscription.ts
+model/listCountQuery.ts
 model/loginRequest.ts
 model/mailingList.ts
 model/mailingListInput.ts

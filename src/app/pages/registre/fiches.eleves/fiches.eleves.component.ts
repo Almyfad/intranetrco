@@ -11,10 +11,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AutocompleteChipsComponent } from '../../../components/autocomplete-chips/autocomplete-chips.component';
+import { AutocompleteChipsComponent, AutocompleteChipsDataSource, AutocompleteChipsInput, AutocompleteChipsItem } from '../../../components/autocomplete-chips/autocomplete-chips.component';
 import { Centre, MembreOutputDataPager, TypeMembre } from '../../../core/osmose-api-client';
 import { FormGroup, FormControl } from '@angular/forms';
-import { combineLatest, debounceTime, map, merge, of, scan, shareReplay, switchMap, tap } from 'rxjs';
+import { combineLatest, debounceTime, map, merge, Observable, of, scan, shareReplay, switchMap, tap } from 'rxjs';
 import { DetailEleveComponent } from "../../../components/detail-eleve/detail-eleve.component";
 import { ScrollService } from '../../../core/services/scroll.service';
 
@@ -31,10 +31,12 @@ import { ScrollService } from '../../../core/services/scroll.service';
 export class FichesElevesComponent {
 
   onAspectChange($event: TypeMembre[]) {
+    //TODO try use model here
     this.searchForm.patchValue({ aspects: $event.length === 0 ? null : $event })
   }
 
   onCentreChange($event: Centre[]) {
+    //TODO try use model here
     this.searchForm.patchValue({ centres: $event.length === 0 ? null : $event })
   }
 
@@ -49,8 +51,20 @@ export class FichesElevesComponent {
   private readonly menuService = inject(MenuService);
   private readonly scrollService = inject(ScrollService);
   listing = this.RegistreService.apiRegistreMembresPost()
-  aspects = this.RegistreService.apiRegistreAspectsGet()
-  centres = this.RegistreService.apiRegistreCentresGet()
+  aspects: Observable<AutocompleteChipsItem<TypeMembre>[]> = this.RegistreService.apiRegistreAspectsGet().pipe(map(x => {
+    return x.map((x) => ({
+      id: x.code!,
+      item: x,
+      displayWith: x.description,
+    }))
+  }))
+  centres: Observable<AutocompleteChipsItem<Centre>[]> = this.RegistreService.apiRegistreCentresGet().pipe(map(x => {
+    return x.map((x) => ({
+      id: x.id!,
+      item: x,
+      displayWith: x.libelle,
+    }))
+  }))
 
   searchForm = new FormGroup({
     nom: new FormControl(''),
@@ -101,11 +115,19 @@ export class FichesElevesComponent {
   items = this.dataPagedItems.pipe(map((x) => x?.data ?? []))
   itemsCount = this.dataPagedItems.pipe(map((x) => x?.total ?? 0))
 
-  aspectKeySelector = (x: TypeMembre | undefined): string => x?.code ?? ''
-  aspectDisplayWith = (x: TypeMembre | undefined): string => x?.description ?? ''
+  aspectAutocompleteChipsOptions: AutocompleteChipsInput<TypeMembre> = {
+    label: 'Aspects',
+    placeholder: 'Sélectionner un ou plusieurs aspects',
+    formControlName: 'aspects',
+    datasource: new AutocompleteChipsDataSource<TypeMembre>({ asyncData: this.aspects })
+  }
+  centreAutocompleteChipsOptions: AutocompleteChipsInput<Centre> = {
+    label: 'Centres',
+    placeholder: 'Sélectionner un ou plusieurs centres',
+    formControlName: 'centres',
+    datasource: new AutocompleteChipsDataSource<Centre>({ asyncData: this.centres })
+  }
 
-  centreKeySelector = (x: Centre | undefined): string => x?.code ?? ''
-  centreDisplayWith = (x: Centre | undefined): string => x?.libelle ?? ''
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(): void {

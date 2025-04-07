@@ -21,13 +21,13 @@
         </mat-form-field>
       </div>
       <div class="searchpanel">
-        <app-autocomplete-chips [items]="(aspects | async) ?? []" [keySelector]="aspectKeySelector" label="Aspect(s)"
-          placeholder="Ex. 1er Aspect" [displayWith]="aspectDisplayWith" (selectedItemsChange)="onAspectChange($event)">
+        <app-autocomplete-chips [options]="aspectAutocompleteChipsOptions"
+          (selectedItemsChange)="onAspectChange($event)">
         </app-autocomplete-chips>
       </div>
       <div class="searchpanel">
-        <app-autocomplete-chips [items]="(centres | async) ?? []" [keySelector]="centreKeySelector" label="Centre(s)"
-          placeholder="Ex.  Paris" [displayWith]="centreDisplayWith" (selectedItemsChange)="onCentreChange($event)">
+        <app-autocomplete-chips [options]="centreAutocompleteChipsOptions"
+          (selectedItemsChange)="onCentreChange($event)">
         </app-autocomplete-chips>
       </div>
       <span class="count">
@@ -37,7 +37,7 @@
   </form>
 
   @for(item of items | async;track item.id) {
-  <app-detail-eleve [eleve]="item"></app-detail-eleve>  
+  <app-detail-eleve [eleve]="item"></app-detail-eleve>
   }
 
 </div>
