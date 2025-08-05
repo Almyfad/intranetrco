@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="178"
+   height="40"
+   viewBox="0 0 178 40"
+   fill="none"
+   version="1.1"
+   id="svg3"
+   sodipodi:docname="dark-logo.svg"
+   xml:space="preserve"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs3"><rect
+       x="50.109822"
+       y="7.5715391"
+       width="120.18097"
+       height="23.953596"
+       id="rect3" /></defs><sodipodi:namedview
+     id="namedview3"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="7.2640449"
+     inkscape:cx="102.49111"
+     inkscape:cy="35.310905"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg3" /><style
+     id="style1">
+#stcricle,
+#stquare,
+#stdot,
+#striangle {
+  stroke-width: 34;
+   stroke: #caa55c;
+   fill:none;
+}
+#stdot {
+fill :#caa55c;
+}
+
+</style><g
+     id="g3"
+     transform="matrix(0.0383862,0,0,0.04006742,-0.09565181,-0.11028115)"><circle
+       id="stcricle"
+       cx="500"
+       cy="500"
+       r="477.4845" /><rect
+       id="stquare"
+       x="195.29192"
+       y="185.37128"
+       width="608.63666"
+       height="629.41663" /><circle
+       id="stdot"
+       cx="499"
+       cy="499"
+       r="15" /><path
+       id="striangle"
+       d="M 870.64094,714.4446 129.5443,714.44459 500.09262,72.636078 Z" /></g><text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.1846px;line-height:0.1;font-family:'Britannic Bold';-inkscape-font-specification:'Britannic Bold, ';text-align:start;letter-spacing:2.25842px;word-spacing:0.0446329px;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke-width:0.892658"
+     x="51.865173"
+     y="29.364618"
+     id="text4"
+     transform="scale(1.0297577,0.97110221)"><tspan
+       sodipodi:role="line"
+       id="tspan4"
+       x="51.865173"
+       y="29.364618"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Montserrat;-inkscape-font-specification:Montserrat;fill:#333333;stroke-width:0.892658">Intranet</tspan></text></svg>

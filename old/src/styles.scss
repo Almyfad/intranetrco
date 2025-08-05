@@ -1,0 +1,113 @@
+@use "@angular/material" as mat;
+@use "./app/layout/layout-component.theme";
+@use "./styles.m3-theme.scss" as m3-theme;
+@use "./theme.scss" as theme;
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@include mat.core();
+
+
+body {
+  margin: 0;
+  font-family: Roboto, sans-serif;
+}
+
+:root {
+  @include mat.all-component-themes(m3-theme.$light-theme);
+  @include layout-component.theme(m3-theme.$light-theme);
+}
+
+.mat-mdc-snack-bar-container {
+  --mat-mdc-snack-bar-button-color: #ffffff;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+
+  &.app-notification-error {
+    --mdc-snackbar-container-color: #{theme.$color-error};
+  }
+
+  &.app-notification-success {
+    --mdc-snackbar-container-color: #{theme.$color-success};
+  }
+}
+
+.color-primary {
+  color: theme.$primary;
+}
+
+.color-secondary {
+  color: theme.$secondary;
+}
+
+.color-tertiary {
+  color: theme.$tertiary;
+}
+
+.color-success {
+  color: theme.$color-success;
+}
+
+.color-error {
+  color: theme.$color-error;
+}
+
+.color-white {
+  color: white;
+}
+
+.bg-primary {
+  background-color: theme.$primary;
+}
+
+.bg-secondary {
+  background-color: theme.$secondary;
+}
+
+.bg-tertiary {
+  background-color: theme.$tertiary;
+}
+
+.bg-success {
+  background-color: theme.$color-success;
+}
+
+.bg-error {
+  background-color: theme.$color-error;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+
+.circleAvatar {
+  background-color: theme.$primary;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  text-align: center;
+  line-height: 32px;
+  font-weight: bold;
+  font-size: 0.8em;
+  margin-right: 5px;
+}
