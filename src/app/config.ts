@@ -19,7 +19,7 @@ export const defaults: AppSettings = {
   boxed: true,
   horizontal: false,
   cardBorder: false,
-  activeTheme: 'blue_theme',
+  activeTheme: 'rco_theme',
   language: 'en-us',
   navPos: 'side',
 };
