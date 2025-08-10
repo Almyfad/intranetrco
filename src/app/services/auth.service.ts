@@ -8,7 +8,13 @@ import { Observable, switchMap, tap } from 'rxjs';
 })
 export class AuthService {
 
-  constructor() { }
+  private readonly STORAGE_KEY = 'userInfo';
+
+  constructor() {
+    // Charger les données depuis le session storage au démarrage
+    this.loadUserFromStorage();
+    this.getUserInfoFromApi().subscribe();
+  }
 
   private readonly userService = inject(UserService)
   private readonly router = inject(Router);
@@ -19,7 +25,7 @@ export class AuthService {
 
   login(email: string, password: string): Observable<any> {
     return this.userService.apiUserLoginPost({ email: email, password }).pipe(
-      switchMap(() => this.getUserInfo())
+      switchMap(() => this.getUserInfoFromApi())
     );
   }
 
@@ -27,16 +33,48 @@ export class AuthService {
     return this.userService.apiUserLogoutPost().pipe(
       tap(() => {
         this._currentUser.set({});
+        this.clearUserFromStorage();
         this.router.navigate(['/authentication/login']);
       })
     );
   }
 
-  getUserInfo(): Observable<UserInfo> {  
+
+  getUserInfoFromApi(): Observable<UserInfo> {  
     return this.userService.apiUserInfosGet().pipe(
       tap((userInfo) => {
         this._currentUser.set(userInfo);
+        this.saveUserToStorage(userInfo);
       })
     );
+  }
+
+  private saveUserToStorage(userInfo: UserInfo): void {
+    try {
+      sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(userInfo));
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde dans le session storage:', error);
+    }
+  }
+
+  private loadUserFromStorage(): void {
+    try {
+      const storedUser = sessionStorage.getItem(this.STORAGE_KEY);
+      if (storedUser) {
+        const userInfo: UserInfo = JSON.parse(storedUser);
+        this._currentUser.set(userInfo);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement depuis le session storage:', error);
+      this.clearUserFromStorage();
+    }
+  }
+
+  private clearUserFromStorage(): void {
+    try {
+      sessionStorage.removeItem(this.STORAGE_KEY);
+    } catch (error) {
+      console.error('Erreur lors de la suppression du session storage:', error);
+    }
   }
 }

@@ -29,7 +29,7 @@ export class AppSideLoginComponent implements OnInit {
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/']);
     } else {
-      this.authService.getUserInfo().subscribe({
+      this.authService.getUserInfoFromApi().subscribe({
         next: (userInfo) => {
           if (this.authService.isLoggedIn()) {
             this.router.navigate(['/']);
