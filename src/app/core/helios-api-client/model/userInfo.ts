@@ -8,6 +8,7 @@
  * Do not edit the class manually.
  */
 import { CentreModule } from './centreModule';
+import { NullableOfTypesMembres } from './nullableOfTypesMembres';
 
 
 export interface UserInfo { 
@@ -19,6 +20,9 @@ export interface UserInfo {
     centreModules?: Array<CentreModule> | null;
     sysAdminModules?: Array<any> | null;
     adminModules?: Array<any> | null;
-    typeMembre?: number | null;
+    typeMembre?: NullableOfTypesMembres | null;
 }
+export namespace UserInfo {
+}
+
 

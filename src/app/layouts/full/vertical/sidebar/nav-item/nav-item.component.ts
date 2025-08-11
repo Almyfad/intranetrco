@@ -65,6 +65,7 @@ export class AppNavItemComponent implements OnChanges {
 
   onItemSelected(item: NavItem) {
     if (!item.children || !item.children.length) {
+      console.log('Navigating to:', item.route);
       this.router.navigate([item.route]);
     }
     if (item.children && item.children.length) {

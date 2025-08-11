@@ -1,0 +1,55 @@
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="full-width-table">
+    <!-- Statut Column -->
+    <ng-container matColumnDef="statut">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <app-statut-membre [statutMembre]="element.statut"></app-statut-membre>
+      </td>
+    </ng-container>
+
+    <!-- Nom Column -->
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef> Nom </th>
+      <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
+    </ng-container>		<!-- Prénom Column -->
+		<ng-container matColumnDef="prenom">
+			<th mat-header-cell *matHeaderCellDef> Prénom </th>
+			<td mat-cell *matCellDef="let element"> {{element.prenom}} </td>
+		</ng-container>
+
+		<!-- Email Column -->
+		<ng-container matColumnDef="email">
+			<th mat-header-cell *matHeaderCellDef> Email </th>
+			<td mat-cell *matCellDef="let element"> {{element.email}} </td>
+		</ng-container>
+
+		<!-- Téléphone Column -->
+		<ng-container matColumnDef="telephone">
+			<th mat-header-cell *matHeaderCellDef> Téléphone </th>
+			<td mat-cell *matCellDef="let element"> {{element.telephone}} </td>
+		</ng-container>
+
+		<!-- Adresse Column -->
+		<ng-container matColumnDef="adresse">
+			<th mat-header-cell *matHeaderCellDef> Adresse </th>
+			<td mat-cell *matCellDef="let element"> {{element.adresse}} </td>
+		</ng-container>
+
+		<!-- Ville Column -->
+		<ng-container matColumnDef="ville">
+			<th mat-header-cell *matHeaderCellDef> Ville </th>
+			<td mat-cell *matCellDef="let element"> {{element.ville}} </td>
+		</ng-container>
+
+		<!-- Pays Column -->
+		<ng-container matColumnDef="pays">
+			<th mat-header-cell *matHeaderCellDef> Pays </th>
+			<td mat-cell *matCellDef="let element"> {{element.pays}} </td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+	</table>
+	<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+</div>

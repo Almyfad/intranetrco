@@ -25,6 +25,11 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./pages/pages.routes').then((m) => m.PagesRoutes),
       },
+      {
+        path:'registre',
+        loadChildren: () =>
+          import('./pages/registre/registre.route').then((m) => m.RegistreRoutes),
+      },
     ],
   },
   {

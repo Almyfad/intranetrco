@@ -7,6 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Modules } from './modules';
 
 
 export interface Module { 
@@ -20,8 +21,11 @@ export interface Module {
     suffixIcon?: string | null;
     id?: number;
     description?: string | null;
-    code?: number;
+    code?: Modules;
     creation?: string;
     modification?: string | null;
 }
+export namespace Module {
+}
+
 
