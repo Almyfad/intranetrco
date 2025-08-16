@@ -57,4 +57,15 @@
 		></tr>
 	</table>
 	<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+	
+	<!-- Pagination -->
+	<mat-paginator 
+		[length]="totalElements"
+		[pageSize]="pageSize"
+		[pageIndex]="currentPage"
+		[pageSizeOptions]="pageSizeOptions"
+		[showFirstLastButtons]="true"
+		(page)="onPageChange($event)"
+		aria-label="Sélectionner une page d'élèves">
+	</mat-paginator>
 </div>
