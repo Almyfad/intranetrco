@@ -1,4 +1,115 @@
-<div class="mat-elevation-z8">
+
+<div class="bg-white rounded m-b-30">
+	<div class="d-flex align-items-center justify-content-center p-x-24 p-y-16 gap-8">
+		<mat-icon class="text-secondary">filter_list</mat-icon>
+		<h4 class="text-secondary text-center">Filtres</h4>
+	</div>
+	<div class="p-x-24 p-b-24">
+		<!-- Première ligne : Nom, Prénom, Email -->
+		<div class="d-flex gap-16 m-b-16">
+			<mat-form-field appearance="outline" class="flex-1">
+				<mat-label>Rechercher par nom</mat-label>
+				<input 
+					matInput 
+					[formControl]="nomFilterControl"
+					placeholder="Saisissez au moins 3 caractères..."
+					autocomplete="off">
+				<mat-icon matPrefix>search</mat-icon>
+			</mat-form-field>
+			
+			<mat-form-field appearance="outline" class="flex-1">
+				<mat-label>Rechercher par prénom</mat-label>
+				<input 
+					matInput 
+					[formControl]="prenomFilterControl"
+					placeholder="Saisissez au moins 3 caractères..."
+					autocomplete="off">
+				<mat-icon matPrefix>search</mat-icon>
+			</mat-form-field>
+			
+			<mat-form-field appearance="outline" class="flex-1">
+				<mat-label>Rechercher par email</mat-label>
+				<input 
+					matInput 
+					[formControl]="emailFilterControl"
+					placeholder="Saisissez au moins 3 caractères..."
+					autocomplete="off"
+					type="email">
+				<mat-icon matPrefix>email</mat-icon>
+			</mat-form-field>
+		</div>
+		
+		<!-- Deuxième ligne : Ville, Pays, Centre -->
+		<div class="d-flex gap-16 m-b-16">
+			<mat-form-field appearance="outline" class="flex-1">
+				<mat-label>Rechercher par ville</mat-label>
+				<input 
+					matInput 
+					[formControl]="villeFilterControl"
+					placeholder="Saisissez au moins 3 caractères..."
+					autocomplete="off">
+				<mat-icon matPrefix>location_city</mat-icon>
+			</mat-form-field>
+			
+			<mat-form-field appearance="outline" class="flex-1">
+				<mat-label>Rechercher par pays</mat-label>
+				<input 
+					matInput 
+					[formControl]="paysFilterControl"
+					placeholder="Saisissez au moins 3 caractères..."
+					autocomplete="off">
+				<mat-icon matPrefix>public</mat-icon>
+			</mat-form-field>
+			
+			<div class="flex-1">
+				<app-async-select
+					label="Filtrer par centre"
+					placeholder="Sélectionnez un ou plusieurs centres"
+					clearOptionText="Tous les centres"
+					[multiple]="true"
+					[options$]="centresOptions$"
+					[loading$]="centresLoading$"
+					(selectionChange)="onCentreSelection($event)">
+				</app-async-select>
+			</div>
+		</div>
+
+		<!-- Troisième ligne : Types membre et Statuts -->
+		<div class="d-flex gap-16">
+			<div class="flex-1">
+				<app-async-select
+					label="Filtrer par type membre"
+					placeholder="Sélectionnez un ou plusieurs aspects"
+					clearOptionText="Tous les types"
+					[multiple]="true"
+					[options$]="aspectsOptions$"
+					[loading$]="aspectsLoading$"
+					(selectionChange)="onAspectSelection($event)">
+				</app-async-select>
+			</div>
+
+			<div class="flex-1">
+				<app-async-select
+					label="Filtrer par statut"
+					placeholder="Sélectionnez un ou plusieurs statuts"
+					clearOptionText="Tous les statuts"
+					[multiple]="true"
+					[options$]="statutsOptions$"
+					[loading$]="statutsLoading$"
+					[optionColor]="getStatutColor.bind(this)"
+					(selectionChange)="onStatutSelection($event)">
+				</app-async-select>
+			</div>
+
+			<div class="flex-1">
+				<!-- Espace réservé pour d'autres filtres futurs -->
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="bg-white rounded m-b-30 overflow-hidden">
+<div class="mat-elevation-z8 w-100">
   <table mat-table [dataSource]="dataSource" class="full-width-table">
     <!-- Statut Column -->
     <ng-container matColumnDef="statut">
@@ -68,4 +179,4 @@
 		(page)="onPageChange($event)"
 		aria-label="Sélectionner une page d'élèves">
 	</mat-paginator>
-</div>
+</div></div>

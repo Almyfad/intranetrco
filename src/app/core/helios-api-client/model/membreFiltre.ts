@@ -17,9 +17,11 @@ export interface MembreFiltre {
     pays?: string | null;
     centre?: string | null;
     aspect?: string | null;
+    statut?: string | null;
     l_villes?: Array<string> | null;
     l_pays?: Array<string> | null;
     l_centres?: Array<string> | null;
     l_aspects?: Array<number> | null;
+    l_statuts?: Array<number> | null;
 }
 
