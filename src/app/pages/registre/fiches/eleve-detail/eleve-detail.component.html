@@ -1,0 +1,42 @@
+<ng-scrollbar class="position-relative" style="height: calc(100vh - 80px)">
+    <div class="p-24">
+        @if (eleve) {
+        <div class="d-flex align-items-center m-b-16 gap-8">
+            <mat-icon class="me-2 text-primary">person</mat-icon>
+            <h3 class="mb-0 text-primary">{{ eleve.prenom }} {{ eleve.nom }}</h3>
+        </div>
+
+        @if (eleve.statut) {
+        <div class="m-b-16">
+            <app-statut-membre [statutMembre]="eleve.statut" [showLabel]="true"></app-statut-membre>
+        </div>
+        }
+
+        <h4 class="text-secondary">Informations personnelles</h4>
+        <mat-divider ></mat-divider>
+        <p><label>Nom:</label> {{ eleve.nom }}</p>
+        <p><label>Prénom:</label> {{ eleve.prenom }}</p>
+        <p><label>Age:</label> 0</p>
+        <p><label>Email:</label> {{ eleve.email }}</p>
+        @if(eleve.telephone) {
+        <p><label>Téléphone:</label> {{ eleve.telephone }}</p>
+        }
+        <p><label>Portable:</label> {{ eleve.portable }}</p>
+
+        <h4 class="text-secondary">Adresse</h4>
+        <mat-divider ></mat-divider>
+
+        <p><label>Adresse:</label> {{ eleve.adresse }}</p>
+        <p><label>Ville:</label> {{ eleve.ville }}</p>
+        <p><label>Pays:</label> {{ eleve.pays }}</p>
+        <p><label>Code postal:</label> {{ eleve.codePostal }}</p>
+
+        <h4 class="text-secondary">Vie de l'élève</h4>
+        <mat-divider></mat-divider>
+        <p><label>Aspect:</label> {{ eleve.typeMembre.libelle }}</p>
+        <p><label>Centre:</label> {{ eleve.centre.libelle }}</p>
+        <p><label>Statut:</label> {{ eleve.statut.libelle }}</p>
+
+        }
+    </div>
+</ng-scrollbar>

@@ -1,0 +1,52 @@
+.clickable-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+  
+  &:active {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+}
+
+.full-width-table {
+  width: 100%;
+}
+
+.info-banner {
+  font-size: 0.875rem;
+}
+
+.bg-light {
+  background-color: #f8f9fa !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #dee2e6 !important;
+}
+
+.p-3 {
+  padding: 1rem !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.me-2 {
+  margin-right: 0.5rem !important;
+}
+
+.text-primary {
+  color: #007bff !important;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}

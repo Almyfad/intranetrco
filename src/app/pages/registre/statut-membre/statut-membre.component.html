@@ -1,5 +1,11 @@
-<div class="status-badge" 
-     [style.background-color]="getStatusColor()"
-     [matTooltip]="statutMembre?.libelle || 'Statut inconnu'">
+<div class="d-flex align-items-center justify-content-start mb-3 gap-10">
+
+  <div class="status-badge" 
+  [style.background-color]="getStatusColor()"
+  [matTooltip]="statutMembre?.libelle || 'Statut inconnu'">
   <span class="status-dot"></span>
+</div>
+@if (showLabel && statutMembre?.libelle) {
+  <span class="status-label">{{ statutMembre?.libelle }}</span>
+}
 </div>

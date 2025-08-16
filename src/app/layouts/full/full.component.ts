@@ -290,6 +290,13 @@ export class FullComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sidenavService.toggle();
   }
 
+  get title(): string {
+    return this.sidenavService.title();
+  } 
+  get width(): string {
+    return this.sidenavService.width();
+  }
+
   // Méthode pour changer le composant dans la sidenav
   setCustomizerComponent<T>(componentType: any, inputs?: Partial<T>): void {
     this.sidenavService.setComponent(componentType, inputs);

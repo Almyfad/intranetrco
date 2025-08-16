@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NullableOfStatutsMembres, StatutMembreDTO } from 'src/app/core/helios-api-client';
 import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { I } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-statut-membre',
@@ -11,6 +12,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 })
 export class StatutMembreComponent {
   @Input() statutMembre?: StatutMembreDTO;
+  @Input() showTooltip: boolean = true;
+  @Input() showLabel: boolean = false;
 
   getStatusColor(): string {
     if (!this.statutMembre?.code) {

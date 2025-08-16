@@ -175,16 +175,17 @@
     mode="over"
     position="end"
     class="customizerNav"
+    [style.width]="width"
   >
     <div
       class="p-x-16 p-y-20 d-flex align-items-center justify-content-between"
     >
-      <h3 class="f-s-21 f-w-600">Settings</h3>
-
-      <button class="d-lg-none" mat-button (click)="toggleCustomizerSidenav()">
-        <i-tabler name="x" class="icon-20 d-flex"></i-tabler>
+      <h3 class="f-s-21 f-w-600 text-primary">{{ title }}</h3>
+      <button  mat-button (click)="toggleCustomizerSidenav()">
+        <i-tabler name="x" class="icon-20 d-flex text-secondary"></i-tabler>
       </button>
     </div>
+    <mat-divider></mat-divider>
 
     <!-- Conteneur pour les composants dynamiques -->
     <div #dynamicComponentContainer></div>
