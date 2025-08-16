@@ -181,12 +181,13 @@
     >
       <h3 class="f-s-21 f-w-600">Settings</h3>
 
-      <button class="d-lg-none" mat-button (click)="customizerRight.toggle()">
+      <button class="d-lg-none" mat-button (click)="toggleCustomizerSidenav()">
         <i-tabler name="x" class="icon-20 d-flex"></i-tabler>
       </button>
     </div>
 
-    <app-customizer (optionsChange)="receiveOptions($event)"></app-customizer>
+    <!-- Conteneur pour les composants dynamiques -->
+    <div #dynamicComponentContainer></div>
   </mat-sidenav>
 </mat-sidenav-container>
 

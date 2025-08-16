@@ -3,6 +3,7 @@ import { ElevesComponent } from './fiches/eleves/eleves.component';
 
 export const RegistreRoutes: Routes = [
   {
+    data : { title: 'Fiche Élèves' },
     path: 'fiches/eleves',
     component: ElevesComponent,
   },

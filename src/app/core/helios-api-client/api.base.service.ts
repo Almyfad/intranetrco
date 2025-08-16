@@ -12,7 +12,7 @@ import { CustomHttpParameterCodec } from './encoder';
 import { Configuration } from './configuration';
 
 export class BaseService {
-    protected basePath = 'http://localhost:32770';
+    protected basePath = 'http://localhost:32771';
     public defaultHeaders = new HttpHeaders();
     public configuration: Configuration;
     public encoder: HttpParameterCodec;

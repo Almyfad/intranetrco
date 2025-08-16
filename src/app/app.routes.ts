@@ -30,6 +30,20 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./pages/registre/registre.route').then((m) => m.RegistreRoutes),
       },
+      {
+        path: 'sidenav-demo',
+        loadComponent: () =>
+          import('./components/sidenav-demo/sidenav-demo.component').then(
+            (m) => m.SidenavDemoComponent
+          ),
+      },
+      {
+        path: 'alternative-customizer',
+        loadComponent: () =>
+          import('./layouts/full/shared/alternative-customizer/alternative-customizer-page.component').then(
+            (m) => m.AlternativeCustomizerPageComponent
+          ),
+      },
     ],
   },
   {

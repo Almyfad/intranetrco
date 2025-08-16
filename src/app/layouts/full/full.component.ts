@@ -1,8 +1,9 @@
 import { BreakpointObserver, MediaMatcher } from '@angular/cdk/layout';
-import { Component, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, ViewEncapsulation, ViewContainerRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
 import { CoreService } from 'src/app/services/core.service';
+import { SidenavService } from 'src/app/services/sidenav.service';
 import { AppSettings } from 'src/app/config';
 import { filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
@@ -19,6 +20,7 @@ import { AppHorizontalHeaderComponent } from './horizontal/header/header.compone
 import { AppHorizontalSidebarComponent } from './horizontal/sidebar/sidebar.component';
 import { AppBreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { CustomizerComponent } from './shared/customizer/customizer.component';
+import { AlternativeCustomizerComponent } from './shared/alternative-customizer/alternative-customizer.component';
 import { BrandingComponent } from './vertical/sidebar/branding.component';
 import { MenuService } from 'src/app/services/menu.service';
 
@@ -56,27 +58,36 @@ interface quicklinks {
         AppHorizontalHeaderComponent,
         AppHorizontalSidebarComponent,
         AppBreadcrumbComponent,
-        CustomizerComponent,
         BrandingComponent
     ],
     templateUrl: './full.component.html',
     styleUrls: [],
     encapsulation: ViewEncapsulation.None
 })
-export class FullComponent implements OnInit {
+export class FullComponent implements OnInit, AfterViewInit, OnDestroy {
   
   @ViewChild('leftsidenav')
   public sidenav: MatSidenav;
+  
+  @ViewChild('customizerRight')
+  public customizerRight: MatSidenav;
+  
+  @ViewChild('dynamicComponentContainer', { read: ViewContainerRef })
+  dynamicComponentContainer!: ViewContainerRef;
+  
   resView = false;
   @ViewChild('content', { static: true }) content!: MatSidenavContent;
   //get options from service
   options = this.settings.getOptions();
   private layoutChangesSubscription = Subscription.EMPTY;
+  private sidenavSubscription = Subscription.EMPTY;
+  private optionsChangeSubscription = Subscription.EMPTY;
   private isMobileScreen = false;
   private isContentWidthFixed = true;
   private isCollapsedWidthFixed = false;
   private htmlElement!: HTMLHtmlElement;
   private readonly menuService = inject(MenuService);
+  
   get isOver(): boolean {
     return this.isMobileScreen;
   }
@@ -182,6 +193,16 @@ export class FullComponent implements OnInit {
       title: 'Treeview',
       link: '/theme-pages/treeview',
     },
+    {
+      id: 9,
+      title: 'Demo Service Sidenav',
+      link: '/sidenav-demo',
+    },
+    {
+      id: 10,
+      title: 'Customizer Alternatif',
+      link: '/alternative-customizer',
+    },
   ];
 
   constructor(
@@ -189,7 +210,8 @@ export class FullComponent implements OnInit {
     private mediaMatcher: MediaMatcher,
     private router: Router,
     private breakpointObserver: BreakpointObserver,
-    private navService: NavService
+    private navService: NavService,
+    private sidenavService: SidenavService
   ) {
     this.htmlElement = document.querySelector('html')!;
     this.layoutChangesSubscription = this.breakpointObserver
@@ -218,8 +240,69 @@ export class FullComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  ngAfterViewInit(): void {
+    // Configure le service sidenav avec le ViewContainerRef
+    this.sidenavService.setViewContainerRef(this.dynamicComponentContainer);
+    
+    // Écoute les changements d'état de la sidenav
+    this.sidenavSubscription = this.sidenavService.isOpen$.subscribe(isOpen => {
+      if (this.customizerRight) {
+        if (isOpen) {
+          this.customizerRight.open();
+        } else {
+          this.customizerRight.close();
+        }
+      }
+    });
+
+    // Écoute les changements d'options depuis le service
+    this.optionsChangeSubscription = this.sidenavService.optionsChange$.subscribe(options => {
+      if (options) {
+        this.receiveOptions(options);
+      }
+    });
+
+    // Charge le composant customizer par défaut
+    this.loadDefaultCustomizer();
+  }
+
   ngOnDestroy() {
     this.layoutChangesSubscription.unsubscribe();
+    this.sidenavSubscription.unsubscribe();
+    this.optionsChangeSubscription.unsubscribe();
+    this.sidenavService.destroy();
+  }
+
+  private loadDefaultCustomizer(): void {
+    this.sidenavService.setComponent(CustomizerComponent);
+  }
+
+  // Méthodes publiques pour contrôler la sidenav customizer
+  openCustomizerSidenav(): void {
+    this.sidenavService.open();
+  }
+
+  closeCustomizerSidenav(): void {
+    this.sidenavService.close();
+  }
+
+  toggleCustomizerSidenav(): void {
+    this.sidenavService.toggle();
+  }
+
+  // Méthode pour changer le composant dans la sidenav
+  setCustomizerComponent<T>(componentType: any, inputs?: Partial<T>): void {
+    this.sidenavService.setComponent(componentType, inputs);
+  }
+
+  // Méthode pour basculer entre le customizer par défaut et l'alternatif
+  toggleCustomizerType(): void {
+    const currentComponent = this.sidenavService.getCurrentComponent();
+    if (currentComponent === CustomizerComponent) {
+      this.sidenavService.setComponent(AlternativeCustomizerComponent);
+    } else {
+      this.sidenavService.setComponent(CustomizerComponent);
+    }
   }
 
   toggleCollapsed() {

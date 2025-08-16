@@ -7,6 +7,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { CoreService } from 'src/app/services/core.service';
+import { SidenavService } from 'src/app/services/sidenav.service';
 import { MatDialog } from '@angular/material/dialog';
 import { navItems } from '../sidebar/sidebar-data';
 import { TranslateService } from '@ngx-translate/core';
@@ -112,7 +113,8 @@ export class HeaderComponent {
     private settings: CoreService,
     private vsidenav: CoreService,
     public dialog: MatDialog,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private sidenavService: SidenavService
   ) {
     translate.setDefaultLang('en');
   }
@@ -125,6 +127,15 @@ export class HeaderComponent {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  // Méthodes pour contrôler le customizer via le service
+  toggleCustomizer(): void {
+    this.sidenavService.toggle();
+  }
+
+  openCustomizer(): void {
+    this.sidenavService.open();
   }
 
   changeLanguage(lang: any): void {
@@ -295,6 +306,16 @@ export class HeaderComponent {
       id: 8,
       title: 'Treeview',
       link: '/',
+    },
+    {
+      id: 9,
+      title: 'Demo Service Sidenav',
+      link: '/sidenav-demo',
+    },
+    {
+      id: 10,
+      title: 'Customizer Alternatif',
+      link: '/alternative-customizer',
     },
   ];
 }
