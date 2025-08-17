@@ -72,6 +72,9 @@ export class ElevesComponent implements OnInit, OnDestroy {
   statutsOptions$: Observable<AsyncSelectOption[]>;
   selectedStatuts: number[] = [];
 
+  // Propriété pour le collapse des filtres
+  filtersExpanded = false;
+
   constructor() {
     // Initialisation de l'observable pour les centres
     this.centresOptions$ = this.rs.apiRegistreCentresGet().pipe(
@@ -343,5 +346,12 @@ export class ElevesComponent implements OnInit, OnDestroy {
       .setTitle('🧾 Détail de l\'élève id: ' + eleve.id)
       .setWidth('600px')
       .open();
+  }
+
+  /**
+   * Bascule l'état d'expansion du panneau de filtres
+   */
+  toggleFilters(): void {
+    this.filtersExpanded = !this.filtersExpanded;
   }
 }

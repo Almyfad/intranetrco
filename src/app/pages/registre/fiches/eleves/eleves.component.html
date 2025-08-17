@@ -1,10 +1,15 @@
 
 <div class="bg-white rounded m-b-30">
-	<div class="d-flex align-items-center justify-content-center p-x-24 p-y-16 gap-8">
+	<!-- En-tête cliquable -->
+	<div class="d-flex align-items-center justify-content-center p-x-24 p-y-16 gap-8 cursor-pointer" 
+		 (click)="toggleFilters()">
 		<mat-icon class="text-secondary">filter_list</mat-icon>
 		<h4 class="text-secondary text-center">Filtres</h4>
+		<mat-icon class="text-secondary">{{ filtersExpanded ? 'expand_less' : 'expand_more' }}</mat-icon>
 	</div>
-	<div class="p-x-24 p-b-24">
+	
+	<!-- Contenu collapsible -->
+	<div class="p-x-24 p-b-24" [class.d-none]="!filtersExpanded">
 		<!-- Première ligne : Nom, Prénom, Email -->
 		<div class="d-flex gap-16 m-b-16">
 			<mat-form-field appearance="outline" class="flex-1">
