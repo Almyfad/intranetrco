@@ -3,6 +3,7 @@ import { MembreDTO, RegistreService, DataPagerOfMembreDTO, MembreFiltre, CentreD
 import { MatTableDataSource } from '@angular/material/table';
 import { SidenavService } from 'src/app/services/sidenav.service';
 import { EleveDetailComponent } from '../eleve-detail/eleve-detail.component';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -38,6 +39,8 @@ import { debounceTime, distinctUntilChanged, Subject, takeUntil, map, BehaviorSu
 export class ElevesComponent implements OnInit, OnDestroy {
   private readonly rs = inject(RegistreService);
   private readonly sidenavService = inject(SidenavService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private readonly destroy$ = new Subject<void>();
 
   displayedColumns: string[] = ['statut', 'nom', 'prenom', 'email', 'telephone', 'adresse', 'ville', 'pays'];
@@ -111,6 +114,14 @@ export class ElevesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.fetchEleves();
     this.setupFilters();
+    
+    // Écouter les changements de paramètres d'URL pour détecter l'ID
+    this.route.params.pipe(takeUntil(this.destroy$)).subscribe(params => {
+      const eleveId = params['id'];
+      if (eleveId) {
+        this.openEleveDetailById(Number(eleveId));
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -336,8 +347,23 @@ export class ElevesComponent implements OnInit, OnDestroy {
     this.fetchEleves();
   }
 
+
+
+  openEleveDetailById(id: number): void {
+
+      this.rs.apiRegistreMembresMembreIdGet(id).subscribe({
+        next: (response: MembreDTO) => {
+          this.openEleveDetail(response);
+        },
+        error: (error) => {
+          console.error('Erreur lors de la recherche de l\'élève:', error);
+          this.router.navigate(['/registre/fiches/eleves']);
+        }
+      });
+  }
+
   /**
-   * Ouvre la sidenav avec le détail de l'élève sélectionné
+   * Ouvre effectivement la sidenav avec le détail de l'élève
    * @param eleve - L'élève dont on veut afficher le détail
    */
   openEleveDetail(eleve: MembreDTO): void {

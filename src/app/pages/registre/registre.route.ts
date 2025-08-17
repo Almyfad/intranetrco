@@ -7,4 +7,9 @@ export const RegistreRoutes: Routes = [
     path: 'fiches/eleves',
     component: ElevesComponent,
   },
+  {
+    data: { title: 'Fiche Élèves' },
+    path: 'fiches/eleve/detail/:id',
+    component: ElevesComponent,
+  },
 ];
