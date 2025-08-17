@@ -6,102 +6,59 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { TablerIconsModule } from "angular-tabler-icons";
 
 export interface AsyncSelectOption {
-  value: any;
-  label: string;
-  icon?: string;
+    value: any;
+    label: string;
+    icon?: string;
+    iconColor?: string;
 }
 
 @Component({
-  selector: 'app-async-select',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatProgressSpinnerModule,
-    MatIconModule,
-    ReactiveFormsModule
-  ],
-  template: `
-    <mat-form-field appearance="outline" class="w-100">
-      <mat-label>{{ label }}</mat-label>
-      <mat-select 
-        [formControl]="selectControl" 
-        [placeholder]="placeholder"
-        [multiple]="multiple">
-        @if (!multiple) {
-          <mat-option value="">
-            <em>{{ clearOptionText }}</em>
-          </mat-option>
-        }
-        @if (loading$ | async) {
-          <mat-option disabled>
-            <mat-spinner diameter="20"></mat-spinner>
-            Chargement...
-          </mat-option>
-        } @else {
-          @for (option of options$ | async; track option.value) {
-            <mat-option [value]="option.value">
-              @if (option.icon) {
-                <mat-icon [style.color]="getOptionColor(option)">{{ option.icon }}</mat-icon>
-              }
-              {{ option.label }}
-            </mat-option>
-          }
-        }
-      </mat-select>
-    </mat-form-field>
-  `,
-  styles: [`
-    :host {
-      display: block;
-      width: 100%;
-    }
-    
-    mat-spinner {
-      margin-right: 8px;
-    }
-  `]
+    selector: 'app-async-select',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatSelectModule,
+        MatFormFieldModule,
+        MatProgressSpinnerModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        TablerIconsModule
+    ],
+    templateUrl: './async-select.component.html',
+    styleUrl: './async-select.component.scss'
 })
 export class AsyncSelectComponent implements OnInit {
-  @Input() label: string = 'Sélectionner';
-  @Input() placeholder: string = 'Choisissez une option';
-  @Input() clearOptionText: string = 'Aucun filtre';
-  @Input() multiple: boolean = false;
-  @Input() options$!: Observable<AsyncSelectOption[]>;
-  @Input() loading$: Observable<boolean> = new BehaviorSubject(false);
-  @Input() optionColor?: (option: AsyncSelectOption) => string;
-  
-  @Output() selectionChange = new EventEmitter<any>();
+    @Input() label: string = 'Sélectionner';
+    @Input() placeholder: string = 'Choisissez une option';
+    @Input() clearOptionText: string = 'Aucun filtre';
+    @Input() multiple: boolean = false;
+    @Input() options$!: Observable<AsyncSelectOption[]>;
+    @Input() loading$: Observable<boolean> = new BehaviorSubject(false);
 
-  selectControl = new FormControl();
+    @Output() selectionChange = new EventEmitter<any>();
 
-  ngOnInit(): void {
-    this.selectControl.valueChanges.subscribe(value => {
-      this.selectionChange.emit(value);
-    });
-  }
+    selectControl = new FormControl();
 
-  /**
-   * Permet de définir la valeur sélectionnée depuis l'extérieur
-   */
-  setValue(value: any): void {
-    this.selectControl.setValue(value);
-  }
+    ngOnInit(): void {
+        this.selectControl.valueChanges.subscribe(value => {
+            this.selectionChange.emit(value);
+        });
+    }
 
-  /**
-   * Réinitialise la sélection
-   */
-  clear(): void {
-    this.selectControl.setValue(this.multiple ? [] : '');
-  }
+    /**
+     * Permet de définir la valeur sélectionnée depuis l'extérieur
+     */
+    setValue(value: any): void {
+        this.selectControl.setValue(value);
+    }
 
-  /**
-   * Retourne la couleur pour une option avec icône
-   */
-  getOptionColor(option: AsyncSelectOption): string {
-    return this.optionColor ? this.optionColor(option) : 'inherit';
-  }
+    /**
+     * Réinitialise la sélection
+     */
+    clear(): void {
+        this.selectControl.setValue(this.multiple ? [] : '');
+    }
 }

@@ -49,6 +49,24 @@
   align-items: center !important;
 }
 
+// Styles pour le collapse des filtres
+.filters-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
+}
+
+.filters-expanded {
+  max-height: 1000px; // Hauteur maximum généreuse
+  opacity: 1;
+}
+
+.filters-collapsed {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 .me-2 {
   margin-right: 0.5rem !important;
 }

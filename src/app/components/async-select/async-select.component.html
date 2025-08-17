@@ -1,0 +1,32 @@
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>{{ label }}</mat-label>
+  <mat-select 
+    class="async-select"
+    panelClass="async-select-panel"
+    [formControl]="selectControl" 
+    [placeholder]="placeholder"
+    [multiple]="multiple">
+    @if (!multiple) {
+      <mat-option value="">
+        <em>{{ clearOptionText }}</em>
+      </mat-option>
+    }
+    @if (loading$ | async) {
+      <mat-option disabled>
+        <mat-spinner diameter="20"></mat-spinner>
+        Chargement...
+      </mat-option>
+    } @else {
+      @for (option of options$ | async; track option.value) {
+        <mat-option [value]="option.value">
+          <div class="d-flex align-items-center justify-content-between">
+            <span>{{ option.label }}</span>
+            @if (option.icon) {
+              <i-tabler [style.color]="option.iconColor"  name="{{ option.icon }}"></i-tabler>
+            }
+          </div>
+        </mat-option>
+      }
+    }
+  </mat-select>
+</mat-form-field>

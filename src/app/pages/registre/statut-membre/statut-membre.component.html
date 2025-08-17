@@ -1,11 +1,8 @@
 <div class="d-flex align-items-center justify-content-start mb-3 gap-10">
-
-  <div class="status-badge" 
-  [style.background-color]="getStatusColor()"
-  [matTooltip]="statutMembre?.libelle || 'Statut inconnu'">
-  <i-tabler [name]="getStatusIcon()" [style.color]="getStatusColor()"></i-tabler>
-</div>
+  <i-tabler [name]="statusIcon" [style.color]="statusColor"></i-tabler>
 @if (showLabel && statutMembre?.libelle) {
-  <span class="status-label">{{ statutMembre?.libelle }}</span>
+  <span class="status-label" [style.color]="statusColor">
+    {{ statutMembre?.libelle }}
+  </span>
 }
 </div>

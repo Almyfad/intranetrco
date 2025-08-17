@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MaterialModule } from 'src/app/material.module';
 import { CommonModule } from '@angular/common';
-import { StatutMembreComponent } from '../../statut-membre/statut-membre.component';
+import { StatutMembreComponent,getStatusColor,getStatusIcon } from '../../statut-membre/statut-membre.component';
 import { AsyncSelectComponent, AsyncSelectOption } from 'src/app/components/async-select/async-select.component';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil, map, BehaviorSubject, Observable } from 'rxjs';
 
@@ -105,7 +105,8 @@ export class ElevesComponent implements OnInit, OnDestroy {
         statuts.map(statut => ({
           value: statut.id || 0,
           label: statut.libelle || 'Statut sans nom',
-          icon: this.getStatutIcon(statut.code as NullableOfStatutsMembres)
+          icon: getStatusIcon(statut.code as NullableOfStatutsMembres),
+          iconColor: getStatusColor(statut.code as NullableOfStatutsMembres)
         }))
       )
     );
@@ -293,48 +294,6 @@ export class ElevesComponent implements OnInit, OnDestroy {
     this.selectedStatuts = statutIds;
     this.currentPage = 0; // Reset à la première page lors d'un nouveau filtre
     this.fetchEleves();
-  }
-
-  /**
-   * Retourne la couleur pour un statut donné
-   * @param option - L'option de statut
-   */
-  getStatutColor(option: AsyncSelectOption): string {
-    switch (option.value) {
-      case 0: // Present
-        return 'green';
-      case 1: // Suivi
-        return 'blue';
-      case 3: // Demissionnaire
-        return 'orange';
-      case 4: // Decede
-        return 'gray';
-      default:
-        return 'gray';
-    }
-  }
-
-  /**
-   * Retourne l'icône pour un statut donné
-   * @param code - Le code du statut
-   */
-  getStatutIcon(code: NullableOfStatutsMembres | null): string {
-    if (!code) {
-      return 'point';
-    }
-
-    switch (code) {
-      case NullableOfStatutsMembres.Present:
-        return 'point';
-      case NullableOfStatutsMembres.Suivi:
-        return 'eye-spark';
-      case NullableOfStatutsMembres.Demissionnaire:
-        return 'user-cancel';
-      case NullableOfStatutsMembres.Decede:
-        return 'user-x';
-      default:
-        return 'point';
-    }
   }
 
   /**

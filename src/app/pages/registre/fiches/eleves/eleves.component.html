@@ -9,7 +9,9 @@
 	</div>
 	
 	<!-- Contenu collapsible -->
-	<div class="p-x-24 p-b-24" [class.d-none]="!filtersExpanded">
+	<div class="p-x-24 p-b-24 filters-content" 
+		 [class.filters-collapsed]="!filtersExpanded"
+		 [class.filters-expanded]="filtersExpanded">
 		<!-- Première ligne : Nom, Prénom, Email -->
 		<div class="d-flex gap-16 m-b-16">
 			<mat-form-field appearance="outline" class="flex-1">
@@ -101,7 +103,6 @@
 					[multiple]="true"
 					[options$]="statutsOptions$"
 					[loading$]="statutsLoading$"
-					[optionColor]="getStatutColor.bind(this)"
 					(selectionChange)="onStatutSelection($event)">
 				</app-async-select>
 			</div>

@@ -8,8 +8,8 @@ export const RegistreRoutes: Routes = [
     component: ElevesComponent,
   },
   {
-    data: { title: 'Fiche Élèves' },
-    path: 'fiches/eleve/detail/:id',
+    data: { title: 'Détail Élève' },
+    path: 'fiches/eleves/:id',
     component: ElevesComponent,
   },
 ];

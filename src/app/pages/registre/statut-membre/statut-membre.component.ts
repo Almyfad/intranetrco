@@ -15,43 +15,45 @@ export class StatutMembreComponent {
   @Input() showTooltip: boolean = true;
   @Input() showLabel: boolean = false;
 
-  getStatusColor(): string {
-    if (!this.statutMembre?.code) {
-      return 'gray';
-    }
-
-    const code = this.statutMembre.code as NullableOfStatutsMembres;
-
-    if (code === NullableOfStatutsMembres.Present) {
-      return 'green';
-    } else if (code === NullableOfStatutsMembres.Suivi) {
-      return 'blue';
-    } else if (code === NullableOfStatutsMembres.Demissionnaire) {
-      return 'orange';
-    } else if (code === NullableOfStatutsMembres.Decede) {
-      return 'gray';
-    }
-    
-    return 'gray';
+  get statusColor(): string {
+    return getStatusColor(this.statutMembre?.code);
   }
 
-  getStatusIcon(): string {
-    if (!this.statutMembre?.code) {
-      return 'point';
-    }
+  get statusIcon(): string {
+    return getStatusIcon(this.statutMembre?.code);
+  }
+}
 
-    const code = this.statutMembre.code as NullableOfStatutsMembres;
+export function getStatusColor(statutMembreCode: NullableOfStatutsMembres | null | undefined): string {
+  switch (statutMembreCode) {
+    case NullableOfStatutsMembres.Present:
+      return 'green';
+    case NullableOfStatutsMembres.Suivi:
+      return 'blue';
+    case NullableOfStatutsMembres.Absent:
+      return 'red';
+    case NullableOfStatutsMembres.Demissionnaire:
+      return 'orange';
+    case NullableOfStatutsMembres.Decede:
+      return 'gray';
+    default:
+      return 'gray';
+  }
+}
 
-    if (code === NullableOfStatutsMembres.Present) {
+export function getStatusIcon(statutMembreCode: NullableOfStatutsMembres | null | undefined): string {
+  switch (statutMembreCode) {
+    case NullableOfStatutsMembres.Present:
       return 'point';
-    } else if (code === NullableOfStatutsMembres.Suivi) {
-      return 'eye-spark';
-    } else if (code === NullableOfStatutsMembres.Demissionnaire) {
+    case NullableOfStatutsMembres.Suivi:
+      return 'eye-star';
+    case NullableOfStatutsMembres.Absent:
       return 'user-cancel';
-    } else if (code === NullableOfStatutsMembres.Decede) {
+    case NullableOfStatutsMembres.Demissionnaire:
+      return 'user-question';
+    case NullableOfStatutsMembres.Decede:
       return 'user-x';
-    }
-    
-    return 'point';
+    default:
+      return 'point';
   }
 }
