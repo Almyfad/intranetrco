@@ -1,0 +1,135 @@
+.eleve-form-card {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0;
+}
+
+.eleve-form {
+  padding: 0;
+}
+
+.form-section {
+  margin-bottom: 32px;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 24px 0;
+  color: #1976d2;
+  font-weight: 500;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+.form-field {
+  flex: 1;
+  min-width: 200px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+.form-field-full {
+  width: 100%;
+}
+
+.form-actions {
+  padding: 16px 24px;
+  border-top: 1px solid #e0e0e0;
+  gap: 16px;
+
+  button {
+    min-width: 120px;
+    
+    &[mat-raised-button] {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      
+      mat-spinner {
+        width: 16px !important;
+        height: 16px !important;
+      }
+    }
+  }
+}
+
+// Style pour les champs requis
+.mat-mdc-form-field-required-marker {
+  color: #f44336;
+}
+
+// Style pour les erreurs
+.mat-mdc-form-field.mat-form-field-invalid {
+  .mat-mdc-text-field-wrapper {
+    .mat-mdc-form-field-outline {
+      .mat-mdc-form-field-outline-thick {
+        border-color: #f44336;
+      }
+    }
+  }
+}
+
+// Style pour les spinners dans les selects
+.mat-mdc-option {
+  mat-spinner {
+    margin-right: 8px;
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .eleve-form-card {
+    margin: 10px;
+    
+    .form-row {
+      .form-field {
+        margin-bottom: 16px;
+      }
+    }
+  }
+}
+
+// Animation pour les sections
+.form-section {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

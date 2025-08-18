@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, computed, Signal } from '@angular/core';
 import { MembreDTO, RegistreService, DataPagerOfMembreDTO, MembreFiltre, CentreDTO, TypeMembreDTO, StatutMembreDTO, NullableOfStatutsMembres } from 'src/app/core/helios-api-client';
 import { MatTableDataSource } from '@angular/material/table';
 import { SidenavService } from 'src/app/services/sidenav.service';
@@ -17,7 +17,8 @@ import { CommonModule } from '@angular/common';
 import { StatutMembreComponent,getStatusColor,getStatusIcon } from '../../statut-membre/statut-membre.component';
 import { AsyncSelectComponent, AsyncSelectOption } from 'src/app/components/async-select/async-select.component';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil, map, BehaviorSubject, Observable } from 'rxjs';
-import { EleveDetailService } from '../eleve-detail.service';
+import { EleveDetailService } from '../../services/eleve-detail.service';
+import { RegistreModuleService } from '../../services/registre-module.service';
 
 @Component({
   selector: 'app-eleves',
@@ -38,11 +39,12 @@ import { EleveDetailService } from '../eleve-detail.service';
   styleUrl: './eleves.component.scss'
 })
 export class ElevesComponent implements OnInit, OnDestroy {
-  private readonly rs = inject(RegistreService);
-  private readonly sidenavService = inject(SidenavService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly rs = inject(RegistreService);
+  private readonly sidenavService = inject(SidenavService);
   private readonly eleveDetailService = inject(EleveDetailService);
+  private readonly registre = inject(RegistreModuleService);
   private readonly destroy$ = new Subject<void>();
 
   displayedColumns: string[] = ['statut', 'nom', 'prenom', 'email', 'telephone', 'adresse', 'ville', 'pays'];
@@ -63,55 +65,45 @@ export class ElevesComponent implements OnInit, OnDestroy {
   paysFilterControl = new FormControl('');
   
   // Propriétés pour le filtre centre
-  centresLoading$ = new BehaviorSubject<boolean>(false);
-  centresOptions$: Observable<AsyncSelectOption[]>;
+  centresLoading = computed(() => this.registre.centres().loading);
+  centresOptions = computed(() => {
+    const centres = this.registre.centres();
+    return centres.data.map(centre => ({
+      value: centre.libelle,
+      label: centre.libelle || 'Centre sans nom'
+    }));
+  });
   selectedCentres: string[] = [];
 
   // Propriétés pour le filtre aspects (types membres)
-  aspectsLoading$ = new BehaviorSubject<boolean>(false);
-  aspectsOptions$: Observable<AsyncSelectOption[]>;
+  aspectsLoading = computed(() => this.registre.aspects().loading);
+  aspectsOptions: Signal<AsyncSelectOption<TypeMembreDTO>[]> = computed(() => {
+    const aspects = this.registre.aspects();
+    return aspects.data.map(aspect => ({
+      value: aspect,
+      label: aspect.libelle || 'Type membre sans nom'
+    }));
+  });
   selectedAspects: number[] = [];
 
   // Propriétés pour le filtre statuts
-  statutsLoading$ = new BehaviorSubject<boolean>(false);
-  statutsOptions$: Observable<AsyncSelectOption[]>;
+  statutsLoading = computed(() => this.registre.statuts().loading);
+  statutsOptions = computed(() => {
+    const statuts = this.registre.statuts();
+    return statuts.data.map(statut => ({
+      value: statut.id || 0,
+      label: statut.libelle || 'Statut sans nom',
+      icon: getStatusIcon(statut.code as NullableOfStatutsMembres),
+      iconColor: getStatusColor(statut.code as NullableOfStatutsMembres)
+    }));
+  });
   selectedStatuts: number[] = [];
 
   // Propriété pour le collapse des filtres
   filtersExpanded = false;
 
   constructor() {
-    // Initialisation de l'observable pour les centres
-    this.centresOptions$ = this.rs.apiRegistreCentresGet().pipe(
-      map((centres: CentreDTO[]) => 
-        centres.map(centre => ({
-          value: centre.libelle,
-          label: centre.libelle || 'Centre sans nom'
-        }))
-      )
-    );
-
-    // Initialisation de l'observable pour les aspects (types membres)
-    this.aspectsOptions$ = this.rs.apiRegistreAspectsGet().pipe(
-      map((aspects: TypeMembreDTO[]) => 
-        aspects.map(aspect => ({
-          value: aspect.id?.toString() || '',
-          label: aspect.libelle || 'Type membre sans nom'
-        }))
-      )
-    );
-
-    // Initialisation de l'observable pour les statuts
-    this.statutsOptions$ = this.rs.apiRegistreStatutsGet().pipe(
-      map((statuts: StatutMembreDTO[]) => 
-        statuts.map(statut => ({
-          value: statut.id || 0,
-          label: statut.libelle || 'Statut sans nom',
-          icon: getStatusIcon(statut.code as NullableOfStatutsMembres),
-          iconColor: getStatusColor(statut.code as NullableOfStatutsMembres)
-        }))
-      )
-    );
+    // Plus besoin de charger manuellement car nous utilisons les signaux
   }
 
   ngOnInit(): void {

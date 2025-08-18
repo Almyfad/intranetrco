@@ -51,18 +51,18 @@
 			</mat-form-field>
 
 			<app-async-select class="col" label="Filtrer par centre" placeholder="Sélectionnez un ou plusieurs centres"
-				clearOptionText="Tous les centres" [multiple]="true" [options$]="centresOptions$"
-				[loading$]="centresLoading$" (selectionChange)="onCentreSelection($event)">
+				clearOptionText="Tous les centres" [multiple]="true" [options]="centresOptions()"
+				[loading]="centresLoading()" (selectionChange)="onCentreSelection($event)">
 			</app-async-select>
 
 			<app-async-select class="col" label="Filtrer par type membre" placeholder="Sélectionnez un ou plusieurs aspects"
-				clearOptionText="Tous les types" [multiple]="true" [options$]="aspectsOptions$"
-				[loading$]="aspectsLoading$" (selectionChange)="onAspectSelection($event)">
+				clearOptionText="Tous les types" [multiple]="true" [options]="aspectsOptions()"
+				[loading]="aspectsLoading()" (selectionChange)="onAspectSelection($event)">
 			</app-async-select>
 
 			<app-async-select class="col" label="Filtrer par statut" placeholder="Sélectionnez un ou plusieurs statuts"
-				clearOptionText="Tous les statuts" [multiple]="true" [options$]="statutsOptions$"
-				[loading$]="statutsLoading$" (selectionChange)="onStatutSelection($event)">
+				clearOptionText="Tous les statuts" [multiple]="true" [options]="statutsOptions()"
+				[loading]="statutsLoading()" (selectionChange)="onStatutSelection($event)">
 			</app-async-select>
 		</div>
 	</div>

@@ -32,15 +32,23 @@ export class SidenavService {
     /**
      * Ouvre la sidenav
      */
-    open(): void {
-        this.isOpenSubject.next(true);
+    open(delay: number = 0): SidenavService {
+        if (delay >= 500) {
+            setTimeout(() => {
+                this.isOpenSubject.next(true);
+            }, delay);
+        } else {
+            this.isOpenSubject.next(true);
+        }
+        return this;
     }
 
     /**
      * Ferme la sidenav
      */
-    close(): void {
+    close(): SidenavService {
         this.isOpenSubject.next(false);
+        return this;
     }
 
     /**

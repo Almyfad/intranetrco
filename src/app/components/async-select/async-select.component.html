@@ -11,13 +11,15 @@
         <em>{{ clearOptionText }}</em>
       </mat-option>
     }
-    @if (loading$ | async) {
-      <mat-option disabled>
-        <mat-spinner diameter="20"></mat-spinner>
-        Chargement...
+    @if (loading()) {
+      <mat-option disabled >
+        <div class="d-flex align-items-center">
+          <mat-spinner diameter="20"></mat-spinner>
+          <span>Chargement...</span>
+        </div>
       </mat-option>
     } @else {
-      @for (option of options$ | async; track option.value) {
+      @for (option of options(); track option.value) {
         <mat-option [value]="option.value">
           <div class="d-flex align-items-center justify-content-between">
             <span>{{ option.label }}</span>

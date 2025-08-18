@@ -7,7 +7,7 @@
                 <mat-icon class="me-2 text-primary">person</mat-icon>
                 <h3 class="mb-0 text-primary">{{ eleve.prenom }} {{ eleve.nom }}</h3>
             </div>
-            <button mat-flat-button class="bg-light-secondary text-secondary">
+            <button (click)="editEleve()" mat-flat-button class="bg-light-secondary text-secondary">
                 <mat-icon>edit</mat-icon>
                 <span class="ms-2">Modifier</span>
             </button>
