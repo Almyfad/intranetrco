@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { NullableOfStatutsMembres, StatutMembreDTO } from 'src/app/core/helios-api-client';
+import { Component, Input, input, computed } from '@angular/core';
+import { MembreDTO, NullableOfStatutsMembres, StatutMembreDTO } from 'src/app/core/helios-api-client';
 import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TablerIconsModule } from 'angular-tabler-icons';
@@ -11,21 +11,17 @@ import { TablerIconsModule } from 'angular-tabler-icons';
   styleUrl: './statut-membre.component.scss'
 })
 export class StatutMembreComponent {
-  @Input() statutMembre?: StatutMembreDTO;
+  membre = input<MembreDTO| null>();
   @Input() showTooltip: boolean = true;
   @Input() showLabel: boolean = false;
 
-  get statusColor(): string {
-    return getStatusColor(this.statutMembre?.code);
-  }
+  statusColor = computed(() => getStatusColor(this.membre()?.statut?.code));
 
-  get statusIcon(): string {
-    return getStatusIcon(this.statutMembre?.code);
-  }
+  statusIcon = computed(() => getStatusIcon(this.membre()?.statut?.code));
 }
 
-export function getStatusColor(statutMembreCode: NullableOfStatutsMembres | null | undefined): string {
-  switch (statutMembreCode) {
+export function getStatusColor(membreCode: NullableOfStatutsMembres | null | undefined): string {
+  switch (membreCode) {
     case NullableOfStatutsMembres.Present:
       return 'green';
     case NullableOfStatutsMembres.Suivi:

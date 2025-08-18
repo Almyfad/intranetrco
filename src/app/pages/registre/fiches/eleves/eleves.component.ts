@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 import { StatutMembreComponent,getStatusColor,getStatusIcon } from '../../statut-membre/statut-membre.component';
 import { AsyncSelectComponent, AsyncSelectOption } from 'src/app/components/async-select/async-select.component';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil, map, BehaviorSubject, Observable } from 'rxjs';
+import { EleveDetailService } from '../eleve-detail.service';
 
 @Component({
   selector: 'app-eleves',
@@ -41,6 +42,7 @@ export class ElevesComponent implements OnInit, OnDestroy {
   private readonly sidenavService = inject(SidenavService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly eleveDetailService = inject(EleveDetailService);
   private readonly destroy$ = new Subject<void>();
 
   displayedColumns: string[] = ['statut', 'nom', 'prenom', 'email', 'telephone', 'adresse', 'ville', 'pays'];
@@ -244,7 +246,8 @@ export class ElevesComponent implements OnInit, OnDestroy {
     }
 
     // Page +1 car l'API semble utiliser une indexation basée sur 1
-    this.rs.apiRegistreMembresPost(this.currentPage + 1, this.pageSize, filter, 'body').subscribe({
+    this.rs.apiRegistreMembresPost(this.currentPage + 1, this.pageSize, filter, 'body')
+    .subscribe({
       next: (result: DataPagerOfMembreDTO) => {
         this.dataSource.data = result.data || [];
         this.totalElements = result.total || 0;
@@ -326,10 +329,11 @@ export class ElevesComponent implements OnInit, OnDestroy {
    * @param eleve - L'élève dont on veut afficher le détail
    */
   openEleveDetail(eleve: MembreDTO): void {
+    this.eleveDetailService.setEleve(eleve);
     this.sidenavService
-      .setComponent(EleveDetailComponent, { eleve: eleve })
+      .setComponent(EleveDetailComponent)
       .setTitle('🧾 Détail de l\'élève id: ' + eleve.id)
-      .setWidth('600px')
+      .setWidth('500px')
       .open();
   }
 

@@ -13,13 +13,16 @@ index.ts
 model/centreDTO.ts
 model/centreInfos.ts
 model/centreModule.ts
+model/civiliteDTO.ts
 model/dataPagerOfMembreDTO.ts
+model/familyDTO.ts
 model/loginRequest.ts
 model/membreDTO.ts
 model/membreFiltre.ts
 model/models.ts
 model/module.ts
 model/modules.ts
+model/nullableOfCivilites.ts
 model/nullableOfStatutsMembres.ts
 model/nullableOfTypesMembres.ts
 model/statutMembreDTO.ts

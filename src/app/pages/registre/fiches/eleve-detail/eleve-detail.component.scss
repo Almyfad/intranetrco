@@ -1,7 +1,7 @@
 :host {
     label {
         font-weight: bold;
-        background-color: var(--mat-sys-primary);
+        background-color: rgb(from var(--mat-sys-primary) r g b / 0.8);
         color: white;
         font-weight: bold;
         padding: 3px 10px;

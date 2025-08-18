@@ -9,6 +9,7 @@
  */
 import { CentreDTO } from './centreDTO';
 import { TypeMembreDTO } from './typeMembreDTO';
+import { CiviliteDTO } from './civiliteDTO';
 import { StatutMembreDTO } from './statutMembreDTO';
 
 
@@ -16,6 +17,7 @@ export interface MembreDTO {
     id: number;
     nom: string;
     prenom: string;
+    civilite: CiviliteDTO;
     typeMembre: TypeMembreDTO;
     centre: CentreDTO;
     statut: StatutMembreDTO;
@@ -26,7 +28,5 @@ export interface MembreDTO {
     codePostal: string | null;
     ville: string | null;
     pays: string | null;
-    parents?: Array<number> | null;
-    enfants?: Array<number> | null;
 }
 
