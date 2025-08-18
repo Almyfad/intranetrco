@@ -1,7 +1,7 @@
 <ng-scrollbar class="position-relative" style="height: calc(100vh - 80px)">
-    <div class="p-24">
 
-        @if (currentEleve(); as eleve) {
+    @if (currentEleve(); as eleve) {
+    <div class="p-12">
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center  gap-8">
                 <mat-icon class="me-2 text-primary">person</mat-icon>
@@ -20,65 +20,115 @@
                 name="binary-tree-2" /> Généalogie</h4>
         <mat-divider></mat-divider>
         <div class="m-b-20">
-
-            <p class="d-flex align-items-center justify-content-between"><label>Parents:</label>
-                @if(loading()) {
-                <mat-spinner diameter="24"></mat-spinner>
-                }
-            </p>
-            @if(!loading()) {
-
-            @for(parent of parents();track parent.id) {
-            <a (click)="openEleveDetail(parent)">
-                <p>{{ parent.nom + ' ' + parent.prenom }}</p>
-            </a>
-            }}
-            <p class="d-flex align-items-center justify-content-between"><label>Enfants:</label>
-                @if(loading()) {
-                <mat-spinner diameter="24"></mat-spinner>
-                }
-            </p>
-            @if(!loading()) {
-            @for(child of enfants();track child.id) {
-            <a (click)="openEleveDetail(child)">
-                <p>{{ child.nom + ' ' + child.prenom }}</p>
-            </a>
-
-            } }
+            <div class="container p-0">
+                <div class="row m-b-16 m-t-16">
+                    <div class="col">
+                        <label>Parents:</label>
+                    </div>
+                    @if(loading()) {
+                    <div class="col">
+                        <mat-spinner diameter="24"></mat-spinner>
+                    </div>
+                    }@else {
+                    @for(parent of parents();track parent.id) {
+                    <div class="col cursor-pointer hover-zoom">
+                        <a (click)="openEleveDetail(parent)">
+                            {{ parent.prenom }} ℹ️
+                        </a>
+                    </div>
+                    }
+                    }
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <label>Enfants:</label>
+                    </div>
+                    @if(loading()) {
+                    <div class="col">
+                        <mat-spinner diameter="24"></mat-spinner>
+                    </div>
+                    }@else {
+                    @for(child of enfants();track child.id) {
+                    <div class="col cursor-pointer hover-zoom">
+                        <a (click)="openEleveDetail(child)">
+                            {{ child.prenom }} ℹ️
+                        </a>
+                    </div>
+                    }
+                    }
+                </div>
+            </div>
         </div>
 
+        <div style="grid-template-columns: 1fr 1fr;" class="d-grid gap-16">
+            <!-- Informations personnelles -->
+            <div style="grid-column: span 2;">
+                <h4 class="text-secondary d-flex align-items-center justify-content-center gap-8"><i-tabler
+                        name="user-circle" /> Informations personnelles</h4>
+                <mat-divider></mat-divider>
+            </div>
+            <div><label>Nom</label></div>
+            <span>{{ eleve.nom }}</span>
+            <div><label>Prénom</label></div>
+            <span>{{ eleve.prenom }}</span>
+            <div><label>Date de naissance</label></div>
+            <span>{{ eleve.dateNaissance | date: 'dd/MM/yyyy' }}</span>
+            <div><label>Age</label></div>
+            <span>{{ age() }} ans</span>
+            <div><label>Email</label></div>
+            <span>{{ eleve.email }}</span>
+            <div><label>Email Valide</label></div>
+            @if(eleve.emailValide) {
+            <mat-icon class="text-success mb-0">check_circle</mat-icon>
+            } @else {
+            <mat-icon class="text-error mb-0">cancel</mat-icon>
+            }
+            <div><label>Téléphone</label></div>
+            <span>{{ eleve.telephone }}</span>
+            <div><label>Portable</label></div>
+            <span>{{ eleve.portable }}</span>
+            <div><label>Profession</label></div>
+            <span>{{ eleve.profession }}</span>
+            <div><label>Connaissances</label></div>
+            <span>{{ eleve.connaissances }}</span>
+            <div><label>Commentaires</label></div>
+            <span>{{ eleve.commentaires }}</span>
 
-        <h4 class="text-secondary d-flex align-items-center justify-content-center gap-8"><i-tabler
-                name="user-circle" /> Informations personnelles</h4>
-        <mat-divider></mat-divider>
-        <p><label>Nom:</label> {{ eleve.nom }}</p>
-        <p><label>Prénom:</label> {{ eleve.prenom }}</p>
-        <p><label>Age:</label> 0</p>
-        <p><label>Email:</label> {{ eleve.email }}</p>
-        @if(eleve.telephone) {
-        <p><label>Téléphone:</label> {{ eleve.telephone }}</p>
-        }
-        <p><label>Portable:</label> {{ eleve.portable }}</p>
+            <!-- Adresse -->
+            <div style="grid-column: span 2;" class="m-t-20">
+                <h4 class="text-secondary d-flex align-items-center justify-content-center gap-8"><i-tabler
+                        name="map-pin" />
+                    Adresse</h4>
+                <mat-divider></mat-divider>
+            </div>
+            <div><label>Adresse</label></div>
+            <span>{{ eleve.adresse }}</span>
+            <div><label>Ville</label></div>
+            <span>{{ eleve.ville }}</span>
+            <div><label>Pays</label></div>
+            <span>{{ eleve.pays }}</span>
+            <div><label>Code postal</label></div>
+            <span>{{ eleve.codePostal }}</span>
 
-        <h4 class="text-secondary d-flex align-items-center justify-content-center gap-8"><i-tabler name="map-pin" />
-            Adresse</h4>
-        <mat-divider></mat-divider>
-
-        <p><label>Adresse:</label> {{ eleve.adresse }}</p>
-        <p><label>Ville:</label> {{ eleve.ville }}</p>
-        <p><label>Pays:</label> {{ eleve.pays }}</p>
-        <p><label>Code postal:</label> {{ eleve.codePostal }}</p>
-
-        <h4 class="text-secondary d-flex align-items-center justify-content-center gap-8"><i-tabler name="atom" /> Vie
-            de l'élève</h4>
-        <mat-divider></mat-divider>
-        <p><label>Aspect:</label> {{ eleve.typeMembre.libelle }}</p>
-        <p><label>Centre:</label> {{ eleve.centre.libelle }}</p>
-        <p class="d-flex align-items-center justify-content-start">
-            <label>Statut:</label>
-            <app-statut-membre [membre]="currentEleve()" [showLabel]="true"></app-statut-membre>
-        </p>
-
-        }
+            <!-- Vie de l'élève -->
+            <div style="grid-column: span 2;" class="m-t-20">
+                <h4 class="text-secondary d-flex align-items-center justify-content-center gap-8"><i-tabler
+                        name="atom" /> Vie
+                    de l'élève</h4>
+                <mat-divider></mat-divider>
+            </div>
+            <div><label>Aspect</label></div>
+            <span>{{ eleve.typeMembre.libelle }}</span>
+            <div><label>Centre</label></div>
+            <span>{{ eleve.centre.libelle }}</span>
+            <div><label>Statut</label></div>
+            <div class="d-flex align-items-center">
+                <app-statut-membre [membre]="currentEleve()" [showLabel]="true"></app-statut-membre>
+            </div>
+        </div>
     </div>
+
+    }
+
 </ng-scrollbar>

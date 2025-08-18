@@ -17,16 +17,21 @@ export interface MembreDTO {
     id: number;
     nom: string;
     prenom: string;
+    dateNaissance: string | null;
     civilite: CiviliteDTO;
     typeMembre: TypeMembreDTO;
     centre: CentreDTO;
     statut: StatutMembreDTO;
     email: string | null;
+    emailValide: boolean;
     telephone: string | null;
     portable: string | null;
     adresse: string | null;
     codePostal: string | null;
     ville: string | null;
     pays: string | null;
+    commentaires: string | null;
+    connaissances: string | null;
+    profession: string | null;
 }
 

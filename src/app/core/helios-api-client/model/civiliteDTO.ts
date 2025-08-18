@@ -13,7 +13,7 @@ import { NullableOfCivilites } from './nullableOfCivilites';
 export interface CiviliteDTO { 
     id: number | null;
     libelle: string | null;
-    civilite: NullableOfCivilites | null;
+    code: NullableOfCivilites | null;
 }
 export namespace CiviliteDTO {
 }

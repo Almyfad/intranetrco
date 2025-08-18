@@ -35,6 +35,23 @@ export class EleveDetailComponent {
 
   // Signal pour éviter les erreurs de type null
   readonly currentEleve = computed(() => this.eleve());
+  
+  // Signal computed pour calculer l'âge à partir de la date de naissance
+  readonly age = computed(() => {
+    const eleve = this.currentEleve();
+    if (!eleve?.dateNaissance) return 0;
+    
+    const birthDate = new Date(eleve.dateNaissance);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    
+    return age;
+  });
 
   closeSidenav(): void {
     this.sidenavService.close();

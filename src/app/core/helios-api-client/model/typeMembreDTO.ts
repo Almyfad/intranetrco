@@ -13,7 +13,7 @@ import { NullableOfTypesMembres } from './nullableOfTypesMembres';
 export interface TypeMembreDTO { 
     id: number | null;
     libelle: string | null;
-    types: NullableOfTypesMembres | null;
+    code: NullableOfTypesMembres | null;
 }
 export namespace TypeMembreDTO {
 }
