@@ -8,10 +8,11 @@ import { EleveDetailService } from '../eleve-detail.service';
 import { TablerIconsModule } from "angular-tabler-icons";
 import { RouterModule } from '@angular/router';
 import { MembreDTO } from 'src/app/core/helios-api-client';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-eleve-detail',
-  imports: [MaterialModule, CommonModule, NgScrollbarModule, StatutMembreComponent, TablerIconsModule, RouterModule],
+  imports: [MaterialModule, CommonModule, NgScrollbarModule, StatutMembreComponent, TablerIconsModule, RouterModule, MatButtonModule],
   templateUrl: './eleve-detail.component.html',
   styleUrl: './eleve-detail.component.scss'
 })

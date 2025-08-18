@@ -2,13 +2,21 @@
     <div class="p-24">
 
         @if (currentEleve(); as eleve) {
-        <div class="d-flex align-items-center m-b-16 gap-8">
-            <mat-icon class="me-2 text-primary">person</mat-icon>
-            <h3 class="mb-0 text-primary">{{ eleve.prenom }} {{ eleve.nom }}</h3>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center  gap-8">
+                <mat-icon class="me-2 text-primary">person</mat-icon>
+                <h3 class="mb-0 text-primary">{{ eleve.prenom }} {{ eleve.nom }}</h3>
+            </div>
+            <button mat-flat-button class="bg-light-secondary text-secondary">
+                <mat-icon>edit</mat-icon>
+                <span class="ms-2">Modifier</span>
+            </button>
+        </div>
+        <div>
             <app-statut-membre [membre]="currentEleve()" [showLabel]="true"></app-statut-membre>
         </div>
 
-        <h4 class="text-secondary d-flex align-items-center justify-content-center gap-8"><i-tabler
+        <h4 class="text-secondary d-flex align-items-center justify-content-center gap-8 m-t-12"><i-tabler
                 name="binary-tree-2" /> Généalogie</h4>
         <mat-divider></mat-divider>
         <div class="m-b-20">
