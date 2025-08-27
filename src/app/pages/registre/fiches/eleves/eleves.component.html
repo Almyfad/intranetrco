@@ -67,7 +67,9 @@
 		</div>
 	</div>
 </div>
-
+<div class="d-flex justify-content-end gap-16 m-b-32">
+	<button mat-flat-button class="bg-secondary" (click)="addNewEleve()"><div class="d-flex align-items-center gap-8"><i-tabler name="user-plus"></i-tabler> Ajouter un élève</div></button>
+</div>
 <div class="bg-white rounded m-b-30 overflow-hidden">
 	<div class="mat-elevation-z8 w-100">
 		<table mat-table [dataSource]="dataSource" class="full-width-table">

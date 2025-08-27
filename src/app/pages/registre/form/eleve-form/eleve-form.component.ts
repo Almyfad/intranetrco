@@ -14,6 +14,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MembreDTO, RegistreService, CentreDTO, TypeMembreDTO, CiviliteDTO, StatutMembreDTO } from 'src/app/core/helios-api-client';
 import { RegistreModuleService } from '../../services/registre-module.service';
 import { AsyncSelectComponent } from 'src/app/components/async-select/async-select.component';
+import { SidenavService } from 'src/app/services/sidenav.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarService } from 'src/app/layouts/full/shared/snack-bar/snack-bar.service';
 
 @Component({
   selector: 'app-eleve-form',
@@ -34,30 +37,33 @@ import { AsyncSelectComponent } from 'src/app/components/async-select/async-sele
   templateUrl: './eleve-form.component.html',
   styleUrl: './eleve-form.component.scss'
 })
-export class EleveFormComponent implements OnInit {
+export class EleveFormComponent {
   private readonly fb = inject(FormBuilder);
   private readonly rs = inject(RegistreService);
-  private readonly registre = inject(RegistreModuleService);
+  private readonly rsModule = inject(RegistreModuleService);
+  private readonly sidenav = inject(SidenavService);
+  private readonly snackBar = inject(SnackBarService);
 
   // Input signal pour l'élève à éditer (optionnel)
   membre = input<MembreDTO | null>(null);
   
+  _membre = computed(() => this.membre()?? this.rsModule.eleve());
+
+
   // Signal pour déterminer si on est en mode édition
-  isEditMode = computed(() => this.membre() !== null);
+  isEditMode = computed(() => this._membre() !== null);
   
-  // Signaux pour les données de référence
-  civilites = signal<CiviliteDTO[]>([]);
   
   // Options pour les sélecteurs
-  centresOptions = computed(() => this.registre.centres().data);
-  aspectsOptions = computed(() => this.registre.aspects().data);
-  statutsOptions = computed(() => this.registre.statuts().data);
-  
+  centresOptions = computed(() => this.rsModule.centres().data);
+  aspectsOptions = computed(() => this.rsModule.aspects().data);
+  statutsOptions = computed(() => this.rsModule.statuts().data);
+  civilitesOptions = computed(() => this.rsModule.civilites().data);
   // Loading states
-  centresLoading = computed(() => this.registre.centres().loading);
-  aspectsLoading = computed(() => this.registre.aspects().loading);
-  statutsLoading = computed(() => this.registre.statuts().loading);
-  civiliteLoading = signal(false);
+  centresLoading = computed(() => this.rsModule.centres().loading);
+  aspectsLoading = computed(() => this.rsModule.aspects().loading);
+  statutsLoading = computed(() => this.rsModule.statuts().loading);
+  civiliteLoading =computed(() => this.rsModule.civilites().loading);
   
   // Formulaire
   eleveForm: FormGroup;
@@ -90,47 +96,37 @@ export class EleveFormComponent implements OnInit {
 
     // Effect pour pré-remplir le formulaire en mode édition
     effect(() => {
-      const membreData = this.membre();
-      if (membreData) {
+
+      const membreData = this._membre();
+      // S'assurer que les données de référence sont chargées avant d'initialiser
+      const civilites = this.civilitesOptions();
+      const centres = this.centresOptions();
+      const aspects = this.aspectsOptions();
+      const statuts = this.statutsOptions();
+
+
+      if (membreData && civilites.length > 0 && centres.length > 0 && aspects.length > 0 && statuts.length > 0) {
+        // Trouver les bonnes références dans les listes d'options
+        const civiliteMatch = civilites.find(c => c.id === membreData.civilite?.id);
+        const centreMatch = centres.find(c => c.id === membreData.centre?.id);
+        const typeMembreMatch = aspects.find(t => t.id === membreData.typeMembre?.id);
+        const statutMatch = statuts.find(s => s.id === membreData.statut?.id);
+        
+
         this.eleveForm.patchValue({
-          nom: membreData.nom,
-          prenom: membreData.prenom,
+          ...membreData,
           dateNaissance: membreData.dateNaissance ? new Date(membreData.dateNaissance) : null,
-          civilite: membreData.civilite,
-          typeMembre: membreData.typeMembre,
-          centre: membreData.centre,
-          statut: membreData.statut,
-          email: membreData.email,
-          emailValide: membreData.emailValide,
-          telephone: membreData.telephone,
-          portable: membreData.portable,
-          adresse: membreData.adresse,
-          codePostal: membreData.codePostal,
-          ville: membreData.ville,
-          pays: membreData.pays,
-          commentaires: membreData.commentaires,
-          connaissances: membreData.connaissances,
-          profession: membreData.profession
+          civilite: civiliteMatch || membreData.civilite,
+          typeMembre: typeMembreMatch || membreData.typeMembre,
+          centre: centreMatch || membreData.centre,
+          statut: statutMatch || membreData.statut
         });
       }
     });
   }
 
-  ngOnInit(): void {
-    this.loadCivilites();
-  }
 
-  private loadCivilites(): void {
-    this.civiliteLoading.set(true);
-    // Pour l'instant, on crée des civilités par défaut car l'API n'a pas l'endpoint
-    const defaultCivilites: CiviliteDTO[] = [
-      { id: 1, libelle: 'M.', code: null },
-      { id: 2, libelle: 'Mme', code: null },
-      { id: 3, libelle: 'Mlle', code: null }
-    ];
-    this.civilites.set(defaultCivilites);
-    this.civiliteLoading.set(false);
-  }
+
 
   onSubmit(): void {
     if (this.eleveForm.valid) {
@@ -139,7 +135,7 @@ export class EleveFormComponent implements OnInit {
       const formValue = this.eleveForm.value;
       const membreData: MembreDTO = {
         ...formValue,
-        id: this.isEditMode() ? this.membre()!.id : 0,
+        id: this.isEditMode() ? this._membre()!.id : 0,
         dateNaissance: formValue.dateNaissance ? formValue.dateNaissance.toISOString().split('T')[0] : null
       };
 
@@ -148,12 +144,12 @@ export class EleveFormComponent implements OnInit {
         this.rs.apiRegistreMembresMembreIdPut(membreData, membreData.id).subscribe({
           next: () => {
             this.saving.set(false);
-            // TODO: Ajouter notification de succès
-            console.log('Membre mis à jour avec succès');
+            this.snackBar.success('Mise à jour terminée avec succès');
+
           },
           error: (error) => {
             this.saving.set(false);
-            // TODO: Ajouter gestion d'erreur
+            this.snackBar.error('Erreur lors de la mise à jour');
             console.error('Erreur lors de la mise à jour:', error);
           }
         });
@@ -162,13 +158,13 @@ export class EleveFormComponent implements OnInit {
         this.rs.apiRegistreMembresMembrePost(membreData).subscribe({
           next: () => {
             this.saving.set(false);
-            // TODO: Ajouter notification de succès
+            this.snackBar.success('Membre créé avec succès');
             console.log('Membre créé avec succès');
             this.eleveForm.reset();
           },
           error: (error) => {
             this.saving.set(false);
-            // TODO: Ajouter gestion d'erreur
+            this.snackBar.error('Erreur lors de la création');
             console.error('Erreur lors de la création:', error);
           }
         });
@@ -180,6 +176,10 @@ export class EleveFormComponent implements OnInit {
   }
 
   onCancel(): void {
+    if (this.isEditMode()) {
+      this.sidenav.close();
+      return;
+    }
     this.eleveForm.reset();
   }
 

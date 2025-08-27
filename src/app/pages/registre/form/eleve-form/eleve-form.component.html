@@ -19,14 +19,14 @@
         <div class="form-row">
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Civilité</mat-label>
-            <mat-select formControlName="civilite" [disabled]="civiliteLoading()">
+            <mat-select formControlName="civilite">
               @if (civiliteLoading()) {
                 <mat-option disabled>
                   <mat-spinner diameter="16"></mat-spinner>
                   Chargement...
                 </mat-option>
               } @else {
-                @for (civilite of civilites(); track civilite.id) {
+                @for (civilite of civilitesOptions(); track civilite.id) {
                   <mat-option [value]="civilite">{{ civilite.libelle }}</mat-option>
                 }
               }
@@ -142,7 +142,7 @@
         <div class="form-row">
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Centre *</mat-label>
-            <mat-select formControlName="centre" [disabled]="centresLoading()">
+            <mat-select formControlName="centre" >
               @if (centresLoading()) {
                 <mat-option disabled>
                   <mat-spinner diameter="16"></mat-spinner>
@@ -161,7 +161,7 @@
 
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Type de membre *</mat-label>
-            <mat-select formControlName="typeMembre" [disabled]="aspectsLoading()">
+            <mat-select formControlName="typeMembre" >
               @if (aspectsLoading()) {
                 <mat-option disabled>
                   <mat-spinner diameter="16"></mat-spinner>
@@ -180,7 +180,7 @@
 
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Statut *</mat-label>
-            <mat-select formControlName="statut" [disabled]="statutsLoading()">
+            <mat-select formControlName="statut" >
               @if (statutsLoading()) {
                 <mat-option disabled>
                   <mat-spinner diameter="16"></mat-spinner>

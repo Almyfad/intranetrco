@@ -17,33 +17,35 @@ import { CommonModule } from '@angular/common';
 import { StatutMembreComponent,getStatusColor,getStatusIcon } from '../../statut-membre/statut-membre.component';
 import { AsyncSelectComponent, AsyncSelectOption } from 'src/app/components/async-select/async-select.component';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil, map, BehaviorSubject, Observable } from 'rxjs';
-import { EleveDetailService } from '../../services/eleve-detail.service';
 import { RegistreModuleService } from '../../services/registre-module.service';
+import { TablerIconsModule } from "angular-tabler-icons";
+import { EleveFormComponent } from '../../form/eleve-form/eleve-form.component';
 
 @Component({
   selector: 'app-eleves',
   imports: [
-    CommonModule, 
-    MatTableModule, 
-    MatProgressBarModule, 
-    MatPaginatorModule, 
+    CommonModule,
+    MatTableModule,
+    MatProgressBarModule,
+    MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    MaterialModule, 
+    MaterialModule,
     StatutMembreComponent,
-    AsyncSelectComponent
-  ],
+    AsyncSelectComponent,
+    TablerIconsModule
+],
   templateUrl: './eleves.component.html',
   styleUrl: './eleves.component.scss'
 })
 export class ElevesComponent implements OnInit, OnDestroy {
+
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly rs = inject(RegistreService);
   private readonly sidenavService = inject(SidenavService);
-  private readonly eleveDetailService = inject(EleveDetailService);
   private readonly registre = inject(RegistreModuleService);
   private readonly destroy$ = new Subject<void>();
 
@@ -200,7 +202,14 @@ export class ElevesComponent implements OnInit, OnDestroy {
         }
       });
   }
-
+  addNewEleve() {
+    this.registre.clearEleve();
+    this.sidenavService
+      .setComponent(EleveFormComponent)
+      .setTitle('Ajouter un élève')
+      .setWidth('500px')
+      .open();
+  }
   fetchEleves(): void {
     this.loading = true;
     
@@ -321,7 +330,7 @@ export class ElevesComponent implements OnInit, OnDestroy {
    * @param eleve - L'élève dont on veut afficher le détail
    */
   openEleveDetail(eleve: MembreDTO): void {
-    this.eleveDetailService.setEleve(eleve);
+    this.registre.setEleve(eleve);
     this.sidenavService
       .setComponent(EleveDetailComponent)
       .setTitle('🧾 Détail de l\'élève id: ' + eleve.id)

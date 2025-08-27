@@ -4,12 +4,12 @@ import { CommonModule } from '@angular/common';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { StatutMembreComponent } from '../../statut-membre/statut-membre.component';
 import { SidenavService } from 'src/app/services/sidenav.service';
-import { EleveDetailService } from '../../services/eleve-detail.service';
 import { TablerIconsModule } from "angular-tabler-icons";
 import { RouterModule } from '@angular/router';
-import { MembreDTO } from 'src/app/core/helios-api-client';
+import { MembreDTO, RegistreService } from 'src/app/core/helios-api-client';
 import { MatButtonModule } from '@angular/material/button';
 import { EleveFormComponent } from '../../form/eleve-form/eleve-form.component';
+import { RegistreModuleService } from '../../services/registre-module.service';
 
 @Component({
   selector: 'app-eleve-detail',
@@ -30,17 +30,17 @@ export class EleveDetailComponent {
   private readonly sidenavService = inject(SidenavService);
 
   // Injection du service - tout est géré par le service maintenant !
-  readonly eleveDetailService = inject(EleveDetailService);
+  readonly rs = inject(RegistreModuleService);
 
   openEleveDetail(m: MembreDTO) {
-    this.eleveDetailService.setEleve(m);
+    this.rs.setEleve(m);
   }
 
   // Accès direct aux signaux du service
-  readonly eleve = this.eleveDetailService.eleve;
-  readonly parents = this.eleveDetailService.parents;
-  readonly enfants = this.eleveDetailService.enfants;
-  readonly loading = this.eleveDetailService.loading;
+  readonly eleve = this.rs.eleve;
+  readonly parents = this.rs.parents;
+  readonly enfants = this.rs.enfants;
+  readonly loading = this.rs.loading;
 
   // Signal pour éviter les erreurs de type null
   readonly currentEleve = computed(() => this.eleve());
@@ -65,6 +65,6 @@ export class EleveDetailComponent {
   closeSidenav(): void {
     this.sidenavService.close();
     // Optionnel : nettoyer les données quand on ferme
-    this.eleveDetailService.clearEleve();
+    this.rs.clearEleve();
   }
 }

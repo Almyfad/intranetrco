@@ -1,0 +1,25 @@
+@use '@angular/material' as mat;
+@import 'src/assets/scss/variables';
+
+:root {
+    .snack-bar-success {
+        @include mat.snack-bar-overrides((button-color: $white,
+                container-color: $success,
+            ));
+    }
+    .snack-bar-error {
+        @include mat.snack-bar-overrides((button-color: $white,
+                container-color: $error,
+            ));
+    }
+    .snack-bar-warning {
+        @include mat.snack-bar-overrides((button-color: $white,
+                container-color: $warning,
+            ));
+    }
+    .snack-bar-info {
+        @include mat.snack-bar-overrides((button-color: $white,
+                container-color: var(--mat-sys-tertiary),
+            ));
+    }
+}
