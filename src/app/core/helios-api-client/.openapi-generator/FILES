@@ -16,6 +16,7 @@ model/centreModule.ts
 model/civiliteDTO.ts
 model/dataPagerOfMembreDTO.ts
 model/familyDTO.ts
+model/familyUpdateDTO.ts
 model/loginRequest.ts
 model/membreDTO.ts
 model/membreFiltre.ts
@@ -25,6 +26,7 @@ model/modules.ts
 model/nullableOfCivilites.ts
 model/nullableOfStatutsMembres.ts
 model/nullableOfTypesMembres.ts
+model/searchMembreDTO.ts
 model/statutMembreDTO.ts
 model/typeMembreDTO.ts
 model/userInfo.ts
