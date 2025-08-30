@@ -1,6 +1,6 @@
 import { inject, Injectable, signal, computed, effect } from "@angular/core";
 import { toSignal } from "@angular/core/rxjs-interop";
-import { map, take } from "rxjs";
+import { firstValueFrom, map, take } from "rxjs";
 import { FamilyDTO, MembreDTO, RegistreService } from "src/app/core/helios-api-client";
 
 export interface AsyncDataSource<T> {
@@ -12,7 +12,7 @@ export interface AsyncDataSource<T> {
     providedIn: 'root'
 })
 export class RegistreModuleService {
-    registreService: any;
+    readonly registreService = inject(RegistreService);
 
     constructor() {
         // Effet pour récupérer automatiquement les données de famille
@@ -96,8 +96,7 @@ export class RegistreModuleService {
         try {
             this.isLoading.set(true);
 
-            const familyResponse = await this.registreService.apiRegistreMembresFamilyIdGet(eleveId).toPromise();
-
+            const familyResponse = await firstValueFrom(this.registreService.apiRegistreMembresFamilyIdGet(eleveId));
             if (familyResponse) {
                 this.familyData.set(familyResponse);
             }

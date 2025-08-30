@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, input, computed, effect, signal } from '@angular/core';
+import { Component, inject, OnInit, input, computed, effect, signal, model } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,12 +11,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MembreDTO, RegistreService, CentreDTO, TypeMembreDTO, CiviliteDTO, StatutMembreDTO } from 'src/app/core/helios-api-client';
+import { MembreDTO, RegistreService, CentreDTO, TypeMembreDTO, CiviliteDTO, StatutMembreDTO, SearchMembreDTO, FamilyDTO, FamilyUpdateDTO } from 'src/app/core/helios-api-client';
 import { RegistreModuleService } from '../../services/registre-module.service';
 import { AsyncSelectComponent } from 'src/app/components/async-select/async-select.component';
 import { SidenavService } from 'src/app/services/sidenav.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarService } from 'src/app/layouts/full/shared/snack-bar/snack-bar.service';
+import { finalize, iif, map, switchMap } from 'rxjs';
+import { Chip, ChipsAutocompleteComponent } from 'src/app/shared/chips-autocomplete/chips-autocomplete.component';
 
 @Component({
   selector: 'app-eleve-form',
@@ -32,7 +34,8 @@ import { SnackBarService } from 'src/app/layouts/full/shared/snack-bar/snack-bar
     MatCardModule,
     MatIconModule,
     MatCheckboxModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ChipsAutocompleteComponent
   ],
   templateUrl: './eleve-form.component.html',
   styleUrl: './eleve-form.component.scss'
@@ -46,14 +49,14 @@ export class EleveFormComponent {
 
   // Input signal pour l'élève à éditer (optionnel)
   membre = input<MembreDTO | null>(null);
-  
-  _membre = computed(() => this.membre()?? this.rsModule.eleve());
+
+  _membre = computed(() => this.membre() ?? this.rsModule.eleve());
 
 
   // Signal pour déterminer si on est en mode édition
   isEditMode = computed(() => this._membre() !== null);
-  
-  
+
+
   // Options pour les sélecteurs
   centresOptions = computed(() => this.rsModule.centres().data);
   aspectsOptions = computed(() => this.rsModule.aspects().data);
@@ -63,11 +66,25 @@ export class EleveFormComponent {
   centresLoading = computed(() => this.rsModule.centres().loading);
   aspectsLoading = computed(() => this.rsModule.aspects().loading);
   statutsLoading = computed(() => this.rsModule.statuts().loading);
-  civiliteLoading =computed(() => this.rsModule.civilites().loading);
-  
+  civiliteLoading = computed(() => this.rsModule.civilites().loading);
+
   // Formulaire
   eleveForm: FormGroup;
-  
+
+  parents = model(this.rsModule.parents().map(p => ({ id: p.id, name: p.nom, value: p })) as Chip<SearchMembreDTO>[]);
+  enfants = model(this.rsModule.enfants().map(e => ({ id: e.id, name: e.nom, value: e })) as Chip<SearchMembreDTO>[]);
+
+
+  family = computed(() => {
+    const _p = this.parents();
+    const _e = this.enfants();
+    return {
+      parentsIds: _p.map(p => p.value.id),
+      enfantsIds: _e.map(e => e.value.id)
+    };
+
+  });
+
   // État de sauvegarde
   saving = signal(false);
 
@@ -111,7 +128,7 @@ export class EleveFormComponent {
         const centreMatch = centres.find(c => c.id === membreData.centre?.id);
         const typeMembreMatch = aspects.find(t => t.id === membreData.typeMembre?.id);
         const statutMatch = statuts.find(s => s.id === membreData.statut?.id);
-        
+
 
         this.eleveForm.patchValue({
           ...membreData,
@@ -131,44 +148,38 @@ export class EleveFormComponent {
   onSubmit(): void {
     if (this.eleveForm.valid) {
       this.saving.set(true);
-      
+
       const formValue = this.eleveForm.value;
       const membreData: MembreDTO = {
         ...formValue,
         id: this.isEditMode() ? this._membre()!.id : 0,
         dateNaissance: formValue.dateNaissance ? formValue.dateNaissance.toISOString().split('T')[0] : null
       };
-
-      if (this.isEditMode()) {
-        // Mode édition
-        this.rs.apiRegistreMembresMembreIdPut(membreData, membreData.id).subscribe({
+      iif(() => this.isEditMode(),
+        this.rs.apiRegistreMembresMembreIdPut(membreData.id, membreData),
+        this.rs.apiRegistreMembresMembrePost(membreData)
+      ).pipe(
+        switchMap(() => this.rs.apiRegistreMembresFamilyIdPost(membreData.id, this.family())),
+        finalize(() => this.saving.set(false))
+      )
+        .subscribe({
           next: () => {
-            this.saving.set(false);
-            this.snackBar.success('Mise à jour terminée avec succès');
-
+            if (this.isEditMode()) {
+              this.snackBar.success('Mise à jour terminée avec succès');
+            } else {
+              this.snackBar.success('Membre créé avec succès');
+            }
           },
           error: (error) => {
-            this.saving.set(false);
-            this.snackBar.error('Erreur lors de la mise à jour');
+            if (this.isEditMode()) {
+              this.snackBar.error('Erreur lors de la mise à jour');
+            } else {
+              this.snackBar.error('Erreur lors de la création');
+            }
             console.error('Erreur lors de la mise à jour:', error);
           }
         });
-      } else {
-        // Mode création
-        this.rs.apiRegistreMembresMembrePost(membreData).subscribe({
-          next: () => {
-            this.saving.set(false);
-            this.snackBar.success('Membre créé avec succès');
-            console.log('Membre créé avec succès');
-            this.eleveForm.reset();
-          },
-          error: (error) => {
-            this.saving.set(false);
-            this.snackBar.error('Erreur lors de la création');
-            console.error('Erreur lors de la création:', error);
-          }
-        });
-      }
+
     } else {
       // Marquer tous les champs comme touchés pour afficher les erreurs
       this.eleveForm.markAllAsTouched();
@@ -203,4 +214,8 @@ export class EleveFormComponent {
     const control = this.eleveForm.get(fieldName);
     return !!(control?.invalid && (control?.dirty || control?.touched));
   }
+
+  options$ = (pattern: string) => this.rs.apiRegistreMembresSearchGet(pattern)
+    .pipe(map(result => result.map(membre => ({ id: membre.id || 0, name: `${membre.prenom} ${membre.nom}`, value: membre } as Chip<MembreDTO>))));
+
 }

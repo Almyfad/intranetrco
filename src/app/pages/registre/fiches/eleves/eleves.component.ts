@@ -20,6 +20,7 @@ import { debounceTime, distinctUntilChanged, Subject, takeUntil, map, BehaviorSu
 import { RegistreModuleService } from '../../services/registre-module.service';
 import { TablerIconsModule } from "angular-tabler-icons";
 import { EleveFormComponent } from '../../form/eleve-form/eleve-form.component';
+import { Chip, ChipsAutocompleteComponent } from 'src/app/shared/chips-autocomplete/chips-autocomplete.component';
 
 @Component({
   selector: 'app-eleves',
@@ -35,7 +36,7 @@ import { EleveFormComponent } from '../../form/eleve-form/eleve-form.component';
     MaterialModule,
     StatutMembreComponent,
     AsyncSelectComponent,
-    TablerIconsModule
+    TablerIconsModule,
 ],
   templateUrl: './eleves.component.html',
   styleUrl: './eleves.component.scss'
@@ -48,6 +49,7 @@ export class ElevesComponent implements OnInit, OnDestroy {
   private readonly sidenavService = inject(SidenavService);
   private readonly registre = inject(RegistreModuleService);
   private readonly destroy$ = new Subject<void>();
+
 
   displayedColumns: string[] = ['statut', 'nom', 'prenom', 'email', 'telephone', 'adresse', 'ville', 'pays'];
   dataSource = new MatTableDataSource<MembreDTO>([]);

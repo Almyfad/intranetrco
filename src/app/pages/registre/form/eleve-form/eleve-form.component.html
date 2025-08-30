@@ -8,31 +8,31 @@
 
   <mat-card-content>
     <form [formGroup]="eleveForm" (ngSubmit)="onSubmit()" class="eleve-form">
-      
+
       <!-- Section Informations personnelles -->
       <div class="form-section">
         <h3 class="section-title">
           <mat-icon>person</mat-icon>
           Informations personnelles
         </h3>
-        
+
         <div class="form-row">
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Civilité</mat-label>
             <mat-select formControlName="civilite">
               @if (civiliteLoading()) {
-                <mat-option disabled>
-                  <mat-spinner diameter="16"></mat-spinner>
-                  Chargement...
-                </mat-option>
+              <mat-option disabled>
+                <mat-spinner diameter="16"></mat-spinner>
+                Chargement...
+              </mat-option>
               } @else {
-                @for (civilite of civilitesOptions(); track civilite.id) {
-                  <mat-option [value]="civilite">{{ civilite.libelle }}</mat-option>
-                }
+              @for (civilite of civilitesOptions(); track civilite.id) {
+              <mat-option [value]="civilite">{{ civilite.libelle }}</mat-option>
+              }
               }
             </mat-select>
             @if (hasError('civilite')) {
-              <mat-error>{{ getErrorMessage('civilite') }}</mat-error>
+            <mat-error>{{ getErrorMessage('civilite') }}</mat-error>
             }
           </mat-form-field>
 
@@ -40,7 +40,7 @@
             <mat-label>Nom *</mat-label>
             <input matInput formControlName="nom" placeholder="Nom de famille">
             @if (hasError('nom')) {
-              <mat-error>{{ getErrorMessage('nom') }}</mat-error>
+            <mat-error>{{ getErrorMessage('nom') }}</mat-error>
             }
           </mat-form-field>
 
@@ -48,7 +48,7 @@
             <mat-label>Prénom *</mat-label>
             <input matInput formControlName="prenom" placeholder="Prénom">
             @if (hasError('prenom')) {
-              <mat-error>{{ getErrorMessage('prenom') }}</mat-error>
+            <mat-error>{{ getErrorMessage('prenom') }}</mat-error>
             }
           </mat-form-field>
         </div>
@@ -66,7 +66,7 @@
             <input matInput formControlName="email" type="email" placeholder="email@exemple.com">
             <mat-icon matSuffix>email</mat-icon>
             @if (hasError('email')) {
-              <mat-error>{{ getErrorMessage('email') }}</mat-error>
+            <mat-error>{{ getErrorMessage('email') }}</mat-error>
             }
           </mat-form-field>
 
@@ -84,7 +84,7 @@
           <mat-icon>phone</mat-icon>
           Contact
         </h3>
-        
+
         <div class="form-row">
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Téléphone</mat-label>
@@ -106,7 +106,7 @@
           <mat-icon>location_on</mat-icon>
           Adresse
         </h3>
-        
+
         <div class="form-row">
           <mat-form-field appearance="outline" class="form-field-full">
             <mat-label>Adresse</mat-label>
@@ -132,68 +132,81 @@
         </div>
       </div>
 
+      <!-- Section Familles -->
+      <div class="form-section">
+        <h3 class="section-title">
+          <mat-icon>family_restroom</mat-icon>
+          Familles
+        </h3>
+        <app-chips-autocomplete [options]="options$" placeholder="Rechercher un parent" [(items)]="parents"
+          label="Parents"></app-chips-autocomplete>
+
+        <app-chips-autocomplete [options]="options$" placeholder="Rechercher un enfant" [(items)]="enfants"
+          label="Enfants"></app-chips-autocomplete>
+      </div>
+
       <!-- Section Registre -->
       <div class="form-section">
         <h3 class="section-title">
           <mat-icon>school</mat-icon>
           Informations registre
         </h3>
-        
+
         <div class="form-row">
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Centre *</mat-label>
-            <mat-select formControlName="centre" >
+            <mat-select formControlName="centre">
               @if (centresLoading()) {
-                <mat-option disabled>
-                  <mat-spinner diameter="16"></mat-spinner>
-                  Chargement...
-                </mat-option>
+              <mat-option disabled>
+                <mat-spinner diameter="16"></mat-spinner>
+                Chargement...
+              </mat-option>
               } @else {
-                @for (centre of centresOptions(); track centre.id) {
-                  <mat-option [value]="centre">{{ centre.libelle }}</mat-option>
-                }
+              @for (centre of centresOptions(); track centre.id) {
+              <mat-option [value]="centre">{{ centre.libelle }}</mat-option>
+              }
               }
             </mat-select>
             @if (hasError('centre')) {
-              <mat-error>{{ getErrorMessage('centre') }}</mat-error>
+            <mat-error>{{ getErrorMessage('centre') }}</mat-error>
             }
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Type de membre *</mat-label>
-            <mat-select formControlName="typeMembre" >
+            <mat-select formControlName="typeMembre">
               @if (aspectsLoading()) {
-                <mat-option disabled>
-                  <mat-spinner diameter="16"></mat-spinner>
-                  Chargement...
-                </mat-option>
+              <mat-option disabled>
+                <mat-spinner diameter="16"></mat-spinner>
+                Chargement...
+              </mat-option>
               } @else {
-                @for (aspect of aspectsOptions(); track aspect.id) {
-                  <mat-option [value]="aspect">{{ aspect.libelle }}</mat-option>
-                }
+              @for (aspect of aspectsOptions(); track aspect.id) {
+              <mat-option [value]="aspect">{{ aspect.libelle }}</mat-option>
+              }
               }
             </mat-select>
             @if (hasError('typeMembre')) {
-              <mat-error>{{ getErrorMessage('typeMembre') }}</mat-error>
+            <mat-error>{{ getErrorMessage('typeMembre') }}</mat-error>
             }
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Statut *</mat-label>
-            <mat-select formControlName="statut" >
+            <mat-select formControlName="statut">
               @if (statutsLoading()) {
-                <mat-option disabled>
-                  <mat-spinner diameter="16"></mat-spinner>
-                  Chargement...
-                </mat-option>
+              <mat-option disabled>
+                <mat-spinner diameter="16"></mat-spinner>
+                Chargement...
+              </mat-option>
               } @else {
-                @for (statut of statutsOptions(); track statut.id) {
-                  <mat-option [value]="statut">{{ statut.libelle }}</mat-option>
-                }
+              @for (statut of statutsOptions(); track statut.id) {
+              <mat-option [value]="statut">{{ statut.libelle }}</mat-option>
+              }
               }
             </mat-select>
             @if (hasError('statut')) {
-              <mat-error>{{ getErrorMessage('statut') }}</mat-error>
+            <mat-error>{{ getErrorMessage('statut') }}</mat-error>
             }
           </mat-form-field>
         </div>
@@ -205,7 +218,7 @@
           <mat-icon>info</mat-icon>
           Informations complémentaires
         </h3>
-        
+
         <div class="form-row">
           <mat-form-field appearance="outline" class="form-field-full">
             <mat-label>Profession</mat-label>
@@ -216,16 +229,16 @@
         <div class="form-row">
           <mat-form-field appearance="outline" class="form-field-full">
             <mat-label>Connaissances</mat-label>
-            <textarea matInput formControlName="connaissances" rows="3" 
-                      placeholder="Connaissances ou compétences particulières"></textarea>
+            <textarea matInput formControlName="connaissances" rows="3"
+              placeholder="Connaissances ou compétences particulières"></textarea>
           </mat-form-field>
         </div>
 
         <div class="form-row">
           <mat-form-field appearance="outline" class="form-field-full">
             <mat-label>Commentaires</mat-label>
-            <textarea matInput formControlName="commentaires" rows="3" 
-                      placeholder="Commentaires ou remarques"></textarea>
+            <textarea matInput formControlName="commentaires" rows="3"
+              placeholder="Commentaires ou remarques"></textarea>
           </mat-form-field>
         </div>
       </div>
@@ -237,10 +250,10 @@
     <button mat-button type="button" (click)="onCancel()" [disabled]="saving()">
       Annuler
     </button>
-    <button mat-raised-button color="primary" type="submit" 
-            (click)="onSubmit()" [disabled]="saving() || eleveForm.invalid">
+    <button mat-raised-button color="primary" type="submit" (click)="onSubmit()"
+      [disabled]="saving() || eleveForm.invalid">
       @if (saving()) {
-        <mat-spinner diameter="16"></mat-spinner>
+      <mat-spinner diameter="16"></mat-spinner>
       }
       {{ isEditMode() ? 'Modifier' : 'Créer' }}
     </button>
