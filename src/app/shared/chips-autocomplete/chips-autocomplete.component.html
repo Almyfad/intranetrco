@@ -1,0 +1,28 @@
+<form>
+    <mat-form-field class="w-100" appearance="outline">
+         @if(label) {
+             <mat-label>{{label}}</mat-label>
+            }
+             <mat-chip-grid #chipGrid aria-label="Fruit selection">
+            @for (item of items(); track $index) {
+            <mat-chip-row (removed)="remove(item)">
+                <div class="d-flex align-items-center gap-8">
+                    <mat-icon class="iperson">person</mat-icon>
+                    {{item.name}}
+                    <button matChipRemove [attr.aria-label]="'remove ' + item.name">
+                        <mat-icon class="icancel">cancel</mat-icon>
+                    </button>
+                </div>
+            </mat-chip-row>
+            }
+        </mat-chip-grid>
+        <input name="current" [placeholder]="placeholder" #itemInput [(ngModel)]="currentItem"
+            [matChipInputFor]="chipGrid" [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)" />
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event); itemInput.value= ''">
+            @for (item of filteredItems(); track item) {
+            <mat-option [value]="item">{{item.name}}</mat-option>
+            }
+        </mat-autocomplete>
+    </mat-form-field>
+</form>
