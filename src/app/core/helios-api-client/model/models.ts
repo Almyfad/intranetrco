@@ -15,5 +15,8 @@ export * from './nullableOfStatutsMembres';
 export * from './nullableOfTypesMembres';
 export * from './searchMembreDTO';
 export * from './statutMembreDTO';
+export * from './timelineMembreDTO';
+export * from './timelineMembreType';
+export * from './timelineMembreTypes';
 export * from './typeMembreDTO';
 export * from './userInfo';

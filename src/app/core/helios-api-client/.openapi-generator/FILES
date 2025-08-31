@@ -28,6 +28,9 @@ model/nullableOfStatutsMembres.ts
 model/nullableOfTypesMembres.ts
 model/searchMembreDTO.ts
 model/statutMembreDTO.ts
+model/timelineMembreDTO.ts
+model/timelineMembreType.ts
+model/timelineMembreTypes.ts
 model/typeMembreDTO.ts
 model/userInfo.ts
 param.ts

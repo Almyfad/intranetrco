@@ -35,6 +35,10 @@ import { SearchMembreDTO } from '../model/searchMembreDTO';
 // @ts-ignore
 import { StatutMembreDTO } from '../model/statutMembreDTO';
 // @ts-ignore
+import { TimelineMembreDTO } from '../model/timelineMembreDTO';
+// @ts-ignore
+import { TimelineMembreType } from '../model/timelineMembreType';
+// @ts-ignore
 import { TypeMembreDTO } from '../model/typeMembreDTO';
 
 // @ts-ignore
@@ -211,12 +215,12 @@ export class RegistreService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiRegistreMembresFamilyIdGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<FamilyDTO>;
-    public apiRegistreMembresFamilyIdGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<FamilyDTO>>;
-    public apiRegistreMembresFamilyIdGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<FamilyDTO>>;
-    public apiRegistreMembresFamilyIdGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiRegistreMembresIdFamilyGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<FamilyDTO>;
+    public apiRegistreMembresIdFamilyGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<FamilyDTO>>;
+    public apiRegistreMembresIdFamilyGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<FamilyDTO>>;
+    public apiRegistreMembresIdFamilyGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling apiRegistreMembresFamilyIdGet.');
+            throw new Error('Required parameter id was null or undefined when calling apiRegistreMembresIdFamilyGet.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -246,7 +250,7 @@ export class RegistreService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/Registre/membres/family/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int32"})}`;
+        let localVarPath = `/api/Registre/membres/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int32"})}/family`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<FamilyDTO>('get', `${basePath}${localVarPath}`,
             {
@@ -267,15 +271,15 @@ export class RegistreService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiRegistreMembresFamilyIdPost(id: number, familyUpdateDTO: FamilyUpdateDTO, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<MembreDTO>;
-    public apiRegistreMembresFamilyIdPost(id: number, familyUpdateDTO: FamilyUpdateDTO, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<MembreDTO>>;
-    public apiRegistreMembresFamilyIdPost(id: number, familyUpdateDTO: FamilyUpdateDTO, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<MembreDTO>>;
-    public apiRegistreMembresFamilyIdPost(id: number, familyUpdateDTO: FamilyUpdateDTO, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiRegistreMembresIdFamilyPost(id: number, familyUpdateDTO: FamilyUpdateDTO, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<MembreDTO>;
+    public apiRegistreMembresIdFamilyPost(id: number, familyUpdateDTO: FamilyUpdateDTO, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<MembreDTO>>;
+    public apiRegistreMembresIdFamilyPost(id: number, familyUpdateDTO: FamilyUpdateDTO, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<MembreDTO>>;
+    public apiRegistreMembresIdFamilyPost(id: number, familyUpdateDTO: FamilyUpdateDTO, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling apiRegistreMembresFamilyIdPost.');
+            throw new Error('Required parameter id was null or undefined when calling apiRegistreMembresIdFamilyPost.');
         }
         if (familyUpdateDTO === null || familyUpdateDTO === undefined) {
-            throw new Error('Required parameter familyUpdateDTO was null or undefined when calling apiRegistreMembresFamilyIdPost.');
+            throw new Error('Required parameter familyUpdateDTO was null or undefined when calling apiRegistreMembresIdFamilyPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -316,7 +320,7 @@ export class RegistreService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/Registre/membres/family/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int32"})}`;
+        let localVarPath = `/api/Registre/membres/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int32"})}/family`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<MembreDTO>('post', `${basePath}${localVarPath}`,
             {
@@ -337,12 +341,12 @@ export class RegistreService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiRegistreMembresMembreIdGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<MembreDTO>;
-    public apiRegistreMembresMembreIdGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<MembreDTO>>;
-    public apiRegistreMembresMembreIdGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<MembreDTO>>;
-    public apiRegistreMembresMembreIdGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiRegistreMembresIdGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<MembreDTO>;
+    public apiRegistreMembresIdGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<MembreDTO>>;
+    public apiRegistreMembresIdGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<MembreDTO>>;
+    public apiRegistreMembresIdGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling apiRegistreMembresMembreIdGet.');
+            throw new Error('Required parameter id was null or undefined when calling apiRegistreMembresIdGet.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -372,7 +376,7 @@ export class RegistreService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/Registre/membres/membre/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int32"})}`;
+        let localVarPath = `/api/Registre/membres/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int32"})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<MembreDTO>('get', `${basePath}${localVarPath}`,
             {
@@ -393,15 +397,15 @@ export class RegistreService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiRegistreMembresMembreIdPut(id: number, membreDTO: MembreDTO, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<MembreDTO>;
-    public apiRegistreMembresMembreIdPut(id: number, membreDTO: MembreDTO, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<MembreDTO>>;
-    public apiRegistreMembresMembreIdPut(id: number, membreDTO: MembreDTO, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<MembreDTO>>;
-    public apiRegistreMembresMembreIdPut(id: number, membreDTO: MembreDTO, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiRegistreMembresIdPut(id: number, membreDTO: MembreDTO, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<MembreDTO>;
+    public apiRegistreMembresIdPut(id: number, membreDTO: MembreDTO, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<MembreDTO>>;
+    public apiRegistreMembresIdPut(id: number, membreDTO: MembreDTO, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<MembreDTO>>;
+    public apiRegistreMembresIdPut(id: number, membreDTO: MembreDTO, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling apiRegistreMembresMembreIdPut.');
+            throw new Error('Required parameter id was null or undefined when calling apiRegistreMembresIdPut.');
         }
         if (membreDTO === null || membreDTO === undefined) {
-            throw new Error('Required parameter membreDTO was null or undefined when calling apiRegistreMembresMembreIdPut.');
+            throw new Error('Required parameter membreDTO was null or undefined when calling apiRegistreMembresIdPut.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -442,12 +446,67 @@ export class RegistreService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/Registre/membres/membre/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int32"})}`;
+        let localVarPath = `/api/Registre/membres/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int32"})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<MembreDTO>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: membreDTO,
+                responseType: <any>responseType_,
+                ...(withCredentials ? { withCredentials } : {}),
+                headers: localVarHeaders,
+                observe: observe,
+                transferCache: localVarTransferCache,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiRegistreMembresIdTimelineGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<TimelineMembreDTO>>;
+    public apiRegistreMembresIdTimelineGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<TimelineMembreDTO>>>;
+    public apiRegistreMembresIdTimelineGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<TimelineMembreDTO>>>;
+    public apiRegistreMembresIdTimelineGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling apiRegistreMembresIdTimelineGet.');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'text/plain',
+            'application/json',
+            'text/json'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/api/Registre/membres/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int32"})}/timeline`;
+        const { basePath, withCredentials } = this.configuration;
+        return this.httpClient.request<Array<TimelineMembreDTO>>('get', `${basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -532,10 +591,10 @@ export class RegistreService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiRegistreMembresPost(page?: number, size?: number, membreFiltre?: MembreFiltre, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<DataPagerOfMembreDTO>;
-    public apiRegistreMembresPost(page?: number, size?: number, membreFiltre?: MembreFiltre, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataPagerOfMembreDTO>>;
-    public apiRegistreMembresPost(page?: number, size?: number, membreFiltre?: MembreFiltre, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataPagerOfMembreDTO>>;
-    public apiRegistreMembresPost(page?: number, size?: number, membreFiltre?: MembreFiltre, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiRegistreMembresSearchPost(page?: number, size?: number, membreFiltre?: MembreFiltre, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<DataPagerOfMembreDTO>;
+    public apiRegistreMembresSearchPost(page?: number, size?: number, membreFiltre?: MembreFiltre, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DataPagerOfMembreDTO>>;
+    public apiRegistreMembresSearchPost(page?: number, size?: number, membreFiltre?: MembreFiltre, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DataPagerOfMembreDTO>>;
+    public apiRegistreMembresSearchPost(page?: number, size?: number, membreFiltre?: MembreFiltre, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -581,7 +640,7 @@ export class RegistreService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/Registre/membres`;
+        let localVarPath = `/api/Registre/membres/search`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<DataPagerOfMembreDTO>('post', `${basePath}${localVarPath}`,
             {
@@ -603,10 +662,10 @@ export class RegistreService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiRegistreMembresSearchGet(query?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<SearchMembreDTO>>;
-    public apiRegistreMembresSearchGet(query?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<SearchMembreDTO>>>;
-    public apiRegistreMembresSearchGet(query?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<SearchMembreDTO>>>;
-    public apiRegistreMembresSearchGet(query?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiRegistreMembresSimplesearchGet(query?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<SearchMembreDTO>>;
+    public apiRegistreMembresSimplesearchGet(query?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<SearchMembreDTO>>>;
+    public apiRegistreMembresSimplesearchGet(query?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<SearchMembreDTO>>>;
+    public apiRegistreMembresSimplesearchGet(query?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -639,7 +698,7 @@ export class RegistreService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/Registre/membres/search`;
+        let localVarPath = `/api/Registre/membres/simplesearch`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<Array<SearchMembreDTO>>('get', `${basePath}${localVarPath}`,
             {
@@ -694,6 +753,57 @@ export class RegistreService extends BaseService {
         let localVarPath = `/api/Registre/statuts`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<Array<StatutMembreDTO>>('get', `${basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                responseType: <any>responseType_,
+                ...(withCredentials ? { withCredentials } : {}),
+                headers: localVarHeaders,
+                observe: observe,
+                transferCache: localVarTransferCache,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiRegistreTimelineTypesGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<TimelineMembreType>>;
+    public apiRegistreTimelineTypesGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<TimelineMembreType>>>;
+    public apiRegistreTimelineTypesGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<TimelineMembreType>>>;
+    public apiRegistreTimelineTypesGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+
+        let localVarHeaders = this.defaultHeaders;
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'text/plain',
+            'application/json',
+            'text/json'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/api/Registre/timeline/types`;
+        const { basePath, withCredentials } = this.configuration;
+        return this.httpClient.request<Array<TimelineMembreType>>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
