@@ -10,10 +10,11 @@ import { MembreDTO, RegistreService } from 'src/app/core/helios-api-client';
 import { MatButtonModule } from '@angular/material/button';
 import { EleveFormComponent } from '../../form/eleve-form/eleve-form.component';
 import { RegistreModuleService } from '../../services/registre-module.service';
+import { EleveTimelineComponent } from "src/app/components/eleve-timeline/eleve-timeline.component";
 
 @Component({
   selector: 'app-eleve-detail',
-  imports: [MaterialModule, CommonModule, NgScrollbarModule, StatutMembreComponent, TablerIconsModule, RouterModule, MatButtonModule],
+  imports: [MaterialModule, CommonModule, NgScrollbarModule, StatutMembreComponent, TablerIconsModule, RouterModule, MatButtonModule, EleveTimelineComponent],
   templateUrl: './eleve-detail.component.html',
   styleUrl: './eleve-detail.component.scss'
 })
@@ -40,7 +41,8 @@ export class EleveDetailComponent {
   readonly eleve = this.rs.eleve;
   readonly parents = this.rs.parents;
   readonly enfants = this.rs.enfants;
-  readonly loading = this.rs.loading;
+  readonly loading = this.rs.familyloading;
+  readonly timeline = this.rs.timeline;
 
   // Signal pour éviter les erreurs de type null
   readonly currentEleve = computed(() => this.eleve());

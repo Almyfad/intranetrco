@@ -15,12 +15,12 @@ import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MaterialModule } from 'src/app/material.module';
 import { CommonModule } from '@angular/common';
 import { StatutMembreComponent,getStatusColor,getStatusIcon } from '../../statut-membre/statut-membre.component';
-import { AsyncSelectComponent, AsyncSelectOption } from 'src/app/components/async-select/async-select.component';
+import { AsyncSelectComponent, SelectOption } from 'src/app/components/async-select/async-select.component';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil, map, BehaviorSubject, Observable } from 'rxjs';
 import { RegistreModuleService } from '../../services/registre-module.service';
 import { TablerIconsModule } from "angular-tabler-icons";
 import { EleveFormComponent } from '../../form/eleve-form/eleve-form.component';
-import { Chip, ChipsAutocompleteComponent } from 'src/app/shared/chips-autocomplete/chips-autocomplete.component';
+import { Chip, ChipsAutocompleteComponent } from 'src/app/components/chips-autocomplete/chips-autocomplete.component';
 
 @Component({
   selector: 'app-eleves',
@@ -81,7 +81,7 @@ export class ElevesComponent implements OnInit, OnDestroy {
 
   // Propriétés pour le filtre aspects (types membres)
   aspectsLoading = computed(() => this.registre.aspects().loading);
-  aspectsOptions: Signal<AsyncSelectOption<TypeMembreDTO>[]> = computed(() => {
+  aspectsOptions: Signal<SelectOption<TypeMembreDTO>[]> = computed(() => {
     const aspects = this.registre.aspects();
     return aspects.data.map(aspect => ({
       value: aspect,
@@ -249,7 +249,7 @@ export class ElevesComponent implements OnInit, OnDestroy {
     }
 
     // Page +1 car l'API semble utiliser une indexation basée sur 1
-    this.rs.apiRegistreMembresPost(this.currentPage + 1, this.pageSize, filter, 'body')
+    this.rs.apiRegistreMembresSearchPost(this.currentPage + 1, this.pageSize, filter, 'body')
     .subscribe({
       next: (result: DataPagerOfMembreDTO) => {
         this.dataSource.data = result.data || [];
@@ -261,6 +261,10 @@ export class ElevesComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+
+
+  
 
   /**
    * Gère la sélection de centres (multiselect)
@@ -316,7 +320,7 @@ export class ElevesComponent implements OnInit, OnDestroy {
 
   openEleveDetailById(id: number): void {
 
-      this.rs.apiRegistreMembresMembreIdGet(id).subscribe({
+      this.rs.apiRegistreMembresIdGet(id).subscribe({
         next: (response: MembreDTO) => {
           this.openEleveDetail(response);
         },

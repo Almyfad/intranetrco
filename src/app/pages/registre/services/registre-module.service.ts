@@ -1,7 +1,7 @@
 import { inject, Injectable, signal, computed, effect } from "@angular/core";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { firstValueFrom, map, take } from "rxjs";
-import { FamilyDTO, MembreDTO, RegistreService } from "src/app/core/helios-api-client";
+import { FamilyDTO, MembreDTO, RegistreService, TimelineMembreDTO } from "src/app/core/helios-api-client";
 
 export interface AsyncDataSource<T> {
     data: T[];
@@ -20,6 +20,7 @@ export class RegistreModuleService {
             const eleve = this.selectedEleve();
             if (eleve?.id) {
                 this.loadFamilyData(eleve.id);
+                this.loadTimelineData(eleve.id);
             }
         });
     }
@@ -58,15 +59,27 @@ export class RegistreModuleService {
         { initialValue: { data: [], loading: true } }
     );
 
+    timelineEventTypes = toSignal(
+        this.registre.apiRegistreTimelineTypesGet().pipe(
+            map(x => ({ data: x, loading: false })),
+            take(1)
+        ),
+        { initialValue: { data: [], loading: true } }
+    );
+
     // Signaux privés
     private selectedEleve = signal<MembreDTO | null>(null);
     private familyData = signal<FamilyDTO | null>(null);
-    private isLoading = signal<boolean>(false);
+    private isfamilyLoading = signal<boolean>(false);
+    private timelineData = signal<TimelineMembreDTO[] | null>(null);
+    private istimelineLoading = signal<boolean>(false);
 
     // Signaux publics en lecture seule
     readonly eleve = this.selectedEleve.asReadonly();
     readonly family = this.familyData.asReadonly();
-    readonly loading = this.isLoading.asReadonly();
+    readonly familyloading = this.isfamilyLoading.asReadonly();
+    readonly timeline = this.timelineData.asReadonly();
+    readonly timelineLoading = this.istimelineLoading.asReadonly();
 
     // Signaux calculés pour parents et enfants
     readonly parents = computed(() => {
@@ -94,9 +107,9 @@ export class RegistreModuleService {
     // Méthode privée pour charger les données de famille
     private async loadFamilyData(eleveId: number): Promise<void> {
         try {
-            this.isLoading.set(true);
+            this.isfamilyLoading.set(true);
 
-            const familyResponse = await firstValueFrom(this.registreService.apiRegistreMembresFamilyIdGet(eleveId));
+            const familyResponse = await firstValueFrom(this.registreService.apiRegistreMembresIdFamilyGet(eleveId));
             if (familyResponse) {
                 this.familyData.set(familyResponse);
             }
@@ -104,7 +117,23 @@ export class RegistreModuleService {
             console.error('Erreur lors du chargement des données de famille:', error);
             this.familyData.set(null);
         } finally {
-            this.isLoading.set(false);
+            this.isfamilyLoading.set(false);
+        }
+    }
+
+    private async loadTimelineData(eleveId: number): Promise<void> {
+        try {
+            this.istimelineLoading.set(true);
+
+            const timelineResponse = await firstValueFrom(this.registreService.apiRegistreMembresIdTimelineGet(eleveId));
+            if (timelineResponse) {
+                this.timelineData.set(timelineResponse);
+            }
+        } catch (error) {
+            console.error('Erreur lors du chargement des données de timeline:', error);
+            this.timelineData.set(null);
+        } finally {
+            this.istimelineLoading.set(false);
         }
     }
 }

@@ -13,12 +13,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MembreDTO, RegistreService, CentreDTO, TypeMembreDTO, CiviliteDTO, StatutMembreDTO, SearchMembreDTO, FamilyDTO, FamilyUpdateDTO } from 'src/app/core/helios-api-client';
 import { RegistreModuleService } from '../../services/registre-module.service';
-import { AsyncSelectComponent } from 'src/app/components/async-select/async-select.component';
 import { SidenavService } from 'src/app/services/sidenav.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarService } from 'src/app/layouts/full/shared/snack-bar/snack-bar.service';
 import { finalize, iif, map, switchMap } from 'rxjs';
-import { Chip, ChipsAutocompleteComponent } from 'src/app/shared/chips-autocomplete/chips-autocomplete.component';
+import { Chip, ChipsAutocompleteComponent } from 'src/app/components/chips-autocomplete/chips-autocomplete.component';
 
 @Component({
   selector: 'app-eleve-form',
@@ -156,10 +154,10 @@ export class EleveFormComponent {
         dateNaissance: formValue.dateNaissance ? formValue.dateNaissance.toISOString().split('T')[0] : null
       };
       iif(() => this.isEditMode(),
-        this.rs.apiRegistreMembresMembreIdPut(membreData.id, membreData),
+        this.rs.apiRegistreMembresIdPut(membreData.id, membreData),
         this.rs.apiRegistreMembresMembrePost(membreData)
       ).pipe(
-        switchMap(() => this.rs.apiRegistreMembresFamilyIdPost(membreData.id, this.family())),
+        switchMap(() => this.rs.apiRegistreMembresIdFamilyPost(membreData.id, this.family())),
         finalize(() => this.saving.set(false))
       )
         .subscribe({
@@ -215,7 +213,7 @@ export class EleveFormComponent {
     return !!(control?.invalid && (control?.dirty || control?.touched));
   }
 
-  options$ = (pattern: string) => this.rs.apiRegistreMembresSearchGet(pattern)
+  options$ = (pattern: string) => this.rs.apiRegistreMembresSimplesearchGet(pattern)
     .pipe(map(result => result.map(membre => ({ id: membre.id || 0, name: `${membre.prenom} ${membre.nom}`, value: membre } as Chip<MembreDTO>))));
 
 }
