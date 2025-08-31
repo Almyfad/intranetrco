@@ -45,7 +45,7 @@
             </app-async-select>
             <mat-form-field appearance="outline">
                 <mat-label>Commentaires</mat-label>
-                <input matInput formControlName="commentaire" required>
+                <input matInput formControlName="commentaire">
             </mat-form-field>
             <div class="d-flex gap-16">
                 <button mat-flat-button color="primary" (click)="add()">
@@ -73,7 +73,7 @@
             </app-async-select>
             <mat-form-field appearance="outline">
                 <mat-label>Commentaires</mat-label>
-                <input matInput formControlName="commentaire" required>
+                <input matInput formControlName="commentaire">
             </mat-form-field>
             <div class="d-flex gap-16">
                 <button mat-flat-button color="primary" (click)="updateEvent(event)" [disabled]="event.control.invalid">

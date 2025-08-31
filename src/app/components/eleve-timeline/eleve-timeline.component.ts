@@ -4,7 +4,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
-import { MembreDTO, TimelineMembreDTO, TimelineMembreType } from 'src/app/core/helios-api-client';
+import { MembreDTO, RegistreService, TimelineMembreDTO, TimelineMembreType } from 'src/app/core/helios-api-client';
 import { DatePipe } from '@angular/common';
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from '@angular/material/core';
@@ -14,6 +14,7 @@ import { RegistreModuleService } from 'src/app/pages/registre/services/registre-
 import { TablerIconsModule } from "angular-tabler-icons";
 import { MatIconModule } from "@angular/material/icon";
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { SnackBarService } from 'src/app/layouts/full/shared/snack-bar/snack-bar.service';
 @Component({
   selector: 'app-eleve-timeline',
   imports: [
@@ -37,20 +38,9 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
   styleUrl: './eleve-timeline.component.scss'
 })
 export class EleveTimelineComponent {
-  toggleAdd() {
-    this.displaynew = !this.displaynew;
-  }
-  displaynew: boolean = false;
-  add() {
-    throw new Error('Method not implemented.');
-  }
-  deleteEvent(t: TimelineControl) {
-    throw new Error('Method not implemented.');
-  }
-  updateEvent(t: TimelineControl) {
-    console.log(t.control.value.type);
-  }
+  readonly registre = inject(RegistreService)
   readonly rs = inject(RegistreModuleService);
+  readonly snackBar = inject(SnackBarService);
   eleve = input.required<MembreDTO | null>();
   timeline = model.required<TimelineMembreDTO[] | null>();
 
@@ -68,7 +58,7 @@ export class EleveTimelineComponent {
   private _formBuilder = inject(FormBuilder);
 
   newEventForm = this._formBuilder.group({
-    commentaire: ['', Validators.required],
+    commentaire: [''],
     date: ['', Validators.required],
     type: ['', Validators.required],
   });
@@ -79,13 +69,69 @@ export class EleveTimelineComponent {
     return timeline.map((x: TimelineMembreDTO) => ({
       id: String(x.id),
       control: this._formBuilder.group({
-        commentaire: [x.commentaire, Validators.required],
+        commentaire: [x.commentaire],
         date: [x.date, Validators.required],
         type: [x.type, Validators.required],
       }),
       timeline: x
     }));
   });
+
+  toggleAdd() {
+    this.displaynew = !this.displaynew;
+  }
+  displaynew: boolean = false;
+  add() {
+    if (this.newEventForm.invalid || !this.eleve()) return;
+    var timeline = {
+      id: 0,
+      ...this.newEventForm.value
+    } as TimelineMembreDTO
+    this.registre.apiRegistreMembresIdTimelinePost(this.eleve()!.id, timeline).subscribe(
+      {
+        next: () => {
+          this.snackBar.success('élément ajouté');
+          this.rs.reloadAll();
+          this.newEventForm.reset();
+          this.displaynew = false;
+        },
+        error: (error) => {
+          this.snackBar.error('Erreur lors de l\'ajout');
+          console.error('Erreur lors de l\'ajout:', error);
+        }
+      }
+    );
+  }
+  deleteEvent(t: TimelineControl) {
+    if (!this.eleve()) return;
+
+    this.registre.apiRegistreMembresIdTimelineTimelineIdDelete(this.eleve()!.id, t.timeline.id)
+      .subscribe({
+        next: () => {
+          this.snackBar.success('élément supprimé');
+          this.rs.reloadAll();
+        },
+        error: (error) => {
+          this.snackBar.error('Erreur lors de la suppression');
+          console.error('Erreur lors de la mise à jour:', error);
+        }
+      });
+  }
+  updateEvent(t: TimelineControl) {
+    if (t.control.invalid || !this.eleve()) return;
+    this.registre.apiRegistreMembresIdTimelineTimelineIdPut(this.eleve()!.id, t.timeline.id, t.control.value).subscribe(
+      {
+        next: () => {
+          this.snackBar.success('élément mis à jour');
+          this.rs.reloadAll();
+        },
+        error: (error) => {
+          this.snackBar.error('Erreur lors de la mise à jour');
+          console.error('Erreur lors de la mise à jour:', error);
+        }
+      }
+    );
+  }
 
 }
 
@@ -94,4 +140,3 @@ interface TimelineControl {
   control: FormGroup;
   timeline: TimelineMembreDTO;
 }
-

@@ -18,6 +18,7 @@ export class RegistreModuleService {
         // Effet pour récupérer automatiquement les données de famille
         effect(() => {
             const eleve = this.selectedEleve();
+            const reload = this.reload();
             if (eleve?.id) {
                 this.loadFamilyData(eleve.id);
                 this.loadTimelineData(eleve.id);
@@ -72,6 +73,7 @@ export class RegistreModuleService {
     private familyData = signal<FamilyDTO | null>(null);
     private isfamilyLoading = signal<boolean>(false);
     private timelineData = signal<TimelineMembreDTO[] | null>(null);
+    private reload = signal<number>(0);
     private istimelineLoading = signal<boolean>(false);
 
     // Signaux publics en lecture seule
@@ -135,5 +137,8 @@ export class RegistreModuleService {
         } finally {
             this.istimelineLoading.set(false);
         }
+    }
+    public reloadAll(): void {
+        this.reload.set(Date.now());
     }
 }

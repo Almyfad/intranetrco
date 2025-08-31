@@ -8,12 +8,10 @@
  * Do not edit the class manually.
  */
 import { TimelineMembreType } from './timelineMembreType';
-import { MembreDTO } from './membreDTO';
 
 
 export interface TimelineMembreDTO { 
     id: number;
-    membre: MembreDTO;
     type: TimelineMembreType;
     date: string;
     commentaire: string | null;
