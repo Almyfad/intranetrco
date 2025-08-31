@@ -1,0 +1,26 @@
+ @import '../../../assets/scss/variables';
+ ::ng-deep {
+     .mat-step-header {
+
+
+         .mat-step-icon-selected {
+             background-color: $secondary !important;
+             color: $white;
+         }
+
+         .mat-step-icon-state-edit {
+             background-color: $primary;
+             color: $white;
+         }
+
+         .mat-step-icon-state-done {
+             background-color: $secondary;
+             color: $white;
+         }
+
+         .mat-step-icon-state-default {
+             background-color: $secondary;
+             color: $white;
+         }
+     }
+ }

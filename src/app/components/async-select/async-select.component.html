@@ -1,34 +1,30 @@
 <mat-form-field appearance="outline" class="w-100">
   <mat-label>{{ label }}</mat-label>
-  <mat-select 
-    class="async-select"
-    panelClass="async-select-panel"
-    [formControl]="selectControl" 
-    [placeholder]="placeholder"
-    [multiple]="multiple">
+  <mat-select class="async-select" panelClass="async-select-panel" [formControl]="selectControl"
+    [placeholder]="placeholder" [multiple]="multiple" [compareWith]="compareWithFn" (selectionChange)="markTouched()" (closed)="markTouched()">
     @if (!multiple) {
-      <mat-option value="">
-        <em>{{ clearOptionText }}</em>
-      </mat-option>
+    <mat-option value="">
+      <em>{{ clearOptionText }}</em>
+    </mat-option>
     }
     @if (loading()) {
-      <mat-option disabled >
-        <div class="d-flex align-items-center">
-          <mat-spinner diameter="20"></mat-spinner>
-          <span>Chargement...</span>
-        </div>
-      </mat-option>
+    <mat-option disabled>
+      <div class="d-flex align-items-center">
+        <mat-spinner diameter="20"></mat-spinner>
+        <span>Chargement...</span>
+      </div>
+    </mat-option>
     } @else {
-      @for (option of options(); track option.value) {
-        <mat-option [value]="option.value">
-          <div class="d-flex align-items-center justify-content-between">
-            <span>{{ option.label }}</span>
-            @if (option.icon) {
-              <i-tabler [style.color]="option.iconColor"  name="{{ option.icon }}"></i-tabler>
-            }
-          </div>
-        </mat-option>
-      }
+    @for (option of options(); track option.value) {
+    <mat-option [value]="option.value">
+      <div class="d-flex align-items-center justify-content-between">
+        <span>{{ option.label }}</span>
+        @if (option.icon) {
+        <i-tabler [style.color]="option.iconColor" name="{{ option.icon }}"></i-tabler>
+        }
+      </div>
+    </mat-option>
+    }
     }
   </mat-select>
 </mat-form-field>

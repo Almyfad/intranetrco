@@ -1,0 +1,97 @@
+<mat-vertical-stepper isLinear="false">
+    <!-- Icon overrides. -->
+    <ng-template matStepperIcon="default">
+        <mat-icon>star_shine</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="edit">
+        <mat-icon>star_shine</mat-icon>
+
+    </ng-template>
+    <ng-template matStepperIcon="done">
+        <mat-icon>star_shine</mat-icon>
+    </ng-template>
+
+    <mat-step state="done">
+        <ng-template matStepLabel>
+            <div class="d-flex align-items-center justify-content-between gap-16">
+                <span>Aujourd'hui</span>
+                <div></div>
+                <div></div>
+                <div></div>
+                @if(!displaynew) {
+                <button mat-flat-button class="bg-light-success" (click)="toggleAdd()">
+                    <div class="d-flex align-items-center gap-8">
+                        <i-tabler name="timeline"></i-tabler> Nouveau
+                    </div>
+                </button>
+                }@else {
+                <button mat-flat-button class="bg-light-warning" (click)="toggleAdd()">
+                    <div class="d-flex align-items-center gap-8">
+                        <i-tabler name="x"></i-tabler> Annuler
+                    </div>
+                </button>}
+            </div>
+        </ng-template>
+        @if(displaynew) {
+        <form [formGroup]="newEventForm" class="p-t-8">
+            <mat-form-field appearance="outline">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="date">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <app-async-select label="Type" formControlName="type" placeholder="Sélectionnez un évènement"
+                [options]="typeoptions()">
+            </app-async-select>
+            <mat-form-field appearance="outline">
+                <mat-label>Commentaires</mat-label>
+                <input matInput formControlName="commentaire" required>
+            </mat-form-field>
+            <div class="d-flex gap-16">
+                <button mat-flat-button color="primary" (click)="add()">
+                    <div class="d-flex align-items-center gap-8">
+                        <i-tabler name="device-floppy"></i-tabler> Enregistrer
+                    </div>
+                </button>
+            </div>
+        </form>
+        }
+    </mat-step>
+    @for(event of timeline_controls();track event.id) {
+    <mat-step [stepControl]="event.control" state="default">
+        <ng-template matStepLabel>{{ event.timeline.date | date: 'dd/MM/yyyy' }} - {{ event.timeline.type.description
+            }}</ng-template>
+        <form [formGroup]="event.control" class="p-t-8">
+            <mat-form-field appearance="outline">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="date">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <app-async-select label="Type" formControlName="type" placeholder="Sélectionnez un évènement"
+                [options]="typeoptions()">
+            </app-async-select>
+            <mat-form-field appearance="outline">
+                <mat-label>Commentaires</mat-label>
+                <input matInput formControlName="commentaire" required>
+            </mat-form-field>
+            <div class="d-flex gap-16">
+                <button mat-flat-button color="primary" (click)="updateEvent(event)" [disabled]="event.control.invalid">
+                    <div class="d-flex align-items-center gap-8">
+                        <i-tabler name="device-floppy"></i-tabler> Enregistrer
+                    </div>
+                </button>
+                @if (event.timeline.id) {
+                <button mat-raised-button color="warn" (click)="deleteEvent(event)">
+                    <div class="d-flex align-items-center gap-8">
+                        <i-tabler name="trash"></i-tabler> Supprimer
+                    </div>
+                </button>
+                }
+            </div>
+        </form>
+    </mat-step>
+
+    }
+
+</mat-vertical-stepper>
