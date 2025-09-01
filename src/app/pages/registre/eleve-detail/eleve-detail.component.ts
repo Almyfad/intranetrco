@@ -2,14 +2,14 @@ import { Component, inject, computed } from '@angular/core';
 import { MaterialModule } from 'src/app/material.module';
 import { CommonModule } from '@angular/common';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import { StatutMembreComponent } from '../../statut-membre/statut-membre.component';
+import { StatutMembreComponent } from '../statut-membre/statut-membre.component';
 import { SidenavService } from 'src/app/services/sidenav.service';
 import { TablerIconsModule } from "angular-tabler-icons";
 import { RouterModule } from '@angular/router';
 import { MembreDTO, RegistreService } from 'src/app/core/helios-api-client';
 import { MatButtonModule } from '@angular/material/button';
-import { EleveFormComponent } from '../../form/eleve-form/eleve-form.component';
-import { RegistreModuleService } from '../../services/registre-module.service';
+import { EleveFormComponent } from '../form/eleve-form/eleve-form.component';
+import { RegistreModuleService } from '../services/registre-module.service';
 import { EleveTimelineComponent } from "src/app/components/eleve-timeline/eleve-timeline.component";
 
 @Component({

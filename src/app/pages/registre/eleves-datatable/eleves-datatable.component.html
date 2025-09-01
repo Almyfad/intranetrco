@@ -1,0 +1,138 @@
+
+
+<div class="bg-white rounded m-b-30">
+	<!-- En-tête cliquable -->
+	<div class="d-flex align-items-center justify-content-center p-x-24 p-y-16 gap-8 cursor-pointer"
+		(click)="toggleFilters()">
+		<mat-icon class="text-secondary">filter_list</mat-icon>
+		<h4 class="text-secondary text-center">Filtres</h4>
+		<mat-icon class="text-secondary">{{ filtersExpanded ? 'expand_less' : 'expand_more' }}</mat-icon>
+	</div>
+
+	<!-- Contenu collapsible -->
+	<div class="p-x-24 p-b-24 filters-content container" [class.filters-collapsed]="!filtersExpanded"
+		[class.filters-expanded]="filtersExpanded">
+		<!-- Première ligne : Nom, Prénom, Email -->
+		<div class="d-flex gap-16 m-b-16 row">
+			<mat-form-field appearance="outline" class="col">
+				<mat-label>Rechercher par nom</mat-label>
+				<input matInput [formControl]="nomFilterControl" placeholder="Saisissez au moins 3 caractères..."
+					autocomplete="off">
+				<mat-icon matPrefix>search</mat-icon>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" class="col">
+				<mat-label>Rechercher par prénom</mat-label>
+				<input matInput [formControl]="prenomFilterControl" placeholder="Saisissez au moins 3 caractères..."
+					autocomplete="off">
+				<mat-icon matPrefix>search</mat-icon>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" class="col">
+				<mat-label>Rechercher par email</mat-label>
+				<input matInput [formControl]="emailFilterControl" placeholder="Saisissez au moins 3 caractères..."
+					autocomplete="off" type="email">
+				<mat-icon matPrefix>email</mat-icon>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" class="col">
+				<mat-label>Rechercher par ville</mat-label>
+				<input matInput [formControl]="villeFilterControl" placeholder="Saisissez au moins 3 caractères..."
+					autocomplete="off">
+				<mat-icon matPrefix>location_city</mat-icon>
+			</mat-form-field>
+		</div>
+
+		<!-- Deuxième ligne : Ville, Pays, Centre -->
+		<div class="d-flex gap-16 m-b-16 row">
+			<mat-form-field appearance="outline" class="col">
+				<mat-label>Rechercher par pays</mat-label>
+				<input matInput [formControl]="paysFilterControl" placeholder="Saisissez au moins 3 caractères..."
+					autocomplete="off">
+				<mat-icon matPrefix>public</mat-icon>
+			</mat-form-field>
+
+			<app-async-select class="col" label="Filtrer par centre" placeholder="Sélectionnez un ou plusieurs centres"
+				clearOptionText="Tous les centres" [multiple]="true" [options]="centresOptions()"
+				[loading]="centresLoading()" (selectionChange)="onCentreSelection($event)">
+			</app-async-select>
+
+			<app-async-select class="col" label="Filtrer par type membre" placeholder="Sélectionnez un ou plusieurs aspects"
+				clearOptionText="Tous les types" [multiple]="true" [options]="aspectsOptions()"
+				[loading]="aspectsLoading()" (selectionChange)="onAspectSelection($event)">
+			</app-async-select>
+
+			<app-async-select class="col" label="Filtrer par statut" placeholder="Sélectionnez un ou plusieurs statuts"
+				clearOptionText="Tous les statuts" [multiple]="true" [options]="statutsOptions()"
+				[loading]="statutsLoading()" (selectionChange)="onStatutSelection($event)">
+			</app-async-select>
+		</div>
+	</div>
+</div>
+<div class="d-flex justify-content-end gap-16 m-b-32">
+	<button mat-flat-button class="bg-secondary" (click)="addNewEleve()"><div class="d-flex align-items-center gap-8"><i-tabler name="user-plus"></i-tabler> Ajouter un élève</div></button>
+</div>
+<div class="bg-white rounded m-b-30 overflow-hidden">
+	<div class="mat-elevation-z8 w-100">
+		<table mat-table [dataSource]="dataSource" class="full-width-table">
+			<!-- Statut Column -->
+			<ng-container matColumnDef="statut">
+				<th mat-header-cell *matHeaderCellDef></th>
+				<td mat-cell *matCellDef="let element">
+					<app-statut-membre [membre]="element"></app-statut-membre>
+				</td>
+			</ng-container>
+
+			<!-- Nom Column -->
+			<ng-container matColumnDef="nom">
+				<th mat-header-cell *matHeaderCellDef> Nom </th>
+				<td mat-cell *matCellDef="let element"> {{element.nom}} </td>
+			</ng-container> <!-- Prénom Column -->
+			<ng-container matColumnDef="prenom">
+				<th mat-header-cell *matHeaderCellDef> Prénom </th>
+				<td mat-cell *matCellDef="let element"> {{element.prenom}} </td>
+			</ng-container>
+
+			<!-- Email Column -->
+			<ng-container matColumnDef="email">
+				<th mat-header-cell *matHeaderCellDef> Email </th>
+				<td mat-cell *matCellDef="let element"> {{element.email}} </td>
+			</ng-container>
+
+			<!-- Téléphone Column -->
+			<ng-container matColumnDef="telephone">
+				<th mat-header-cell *matHeaderCellDef> Téléphone </th>
+				<td mat-cell *matCellDef="let element"> {{element.telephone}} </td>
+			</ng-container>
+
+			<!-- Adresse Column -->
+			<ng-container matColumnDef="adresse">
+				<th mat-header-cell *matHeaderCellDef> Adresse </th>
+				<td mat-cell *matCellDef="let element"> {{element.adresse}} </td>
+			</ng-container>
+
+			<!-- Ville Column -->
+			<ng-container matColumnDef="ville">
+				<th mat-header-cell *matHeaderCellDef> Ville </th>
+				<td mat-cell *matCellDef="let element"> {{element.ville}} </td>
+			</ng-container>
+
+			<!-- Pays Column -->
+			<ng-container matColumnDef="pays">
+				<th mat-header-cell *matHeaderCellDef> Pays </th>
+				<td mat-cell *matCellDef="let element"> {{element.pays}} </td>
+			</ng-container>
+
+			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openEleveDetail(row)"
+				class="clickable-row"></tr>
+		</table>
+		<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+		<!-- Pagination -->
+		<mat-paginator [length]="totalElements" [pageSize]="pageSize" [pageIndex]="currentPage"
+			[pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true" (page)="onPageChange($event)"
+			aria-label="Sélectionner une page d'élèves">
+		</mat-paginator>
+	</div>
+</div>

@@ -3,12 +3,13 @@ import { ElevesDataTableComponent } from "../../eleves-datatable/eleves-datatabl
 import { MembreFiltre, RegistreService } from 'src/app/core/helios-api-client';
 
 @Component({
-  selector: 'app-eleves',
+  selector: 'app-jeunesses',
   imports: [ElevesDataTableComponent],
-  templateUrl: './eleves.component.html',
-  styleUrl: './eleves.component.scss'
+  templateUrl: './jeunesses.component.html',
+  styleUrl: './jeunesses.component.scss'
 })
-export class ElevesComponent {
+export class JeunessesComponent {
   readonly rs = inject(RegistreService);
-  fetchEleves = (page?: number, size?: number, filtre?: MembreFiltre) => this.rs.apiRegistreMembresSearchPost(page, size, filtre);
+  fetchEleves = (page?: number, size?: number, filtre?: MembreFiltre) => this.rs.apiRegistreMembresJeunesseSearchPost(page, size, filtre);
+
 }
